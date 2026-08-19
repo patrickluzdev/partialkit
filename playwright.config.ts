@@ -14,6 +14,15 @@ export default defineConfig({
   // the Playwright container to stay on the linux set.
   snapshotPathTemplate: "tests/__screenshots__/{platform}/{projectName}/{arg}{ext}",
 
+  expect: {
+    toHaveScreenshot: {
+      // Glyph antialiasing lands differently between runs when text sits on a
+      // subpixel boundary — observed at ~1% of a small example. Anything that
+      // actually changed (a colour, a border, a size) clears this by far.
+      maxDiffPixelRatio: 0.02,
+    },
+  },
+
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: "on-first-retry",

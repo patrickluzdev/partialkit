@@ -10,6 +10,7 @@ const PAGES = [
   "/components/alert-dialog/",
   "/components/badge/",
   "/components/button/",
+  "/components/button-group/",
   "/components/card/",
   "/components/dialog/",
   "/components/dropdown-menu/",
@@ -17,6 +18,7 @@ const PAGES = [
   "/components/input/",
   "/components/label/",
   "/components/native-select/",
+  "/components/spinner/",
   "/components/textarea/",
   "/guides/theming/",
 ];
@@ -25,6 +27,10 @@ async function visit(page: Page, path: string, theme: "light" | "dark") {
   await page.goto(path);
   await page.evaluate((value) => localStorage.setItem("starlight-theme", value), theme);
   await page.reload();
+
+  // Text reflows when the web font swaps in, which is enough to fail a baseline
+  // captured a moment earlier.
+  await page.evaluate(() => document.fonts.ready);
 }
 
 for (const theme of ["light", "dark"] as const) {
@@ -51,6 +57,7 @@ for (const theme of ["light", "dark"] as const) {
     // lab fixture: documentation chrome would make the baseline churn on copy edits.
     test("open dialog", async ({ page }) => {
       await page.goto("/tests/lab.html");
+      await page.evaluate(() => document.fonts.ready);
       await page.click(`#theme-${theme}`);
       await page.click("#open-basic");
       await expect(page.locator("#basic")).toBeVisible();
@@ -68,6 +75,7 @@ for (const theme of ["light", "dark"] as const) {
 
     test("open submenu", async ({ page }) => {
       await page.goto("/tests/lab.html");
+      await page.evaluate(() => document.fonts.ready);
       await page.click(`#theme-${theme}`);
       await page.click("#rich-trigger");
       // The pointer would still be over the menu as it animates in, and moving

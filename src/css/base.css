@@ -30,7 +30,13 @@
 @media (prefers-reduced-motion: reduce) {
   .dialog,
   .dialog::backdrop,
+  .alert-dialog,
+  .alert-dialog::backdrop,
   .dropdown-menu {
     transition-duration: 1ms;
+  }
+
+  .spinner {
+    animation-duration: 2s;
   }
 }

@@ -1,0 +1,76 @@
+@layer components {
+  /* Controls sit flush: the inner corners flatten and the shared edges collapse
+     to a single border. */
+  .button-group {
+    @apply flex w-fit items-stretch;
+  }
+
+  .button-group > * {
+    @apply focus-visible:relative focus-visible:z-10;
+  }
+
+  .button-group:has(> .button-group) {
+    @apply gap-2;
+  }
+
+  .button-group > input {
+    @apply flex-1;
+  }
+
+  .button-group:not([data-orientation="vertical"]) > * {
+    @apply rounded-r-none;
+  }
+
+  .button-group:not([data-orientation="vertical"]) > *:last-child {
+    @apply rounded-r-lg;
+  }
+
+  .button-group:not([data-orientation="vertical"]) > * + * {
+    @apply rounded-l-none border-l-0;
+  }
+
+  .button-group[data-orientation="vertical"] {
+    @apply flex-col;
+  }
+
+  .button-group[data-orientation="vertical"] > * {
+    @apply rounded-b-none;
+  }
+
+  .button-group[data-orientation="vertical"] > *:last-child {
+    @apply rounded-b-lg;
+  }
+
+  .button-group[data-orientation="vertical"] > * + * {
+    @apply rounded-t-none border-t-0;
+  }
+
+  /* A group normalises the corner radius, so the small sizes stop rounding tighter. */
+  .button-group :is(.btn-xs, .btn-sm, .btn-icon-xs, .btn-icon-sm) {
+    @apply rounded-lg;
+  }
+
+  .button-group-text {
+    @apply flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm font-medium;
+  }
+
+  .button-group-text svg {
+    @apply pointer-events-none;
+  }
+
+  .button-group-text svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  .button-group-separator {
+    @apply relative self-stretch bg-input;
+  }
+
+  .button-group:not([data-orientation="vertical"]) > .button-group-separator {
+    @apply mx-px w-px;
+  }
+
+  .button-group[data-orientation="vertical"] > .button-group-separator {
+    @apply my-px h-px;
+  }
+}

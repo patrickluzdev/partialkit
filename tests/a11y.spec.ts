@@ -15,6 +15,7 @@ const PAGES = [
   "/components/alert-dialog/",
   "/components/badge/",
   "/components/button/",
+  "/components/button-group/",
   "/components/card/",
   "/components/dialog/",
   "/components/dropdown-menu/",
@@ -22,6 +23,7 @@ const PAGES = [
   "/components/input/",
   "/components/label/",
   "/components/native-select/",
+  "/components/spinner/",
   "/components/textarea/",
 ];
 

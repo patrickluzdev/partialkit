@@ -4,21 +4,36 @@ description: Displays a button or a component that looks like a button.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="button/overview" layout="row" />
 
-## Variants
+## Usage
 
-| Class | Use |
-| --- | --- |
-| `.btn` | Primary action — the default variant, applied when no other is |
-| `.btn-secondary` | Secondary action |
-| `.btn-outline` | Bordered, sitting on the page surface |
-| `.btn-ghost` | No border, no background until hovered |
-| `.btn-destructive` | Irreversible action — a wash of the danger colour, not a solid fill |
-| `.btn-link` | Looks like a link, behaves like a button |
+```html
+<button class="btn">Save changes</button>
+<button class="btn btn-outline">Cancel</button>
+```
 
-## Sizes
+The classes style any element, but reach for a real `<button>` or `<a>` so keyboard activation,
+focus order and `disabled` come from the platform.
+
+## Cursor
+
+Tailwind v4 [switched](https://tailwindcss.com/docs/upgrade-guide) buttons from `cursor: pointer`
+to `cursor: default`, and partialkit follows it. Add this to your own stylesheet to get the pointer
+back:
+
+```css
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+```
+
+## Size
 
 <Preview src="button/sizes" layout="row" />
 
@@ -30,19 +45,97 @@ import Preview from "../../../components/Preview.astro";
 | `.btn-lg` | 36px |
 | `.btn-icon-xs` `.btn-icon-sm` `.btn-icon` `.btn-icon-lg` | Square, matching the text size of the same name |
 
-An icon-only button needs an `aria-label` or `.sr-only` text — there is no visible text to name it.
 Composing the sizes (`.btn-icon.btn-sm`) reaches the same place, for markup already written that way.
+
+## Default
+
+<Preview src="button/default" layout="row" />
+
+The base class carries the default variant, applied when no other one is.
+
+## Outline
+
+<Preview src="button/outline" layout="row" />
+
+## Secondary
+
+<Preview src="button/secondary" layout="row" />
+
+## Ghost
+
+<Preview src="button/ghost" layout="row" />
+
+No surface until it is hovered. The hover uses `--muted`, which is a 3% grey — deliberately quiet.
+
+## Destructive
+
+<Preview src="button/destructive" layout="row" />
+
+A wash of the danger colour rather than a solid fill, so the weight comes from the colour.
+
+## Link
+
+<Preview src="button/link" layout="row" />
+
+Underlines on hover and never takes a surface.
+
+## Icon
+
+<Preview src="button/icon" layout="row" />
+
+An icon-only button needs an `aria-label` or `.sr-only` text — there is no visible text to name it.
+
+## With Icon
+
+Mark the icon with `data-icon="inline-start"` or `data-icon="inline-end"` so the padding tightens on
+that side.
+
+<Preview src="button/with-icon" layout="row" />
+
+## Rounded
+
+<Preview src="button/rounded" layout="row" />
+
+```html
+<button class="btn" style="border-radius: 9999px">Rounded</button>
+```
+
+With Tailwind in your own build, `rounded-full` says the same thing.
+
+## Spinner
+
+Put a [spinner](/components/spinner/) inside the button for a loading state, and disable the button
+while it runs. Give the spinner a `data-icon` attribute too, so the spacing matches an icon.
+
+<Preview src="button/spinner" layout="row" />
+
+<Aside type="caution" title="Disable, do not just decorate">
+A spinner alone still lets the user submit again. `disabled` is what actually prevents the second
+request, and it dims the control so the state reads without relying on motion.
+</Aside>
+
+## Button Group
+
+Sit several controls flush with the [button group](/components/button-group/).
+
+<Preview src="button-group/overview" />
+
+## As Link
+
+<Preview src="button/as-link" layout="row" />
+
+An anchor takes the classes and keeps its own semantics — it navigates, it is in the tab order, and
+a screen reader announces it as a link. Do not put `role="button"` on it to make it look right;
+that is exactly the semantic the anchor should keep.
 
 ## States
 
 <Preview src="button/states" layout="row" />
 
-Any element takes the classes, but reach for a real `<button>` or `<a>` so keyboard activation,
-focus order and `disabled` come from the platform.
-
-## With an icon
-
-An `svg` child is sized and made non-interactive automatically. Mark it with
-`data-icon="inline-start"` or `data-icon="inline-end"` so the padding tightens on that side.
-
-<Preview src="button/with-an-icon" />
+| State | How |
+| --- | --- |
+| Disabled | the native `disabled` attribute — dims it and stops pointer events |
+| Invalid | `aria-invalid="true"` — recolours the border and ring |
+| Pressed | automatic; the button shifts down 1px, except when it opens a menu |
+| Focus ring | automatic, on `:focus-visible` — a pointer press does not ring |
+| Expanded | `aria-expanded="true"` — outline, secondary and ghost keep their hover surface |

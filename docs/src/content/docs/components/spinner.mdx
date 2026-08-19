@@ -1,0 +1,42 @@
+---
+title: Spinner
+description: An indicator that can be used to show a loading state.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="spinner/overview" />
+
+`.spinner` sizes the icon and spins it. The markup is your own SVG, so it matches whichever icon
+set the rest of your interface uses.
+
+```html
+<svg class="spinner" role="status" aria-label="Loading" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+</svg>
+```
+
+## Sizes
+
+The class sets 16px. Override it with your own width and height, or a utility class if you build
+with Tailwind.
+
+<Preview src="spinner/sizes" layout="row" />
+
+## In a button
+
+<Preview src="button/spinner" layout="row" />
+
+## Accessibility
+
+<Aside type="caution" title="A spinner is a status, not a decoration">
+`role="status"` and a name are what make it announced. Without them a screen reader user gets
+silence while the page waits.
+</Aside>
+
+- `role="status"` announces politely, without interrupting what is being read.
+- `aria-label="Loading"` names it. If visible text already says so, use `aria-hidden="true"` on the
+  spinner instead, so it is not announced twice.
+- The animation stops under `prefers-reduced-motion`, so it does not become a hazard.

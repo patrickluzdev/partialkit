@@ -286,6 +286,40 @@
       <a class="btn" id="state-anchor" href="#state-anchor">Anchor</a>
     </section>
 
+    <section style="display: block">
+      <h2>Button group</h2>
+      <div class="button-group" id="group-horizontal" role="group" aria-label="Alignment">
+        <button class="btn btn-outline" type="button" id="group-first">Left</button>
+        <button class="btn btn-outline" type="button" id="group-middle">Center</button>
+        <button class="btn btn-outline" type="button" id="group-last">Right</button>
+      </div>
+
+      <div class="button-group" data-orientation="vertical" id="group-vertical" role="group" aria-label="Zoom">
+        <button class="btn btn-outline" type="button" id="group-v-first">In</button>
+        <button class="btn btn-outline" type="button" id="group-v-last">Out</button>
+      </div>
+
+      <div class="button-group" id="group-text-wrap">
+        <span class="button-group-text" id="group-text">https://</span>
+        <input class="input" id="group-input" value="partialkit.dev" aria-label="Domain" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Spinner</h2>
+      <svg class="spinner" id="spinner" role="status" aria-label="Loading"
+           viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+      </svg>
+      <button class="btn" id="spinner-button" disabled>
+        <svg class="spinner" data-icon="inline-start" id="spinner-in-button" aria-hidden="true"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+        </svg>
+        Saving
+      </button>
+    </section>
+
     <section>
       <h2>Badge variants</h2>
       <span class="badge" id="badge-default">default</span>

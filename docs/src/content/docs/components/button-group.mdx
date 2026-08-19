@@ -1,0 +1,54 @@
+---
+title: Button Group
+description: A container that groups related buttons together with consistent styling.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview src="button-group/overview" />
+
+The group flattens the inner corners and collapses the shared edges to a single border, so the
+controls read as one object.
+
+## Parts
+
+| Class | Part |
+| --- | --- |
+| `.button-group` | The container |
+| `.button-group-text` | A non-interactive label sharing the group's shape |
+| `.button-group-separator` | A divider between segments |
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-orientation="vertical"` | Stacks the controls instead of placing them in a row |
+
+## Vertical
+
+<Preview src="button-group/vertical" />
+
+## With text
+
+`.button-group-text` is for a prefix or suffix that is not a control — a scheme, a unit, a currency.
+
+<Preview src="button-group/with-text" />
+
+## With a separator
+
+Use a separator when the segments do different things, rather than being choices of one kind.
+
+<Preview src="button-group/with-separator" />
+
+## Accessibility
+
+A group of related controls should say so. Add `role="group"` and a name:
+
+```html
+<div class="button-group" role="group" aria-label="Text alignment">
+```
+
+When the buttons are choices rather than actions, they are a radio group, not a button group —
+reach for `role="radiogroup"` with radio inputs so the arrow keys and the announced state come from
+the platform.
+
+Focus is never hidden by a neighbour: a focused control lifts above the others so its ring stays
+whole.
