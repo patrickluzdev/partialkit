@@ -44,7 +44,7 @@ import "partialkit/auto";
 
 ## Components
 
-Alert · Alert Dialog · Badge · Button · Button Group · Card · Dialog · Dropdown Menu · Field · Input · Label · Native Select · Spinner · Textarea
+Alert · Alert Dialog · Badge · Button · Button Group · Card · Checkbox · Dialog · Dropdown Menu · Field · Input · Label · Native Select · Radio Group · Slider · Spinner · Switch · Textarea
 
 Each one has a page with live examples, its classes and its state contract in the
 [documentation](https://patrickluzdev.github.io/partialkit/), following the same sections

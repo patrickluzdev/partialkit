@@ -1,0 +1,63 @@
+---
+title: Slider
+description: An input where the user selects a value from within a given range.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="slider/overview" width="sm" />
+
+## Usage
+
+```html
+<input class="slider" type="range" min="0" max="100" value="40" aria-label="Volume" />
+```
+
+<Aside title="One value, not a range">
+shadcn/ui's slider is built on Base UI and supports several thumbs, so it can express a range.
+`.slider` styles a native `<input type="range">`, which has exactly one value. For a minimum and a
+maximum, use two inputs and validate the pair — or two number fields, which are easier to set
+precisely anyway.
+</Aside>
+
+## Steps
+
+<Preview src="slider/steps" width="sm" />
+
+`step` controls the granularity and is also what the arrow keys move by.
+
+## Disabled
+
+<Preview src="slider/disabled" width="sm" />
+
+## How the fill works
+
+Firefox paints the filled part natively; Chromium and WebKit have no equivalent. partialkit closes
+the difference with a gradient driven by `--slider-fill`, which the runtime keeps in step with the
+value. Nothing to wire up — but it does mean a slider needs the JavaScript to look right, unlike
+the rest of the library.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `←` `↓` | Down one step |
+| `→` `↑` | Up one step |
+| `Home` / `End` | Minimum / maximum |
+| `Page Up` / `Page Down` | A larger jump |
+
+All from the platform.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the track fills from the other end. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **A slider needs a name**: a `<label>` with `for`, or `aria-label`.
+- **Show the value.** A slider with no visible number is guesswork for everyone, and impossible for
+  anyone who cannot see the thumb's position.
+- **Do not use a slider for a precise value.** Hitting an exact number with a pointer is hard, and
+  harder with a motor impairment. Pair it with a number input when precision matters.

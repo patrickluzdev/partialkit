@@ -1,0 +1,71 @@
+@layer components {
+  .switch {
+    --switch-track: calc(var(--spacing) * 8);
+    --switch-thumb: calc(var(--spacing) * 4);
+
+    @apply relative inline-flex shrink-0 shrink-0 items-center rounded-full border border-transparent;
+    @apply appearance-none transition-all outline-none;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20;
+    @apply dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+    @apply bg-input dark:bg-input/80;
+
+    width: var(--switch-track);
+    height: calc(var(--switch-thumb) + 2px);
+
+    /* The thumb is painted rather than nested, so the control stays one element. */
+    background-image: radial-gradient(
+      circle at center,
+      var(--background) 0 calc(var(--switch-thumb) / 2),
+      transparent calc(var(--switch-thumb) / 2)
+    );
+    background-repeat: no-repeat;
+    background-size: var(--switch-thumb) var(--switch-thumb);
+    background-position: 1px center;
+    transition:
+      background-color 150ms ease,
+      background-position 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .switch::after {
+    @apply absolute -inset-x-3 -inset-y-2;
+
+    content: "";
+  }
+
+  .switch[data-size="sm"] {
+    --switch-track: calc(var(--spacing) * 6);
+    --switch-thumb: calc(var(--spacing) * 3);
+  }
+
+  .switch:checked {
+    @apply bg-primary dark:bg-primary;
+
+    background-position: calc(100% - 1px) center;
+  }
+
+  .dark .switch:checked {
+    background-image: radial-gradient(
+      circle at center,
+      var(--primary-foreground) 0 calc(var(--switch-thumb) / 2),
+      transparent calc(var(--switch-thumb) / 2)
+    );
+  }
+
+  .dark .switch:not(:checked) {
+    background-image: radial-gradient(
+      circle at center,
+      var(--foreground) 0 calc(var(--switch-thumb) / 2),
+      transparent calc(var(--switch-thumb) / 2)
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .switch {
+      transition-duration: 1ms;
+    }
+  }
+}

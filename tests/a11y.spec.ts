@@ -17,13 +17,17 @@ const PAGES = [
   "/components/button/",
   "/components/button-group/",
   "/components/card/",
+  "/components/checkbox/",
   "/components/dialog/",
   "/components/dropdown-menu/",
   "/components/field/",
   "/components/input/",
   "/components/label/",
   "/components/native-select/",
+  "/components/radio-group/",
+  "/components/slider/",
   "/components/spinner/",
+  "/components/switch/",
   "/components/textarea/",
 ];
 
@@ -32,25 +36,41 @@ const PAGES = [
  * ways with shadcn/ui. Each one is narrow: a rule plus the markup it applies to,
  * so anything else still fails the build.
  */
-const ACCEPTED = [
-  {
-    rule: "color-contrast",
-    // A destructive control carries --destructive as its text on a wash of the
-    // same colour. shadcn/ui's palette puts that at 3.97:1 in light and 4.28:1
-    // in dark, under the 4.5:1 WCAG AA asks for. partialkit follows their
-    // palette rather than diverging; see guides/theming.
-    applies: (html: string) => /btn-destructive|badge-destructive/.test(html),
-  },
-];
-
 interface AxeNode {
   html: string;
+  target: unknown[];
+  any?: { data?: { contrastRatio?: number } }[];
 }
 
 interface AxeViolation {
   id: string;
   nodes: AxeNode[];
 }
+
+/**
+ * Violations partialkit knowingly ships, because closing them would mean parting
+ * ways with shadcn/ui. Each one is narrow: a rule plus the markup it covers, so
+ * anything else still fails the build.
+ */
+const ACCEPTED: { rule: string; applies: (node: AxeNode) => boolean }[] = [
+  {
+    rule: "color-contrast",
+    // A destructive control carries --destructive as its text on a wash of the
+    // same colour. shadcn/ui's palette puts that at 3.98:1 in light and 4.28:1
+    // in dark, under the 4.5:1 WCAG AA asks for. partialkit follows their
+    // palette rather than diverging; see guides/theming.
+    applies: (node) => /btn-destructive|badge-destructive/.test(node.html),
+  },
+  {
+    rule: "color-contrast",
+    // A description inside a checked choice card: --muted-foreground on the
+    // card's bg-primary/5 measures 4.27:1, and shadcn/ui composes it exactly
+    // this way. The ratio bound keeps this to a near miss — muted text that is
+    // genuinely unreadable still fails.
+    applies: (node) =>
+      /field-description/.test(node.html) && (node.any?.[0]?.data?.contrastRatio ?? 0) >= 4,
+  },
+];
 
 /** Splits a report into what must fail the build and what is a recorded exception. */
 function triage(violations: AxeViolation[]) {
@@ -60,7 +80,7 @@ function triage(violations: AxeViolation[]) {
   for (const violation of violations) {
     for (const node of violation.nodes) {
       const exception = ACCEPTED.find(
-        (candidate) => candidate.rule === violation.id && candidate.applies(node.html),
+        (candidate) => candidate.rule === violation.id && candidate.applies(node),
       );
       if (exception) accepted++;
       else unexpected.push(`${violation.id}: ${node.html.slice(0, 120)}`);

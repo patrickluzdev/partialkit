@@ -1,0 +1,64 @@
+---
+title: Switch
+description: A control that allows the user to toggle between checked and not checked.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="switch/overview" />
+
+## Usage
+
+```html
+<label class="label">
+  <input class="switch" type="checkbox" role="switch" name="airplane" />
+  Airplane mode
+</label>
+```
+
+<Aside title="role='switch' is not decoration">
+It changes what is announced: "on" and "off" rather than "checked" and "not checked". The control
+underneath is still a checkbox, so the keyboard, the label and form submission are the platform's.
+</Aside>
+
+## Sizes
+
+<Preview src="switch/sizes" layout="stack" />
+
+`data-size="sm"` gives the shorter track, for dense rows of settings.
+
+## States
+
+<Preview src="switch/states" layout="stack" />
+
+## Field
+
+A switch usually belongs at the trailing edge of a row, with the explanation on the other side.
+
+<Preview src="switch/field" />
+
+## Switch or checkbox?
+
+| | Switch | Checkbox |
+| --- | --- | --- |
+| Takes effect | Immediately | When the form is submitted |
+| Reads as | On / off | Checked / unchecked |
+| Belongs in | Settings | Forms |
+| Needs a Save button | No | Usually |
+
+If the user has to press Save for it to count, it is a checkbox. A switch that only applies later
+is a broken promise.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the track and thumb reverse with the reading
+direction. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **A switch needs a label like any control**, wrapping it or with `for`.
+- **The label says what it controls, not its state.** "Airplane mode", not "Airplane mode is on" —
+  the state is announced from the control.
+- **Do not put a switch behind a confirmation.** Something that immediately does a dangerous thing
+  wants a button and an [alert dialog](/components/alert-dialog/) instead.

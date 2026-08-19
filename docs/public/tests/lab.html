@@ -346,6 +346,67 @@
       </div>
     </section>
 
+    <section style="display: block">
+      <h2>Form controls</h2>
+      <label class="label">
+        <input class="checkbox" type="checkbox" id="control-checkbox" />
+        <span id="control-checkbox-label-text">Accept terms</span>
+      </label>
+      <label class="label">
+        <input class="checkbox" type="checkbox" id="control-checkbox-indeterminate" data-indeterminate />
+        Partly selected
+      </label>
+      <label class="label">
+        <input class="checkbox" type="checkbox" id="control-checkbox-disabled" disabled />
+        Disabled
+      </label>
+
+      <div class="radio-group">
+        <label class="label">
+          <input class="radio" type="radio" name="control-radio" id="control-radio-a" checked />
+          First
+        </label>
+        <label class="label">
+          <input class="radio" type="radio" name="control-radio" id="control-radio-b" />
+          Second
+        </label>
+      </div>
+
+      <label class="label">
+        <input class="switch" type="checkbox" role="switch" id="control-switch" />
+        Airplane mode
+      </label>
+      <label class="label">
+        <input class="switch" type="checkbox" role="switch" data-size="sm" id="control-switch-sm" />
+        Small
+      </label>
+
+      <input class="slider" type="range" id="control-slider" min="0" max="100" value="40" aria-label="Volume" />
+      <input class="slider" type="range" id="control-slider-offset" min="10" max="20" step="1" value="15" aria-label="Offset" />
+      <input class="slider" type="range" id="control-slider-disabled" min="0" max="100" value="30" disabled aria-label="Disabled" />
+
+      <div class="radio-group">
+        <label class="label" id="choice-card-first">
+          <div class="field" data-orientation="horizontal">
+            <input class="radio" type="radio" name="choice" id="choice-radio-first" checked />
+            <div class="field-content">
+              <span class="field-title">Starter</span>
+              <p class="field-description">One project.</p>
+            </div>
+          </div>
+        </label>
+        <label class="label" id="choice-card-second">
+          <div class="field" data-orientation="horizontal">
+            <input class="radio" type="radio" name="choice" id="choice-radio-second" />
+            <div class="field-content">
+              <span class="field-title">Team</span>
+              <p class="field-description">Unlimited projects.</p>
+            </div>
+          </div>
+        </label>
+      </div>
+    </section>
+
     <section>
       <h2>Spinner</h2>
       <svg class="spinner" id="spinner" role="status" aria-label="Loading"

@@ -3,4 +3,28 @@
     @apply flex w-fit items-center gap-2 text-sm leading-none font-medium select-none;
     @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-50;
   }
+
+  /* A label wrapping a whole field becomes a choice card: the border, the hover
+     and the checked highlight all come from the control inside it. */
+  .label:has(> .field) {
+    @apply w-full flex-col items-stretch rounded-lg border;
+    @apply transition-colors;
+  }
+
+  .label:has(> .field) > .field {
+    @apply p-2.5;
+  }
+
+  .label:has(> .field):not(:has(:disabled, [data-disabled])):hover {
+    @apply bg-muted/50;
+  }
+
+  .label:has(> .field):has(:focus-visible) {
+    @apply border-ring ring-3 ring-ring/50;
+  }
+
+  .label:has(> .field):has(:checked) {
+    @apply border-primary/30 bg-primary/5;
+    @apply dark:border-primary/20 dark:bg-primary/10;
+  }
 }

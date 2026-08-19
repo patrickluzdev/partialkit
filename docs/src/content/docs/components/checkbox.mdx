@@ -1,0 +1,78 @@
+---
+title: Checkbox
+description: A control that allows the user to toggle between checked and not checked.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="checkbox/overview" />
+
+## Usage
+
+```html
+<label class="label">
+  <input class="checkbox" type="checkbox" name="terms" />
+  Accept terms and conditions
+</label>
+```
+
+<Aside title="It is a native input">
+`.checkbox` styles `<input type="checkbox">` rather than replacing it. Space to toggle, the label
+as a click target, `:checked`, `:indeterminate`, `:disabled` and form submission are all the
+platform's — partialkit only paints it.
+</Aside>
+
+## States
+
+<Preview src="checkbox/states" layout="stack" />
+
+| State | How |
+| --- | --- |
+| Checked | the native `checked` attribute |
+| Indeterminate | `data-indeterminate` on the input |
+| Disabled | the native `disabled` attribute |
+| Invalid | `aria-invalid="true"` |
+
+## Indeterminate
+
+The third state exists only as a DOM property — there is no HTML attribute for it, so
+server-rendered markup has no way to say it. partialkit closes that gap: put `data-indeterminate`
+on the input and the runtime sets the property.
+
+```html
+<input class="checkbox" type="checkbox" data-indeterminate />
+```
+
+Toggling the checkbox clears it, the same way a real click resolves the third state.
+
+Use it for a parent checkbox whose children are partly selected — never as a value of its own,
+since it does not submit.
+
+## Field
+
+<Preview src="checkbox/field" />
+
+`.field-content` keeps the title and description together beside the control, and clicking the
+title toggles it because `for` points at the input.
+
+## Group
+
+A set of checkboxes belongs in a `<fieldset>` with a `<legend>`, which names the group for every
+control inside it. Give them the same `name` so they submit as one list.
+
+<Preview src="checkbox/group" width="sm" />
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the control moves to the other side of its label on
+its own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The label is the hit area.** Wrapping the input, or `for` pointing at its `id`, is what makes
+  clicking the text toggle it — and what a screen reader announces.
+- **The box has a larger hit target than it looks**, extended beyond the 16px square, so it is
+  reachable on touch without changing the layout.
+- **Do not use a checkbox for an immediate action.** A checkbox is a value in a form. Something
+  that takes effect the moment you touch it is a [switch](/components/switch/).

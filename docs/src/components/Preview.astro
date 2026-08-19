@@ -52,10 +52,12 @@ const code = source.replace(/\n+$/, "");
 <script>
   // Not `auto`: that registers partialkit's own theme component, which would fight
   // Starlight for the dark class and win on reload. Starlight owns the theme here.
-  import { dialog, dropdownMenu, register, start } from "../../../src/js/index.ts";
+  import { checkbox, dialog, dropdownMenu, register, slider, start } from "../../../src/js/index.ts";
 
+  register(checkbox);
   register(dialog);
   register(dropdownMenu);
+  register(slider);
   start();
 
   document.addEventListener("click", (event) => {

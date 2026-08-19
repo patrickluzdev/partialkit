@@ -72,15 +72,18 @@ A `pk:theme:change` event fires on `<html>` with `{ theme, dark }` whenever it c
 axe-core runs against every documentation page in both modes on each build, so a token change that
 breaks WCAG AA fails CI.
 
-One exception is recorded rather than fixed. Destructive controls carry `--destructive` as their
-text on a wash of the same colour, which measures **3.97:1** in light and **4.28:1** in dark —
-under the 4.5:1 that WCAG AA asks for. Darkening the token to `oklch(0.50 …)` would clear it at
-4.95:1, but partialkit follows shadcn/ui's palette rather than forking it, so the shipped value is
-theirs.
+Two exceptions are recorded rather than fixed, both places where shadcn/ui's own values land under
+the bar:
 
-The exception is narrow: it names the rule and the markup it applies to, so any other contrast
-failure still fails the build. A test asserts the exception is still triggered, so it disappears
-the day shadcn/ui lifts the colour instead of quietly outliving its reason.
+| Pairing | Measures | Would need |
+| --- | --- | --- |
+| `--destructive` text on a wash of itself | 3.98:1 light, 4.28:1 dark | `--destructive` at `oklch(0.50 …)`, which clears it at 4.95:1 |
+| `--muted-foreground` on a checked choice card | 4.27:1 | a darker muted foreground, or an untinted card |
+
+Both ship shadcn/ui's values rather than a fork. The exceptions are narrow — each names the rule
+and the markup it covers, and the second is bounded to a near miss, so muted text that is genuinely
+unreadable still fails the build. A test asserts the exceptions are still triggered, so they
+disappear the day shadcn/ui lifts the colours instead of quietly outliving their reason.
 
 If your product needs AA on destructive text, one line gets you there:
 

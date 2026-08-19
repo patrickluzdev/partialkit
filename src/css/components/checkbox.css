@@ -1,0 +1,37 @@
+@layer components {
+  /* A styled native input: :checked, :indeterminate, :disabled, the keyboard and
+     form submission all stay the platform's. */
+  .checkbox {
+    @apply relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input;
+    @apply appearance-none transition-colors outline-none;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20;
+    @apply dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.875rem;
+  }
+
+  /* A larger hit area than the 16px box, without changing the layout. */
+  .checkbox::after {
+    @apply absolute -inset-x-3 -inset-y-2;
+
+    content: "";
+  }
+
+  .checkbox:checked,
+  .checkbox:indeterminate {
+    @apply border-primary bg-primary text-primary-foreground;
+    @apply aria-invalid:border-primary;
+  }
+
+  .checkbox:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  }
+
+  .checkbox:indeterminate {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
+  }
+}

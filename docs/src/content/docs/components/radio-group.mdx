@@ -1,0 +1,70 @@
+---
+title: Radio Group
+description: A set of checkable buttons where no more than one can be checked at a time.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="radio-group/overview" width="sm" />
+
+## Usage
+
+```html
+<div class="radio-group">
+  <label class="label">
+    <input class="radio" type="radio" name="plan" value="free" checked />
+    Free
+  </label>
+  <label class="label">
+    <input class="radio" type="radio" name="plan" value="pro" />
+    Pro
+  </label>
+</div>
+```
+
+<Aside title="The name attribute is the group">
+Radios that share a `name` are one group: the browser keeps exactly one checked, and the arrow keys
+move between them. `.radio-group` only handles spacing — it is not what binds them.
+</Aside>
+
+## States
+
+<Preview src="radio-group/states" width="sm" />
+
+| State | How |
+| --- | --- |
+| Checked | the native `checked` attribute |
+| Disabled | the native `disabled` attribute |
+| Invalid | `aria-invalid="true"` |
+
+## Fieldset
+
+A radio group needs a name of its own, and `<legend>` is how you give it one. Without it a screen
+reader announces the options but never the question.
+
+<Preview src="radio-group/overview" width="sm" />
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `↑` `↓` `←` `→` | Move to the next or previous option, and select it |
+| `Tab` | Leave the group — the whole group is one tab stop |
+
+All of it comes from the platform, because these are real radio inputs.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the control moves to the other side of its label on
+its own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **One `name` per group.** Two groups sharing a name become one group, and only one option across
+  both stays checked.
+- **Wrap the group in a `<fieldset>` with a `<legend>`**, rather than a heading.
+- **Do not pre-check an option you do not mean**, because the group is then always answered. If the
+  question is genuinely optional, leave every option unchecked and say so.
+- **Arrow keys select as they move.** That is the standard behaviour and it is why a radio group
+  should not trigger anything expensive on change.

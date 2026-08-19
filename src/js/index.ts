@@ -1,5 +1,7 @@
+export { checkbox } from "./components/checkbox.js";
 export { dialog, openDialog, closeDialog } from "./components/dialog.js";
 export { dropdownMenu } from "./components/dropdown-menu.js";
+export { slider } from "./components/slider.js";
 export { theme, applyTheme, getTheme, setTheme } from "./components/theme.js";
 export type { Theme } from "./components/theme.js";
 
