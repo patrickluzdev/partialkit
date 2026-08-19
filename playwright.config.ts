@@ -16,9 +16,11 @@ export default defineConfig({
 
   expect: {
     toHaveScreenshot: {
-      // Glyph antialiasing lands differently between runs when text sits on a
-      // subpixel boundary — observed at ~1% of a small example. Anything that
-      // actually changed (a colour, a border, a size) clears this by far.
+      // Rounded shapes and glyphs land on different subpixels between runs —
+      // measured at up to ~700 pixels on a small example, which no budget can
+      // tell apart from a change of that size. So this suite guards layout,
+      // colour and size; anything finer is asserted in metrics.spec.ts.
+      threshold: 0.35,
       maxDiffPixelRatio: 0.02,
     },
   },
