@@ -19,7 +19,7 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
-      - run: npm run build:site
+      - run: npm run docs:build
       # Visual baselines are per platform; only linux ones are comparable here.
       - run: npm test
       - uses: actions/upload-artifact@v4

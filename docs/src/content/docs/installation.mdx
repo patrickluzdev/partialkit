@@ -1,0 +1,66 @@
+---
+title: Installation
+description: Three ways to add partialkit to a project, from a two-file drop-in to a full Tailwind build.
+---
+
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+
+## Drop-in
+
+Two self-contained files. Nothing to resolve at runtime, and no Node in your app's build.
+
+<Steps>
+
+1. Get the files.
+
+   ```sh
+   npm install partialkit
+   cp node_modules/partialkit/dist/partialkit.min.css static/
+   cp node_modules/partialkit/dist/partialkit.min.js  static/
+   ```
+
+2. Reference them from your layout.
+
+   ```html
+   <link rel="stylesheet" href="/static/partialkit.min.css" />
+   <script type="module" src="/static/partialkit.min.js"></script>
+   ```
+
+3. Use a component.
+
+   ```html
+   <button class="btn">Save</button>
+   ```
+
+</Steps>
+
+`dist/partialkit.css` carries the design tokens, a preflight and the component classes — but no
+Tailwind utilities. Reach for it when partialkit's own classes are all you need.
+
+## With your own Tailwind build
+
+Import the source so Tailwind utilities and partialkit end up in one stylesheet.
+
+<Tabs>
+  <TabItem label="CSS">
+    ```css
+    @import "tailwindcss";
+    @import "partialkit/css/source";
+    ```
+  </TabItem>
+  <TabItem label="JavaScript">
+    ```js
+    import "partialkit/auto";
+    ```
+  </TabItem>
+</Tabs>
+
+## Vendored, no npm
+
+Copy `partialkit.min.css` and `partialkit.min.js` from a release straight into `static/`. This is
+the same path as the drop-in, minus the package manager.
+
+## Browser support
+
+partialkit needs `<dialog>`, the popover API, `@starting-style` and `oklch()`: Chrome 125+,
+Safari 17.4+, Firefox 125+. There are no polyfills.

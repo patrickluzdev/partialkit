@@ -1,0 +1,46 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+interface Props {
+  /** Markup rendered live and shown in the code panel. One source, two views. */
+  code: string;
+}
+
+const { code } = Astro.props;
+---
+
+<div class="pk-example not-content">
+  <div class="pk-preview pk-surface" set:html={code} />
+
+  <div class="pk-example-bar">
+    <button class="pk-example-toggle" type="button" data-pk-code-toggle aria-expanded="false">
+      Show code
+    </button>
+  </div>
+
+  <div class="pk-example-code" hidden>
+    <Code code={code} lang="html" />
+  </div>
+</div>
+
+<script>
+  // Not `auto`: that registers partialkit's own theme component, which would fight
+  // Starlight for the dark class and win on reload. Starlight owns the theme here.
+  import { dialog, dropdownMenu, register, start } from "../../../src/js/index.ts";
+
+  register(dialog);
+  register(dropdownMenu);
+  start();
+
+  document.addEventListener("click", (event) => {
+    const toggle = (event.target as Element | null)?.closest<HTMLElement>("[data-pk-code-toggle]");
+    if (!toggle) return;
+
+    const panel = toggle.closest(".pk-example")?.querySelector<HTMLElement>(".pk-example-code");
+    if (!panel) return;
+
+    panel.hidden = !panel.hidden;
+    toggle.setAttribute("aria-expanded", String(!panel.hidden));
+    toggle.textContent = panel.hidden ? "Show code" : "Hide code";
+  });
+</script>

@@ -4,38 +4,51 @@ import { expect, test, type Page } from "@playwright/test";
 // compare font rasterisers. Behaviour is what the other browsers are for.
 test.skip(({ browserName }) => browserName !== "chromium", "visual baselines are chromium-only");
 
-const EXAMPLES = ["button", "badge", "alert", "card", "dialog", "dropdown-menu"];
+const COMPONENTS = [
+  "alert",
+  "badge",
+  "button",
+  "card",
+  "dialog",
+  "dropdown-menu",
+  "field",
+  "input",
+  "label",
+  "native-select",
+  "textarea",
+];
 
-async function setTheme(page: Page, theme: "light" | "dark") {
-  await page.evaluate((value) => localStorage.setItem("pk-theme", value), theme);
+async function visit(page: Page, path: string, theme: "light" | "dark") {
+  await page.goto(path);
+  await page.evaluate((value) => localStorage.setItem("starlight-theme", value), theme);
   await page.reload();
 }
 
 for (const theme of ["light", "dark"] as const) {
   test.describe(`@visual ${theme}`, () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto("/");
-      await setTheme(page, theme);
-    });
+    for (const component of COMPONENTS) {
+      test(component, async ({ page }) => {
+        await visit(page, `/components/${component}/`, theme);
 
-    for (const example of EXAMPLES) {
-      test(`${example} example`, async ({ page }) => {
-        const preview = page.locator(`#${example} [data-panel="preview"]`);
-        await expect(preview).toHaveScreenshot(`${example}-${theme}.png`);
+        const preview = page.locator(".pk-preview").first();
+        await expect(preview).toHaveScreenshot(`${component}-${theme}.png`);
       });
     }
 
     test("open dialog", async ({ page }) => {
-      await page.click('[data-pk-dialog-open="delete-project"]');
-      await expect(page.locator("#delete-project")).toBeVisible();
+      await visit(page, "/components/dialog/", theme);
+      await page.click('[data-pk-dialog-open="demo-dialog"]');
+      await expect(page.locator("#demo-dialog")).toBeVisible();
+
       await expect(page).toHaveScreenshot(`dialog-open-${theme}.png`);
     });
 
     test("open dropdown menu", async ({ page }) => {
-      await page.locator("#dropdown-menu").scrollIntoViewIfNeeded();
-      await page.click('[popovertarget="account-menu"]');
-      await expect(page.locator("#account-menu")).toBeVisible();
-      await expect(page.locator("#account-menu")).toHaveScreenshot(`dropdown-menu-open-${theme}.png`);
+      await visit(page, "/components/dropdown-menu/", theme);
+      await page.click('[popovertarget="demo-menu"]');
+      await expect(page.locator("#demo-menu")).toBeVisible();
+
+      await expect(page.locator("#demo-menu")).toHaveScreenshot(`dropdown-menu-open-${theme}.png`);
     });
   });
 }

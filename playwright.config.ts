@@ -27,7 +27,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npm run build && npm run build:site && node site/serve.js",
+    command: "npm run docs:dev",
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     stdout: "ignore",

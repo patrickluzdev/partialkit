@@ -1,0 +1,106 @@
+/* Unlayered rules beat layered ones, so the order is declared up front and the
+   scoped reset lives in `base` — otherwise it would override partialkit's own
+   `@layer components`. */
+@layer theme, base, components, utilities;
+
+/* Tailwind without preflight: Starlight owns the page reset, partialkit only owns
+   what is inside a preview. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "../../../src/css/theme.css";
+@import "../../../src/css/components/index.css";
+
+@layer base {
+  /* Everything preflight would normally provide, scoped to the preview surface. */
+  .pk-surface,
+  .pk-surface *,
+  .pk-surface *::before,
+  .pk-surface *::after {
+    box-sizing: border-box;
+    border: 0 solid var(--border);
+  }
+
+  .pk-surface button,
+  .pk-surface input,
+  .pk-surface select,
+  .pk-surface textarea {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+  }
+
+  .pk-surface button {
+    cursor: pointer;
+    appearance: button;
+  }
+
+  .pk-surface :is(svg, img) {
+    display: block;
+  }
+
+  .pk-surface hr {
+    height: 0;
+    border-top-width: 1px;
+  }
+
+  .pk-surface :is(h1, h2, h3, h4, h5, h6, p, ul, ol) {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .pk-surface a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+}
+
+@layer components {
+  .pk-example {
+    @apply my-6 flex flex-col;
+  }
+
+  .pk-preview {
+    @apply rounded-lg border p-6 text-sm;
+    @apply bg-background text-foreground;
+
+    font-family: var(--sl-font);
+  }
+
+  .pk-example-bar {
+    @apply mt-3 flex items-center justify-end gap-2;
+  }
+
+  /* Docs chrome, not a partialkit component: styled with Starlight's own tokens so
+     it inherits the theme's guaranteed contrast. */
+  .pk-example-toggle {
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.375rem;
+    background-color: var(--sl-color-black);
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-xs);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .pk-example-toggle:hover {
+    background-color: var(--sl-color-gray-6);
+  }
+
+  .pk-example-code {
+    @apply mt-2;
+  }
+
+  .pk-example-code[hidden] {
+    display: none;
+  }
+
+  .pk-example-code .expressive-code,
+  .pk-example-code pre {
+    margin: 0;
+  }
+}

@@ -2,7 +2,9 @@ node_modules/
 dist/
 *.tsbuildinfo
 .DS_Store
-site/dist/
 test-results/
 playwright-report/
 blob-report/
+docs/dist/
+.astro/
+docs/public/dist/

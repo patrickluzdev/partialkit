@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const LAB = "/tests/fixtures/lab.html";
+const LAB = "/tests/lab.html";
 
 test.describe("swapped markup", () => {
   test.beforeEach(async ({ page }) => {

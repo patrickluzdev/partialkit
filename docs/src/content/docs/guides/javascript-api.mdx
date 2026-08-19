@@ -1,0 +1,79 @@
+---
+title: JavaScript API
+description: The runtime, the component contract, and the helpers for writing your own.
+---
+
+`partialkit/auto` registers every component and starts the observer on load — that is what the
+drop-in build does. Import `partialkit` instead when you want to choose.
+
+```js
+import { register, start, dialog, dropdownMenu } from "partialkit";
+
+register(dialog);
+register(dropdownMenu);
+start();
+```
+
+## Exports
+
+| Export | Purpose |
+| --- | --- |
+| `register(component)` | Adds a component and runs its `setup` once |
+| `start({ root })` | Mounts everything under `root` and observes it. Defaults to `document.body` |
+| `mount(root)` / `unmount(root)` | Manual control, if you would rather not observe |
+| `stop()` | Disconnects the observer and runs every cleanup |
+| `openDialog(id, opener?)` / `closeDialog(id, value?)` | Programmatic dialog control |
+| `getTheme()` / `setTheme(theme)` / `applyTheme()` | Theme control |
+| `ensureId`, `setDefaultAttribute`, `focusIsLoose`, `focusableWithin`, `focusFirst`, `createTypeahead` | ARIA helpers |
+| `findAll`, `closestWithAttribute`, `dispatch` | DOM helpers |
+
+## Events
+
+| Event | Fired on | Detail |
+| --- | --- | --- |
+| `pk:dialog:before-open` | the dialog, cancelable | — |
+| `pk:dialog:open` | the dialog | — |
+| `pk:dialog:close` | the dialog | `{ returnValue }` |
+| `pk:theme:change` | `<html>` | `{ theme, dark }` |
+
+## Writing a component
+
+A component is an object with a name, a selector, and a `mount` that runs once per matching
+element. Return a cleanup and it runs when that element leaves the DOM.
+
+```ts
+import { register, type Component } from "partialkit";
+
+const counter: Component = {
+  name: "counter",
+  selector: "[data-counter]",
+
+  mount(element) {
+    const onClick = () => (element.textContent = String(Number(element.textContent) + 1));
+    element.addEventListener("click", onClick);
+    return () => element.removeEventListener("click", onClick);
+  },
+};
+
+register(counter);
+```
+
+`setup()` is the other half of the contract: it runs once when the component is registered, and is
+where document-level delegation belongs.
+
+```ts
+const shortcuts: Component = {
+  name: "shortcuts",
+  selector: "[data-shortcut]",
+  mount() {},
+
+  setup() {
+    const onKeydown = (event: KeyboardEvent) => { /* ... */ };
+    document.addEventListener("keydown", onKeydown);
+    return () => document.removeEventListener("keydown", onKeydown);
+  },
+};
+```
+
+Prefer `setup` for anything that can be delegated. It costs one listener no matter how many
+elements arrive, which is what keeps the runtime cheap under frequent htmx swaps.

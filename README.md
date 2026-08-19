@@ -2,6 +2,8 @@
 
 shadcn-inspired UI components for HTML you render on the server.
 
+**[Documentation and component gallery →](https://patrickluzdev.github.io/partialkit/)**
+
 Tailwind CSS classes plus a small ESM runtime, built for htmx and Go templates. No React, no Vue, and no build step required in the consuming project.
 
 - **Semantic classes** — `class="btn btn-outline"`, not a 20-utility soup in every template.
@@ -280,10 +282,13 @@ Needs `<dialog>`, the popover API, `@starting-style` and `oklch()` — Chrome 12
 
 ```sh
 npm install
-npm run dev        # build everything, then serve the site at :4321
-npm run watch:site # rebuild the site CSS on change
+npm run dev          # build the library, then serve the docs at :4321
+npm run docs:build   # static docs into docs/dist
 npm run typecheck
 ```
+
+The docs are an Astro + Starlight site under `docs/`. Every example is a single string that is
+both rendered live and shown as code, so a preview can never drift from the snippet beside it.
 
 ### Tests
 
@@ -300,8 +305,8 @@ npm run test:update # re-record visual baselines
 ```
 
 Accessibility is enforced, not just documented: `tests/a11y.spec.ts` runs axe-core
-against the site and the fixture page in light and dark mode, and again with a dialog
-and a menu open. A WCAG violation fails the build.
+against every documentation page in light and dark mode, and again with a dialog and
+a menu open. A WCAG violation fails the build.
 
 Visual baselines live in `tests/__screenshots__/{platform}/` because rendering differs
 per OS. CI runs inside the Playwright container; `npm run test:docker` reproduces that
@@ -309,7 +314,7 @@ environment locally.
 
 | Path | Contents |
 | --- | --- |
-| `tests/fixtures/lab.html` | Edge-case fixture, loaded from `dist/` so it also proves the standalone build. |
+| `docs/public/tests/lab.html` | Edge-case fixture, loaded from `dist/` so it also proves the standalone build. |
 | `tests/*.spec.ts` | Behaviour, accessibility and visual specs. |
 
 | Path | Contents |
@@ -317,7 +322,7 @@ environment locally.
 | `src/css/` | Tokens, base layer, one file per component. |
 | `src/js/core/` | Registry, DOM helpers, ARIA helpers, component contract. |
 | `src/js/components/` | Component behaviours. |
-| `site/` | Component gallery with copyable markup. |
+| `docs/` | Astro + Starlight documentation site. |
 | `tests/` | Playwright specs and the lab fixture. |
 | `dist/` | Build output (git-ignored). |
 

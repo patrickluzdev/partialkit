@@ -1,0 +1,106 @@
+---
+title: Dialog
+description: A window overlaid on the page, rendering the content underneath inert.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview code={`<button class="btn btn-destructive" data-pk-dialog-open="demo-dialog">Delete project</button>
+
+<dialog class="dialog" id="demo-dialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">Delete project</h3>
+    <p class="dialog-description">This action cannot be undone.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+  </div>
+</dialog>`} />
+
+<Aside title="It is a real <dialog>">
+Focus trapping, `Esc`, the top layer and making the rest of the page inert all come from
+`showModal()`. partialkit only adds the wiring: opening, closing, backdrop dismissal, labelling
+and the state attribute.
+</Aside>
+
+## Parts
+
+| Class | Part |
+| --- | --- |
+| `.dialog` | The `<dialog>` element itself |
+| `.dialog-header` | Title area |
+| `.dialog-title` | Heading — becomes the accessible name |
+| `.dialog-description` | Supporting line — becomes `aria-describedby` |
+| `.dialog-footer` | Actions row |
+
+## Attributes
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-pk-dialog-open="<id>"` | any control | Opens that dialog as a modal |
+| `data-pk-dialog-close` | a control inside | Closes the enclosing dialog |
+| `data-pk-dialog-close="<value>"` | a control inside | Closes it and sets `returnValue` |
+| `data-pk-dialog-static` | the dialog | Clicking the backdrop does not close it |
+| `data-state="open" \| "closed"` | the dialog | Set by the runtime |
+
+## Static backdrop
+
+Use it when dismissing by accident would lose work.
+
+<Preview code={`<button class="btn" data-pk-dialog-open="static-dialog">Open static dialog</button>
+
+<dialog class="dialog" id="static-dialog" data-pk-dialog-static>
+  <div class="dialog-header">
+    <h3 class="dialog-title">Unsaved changes</h3>
+    <p class="dialog-description">Clicking outside will not close this one.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="btn" data-pk-dialog-close>Got it</button>
+  </div>
+</dialog>`} />
+
+## With a form
+
+<Preview code={`<button class="btn" data-pk-dialog-open="form-dialog">Rename project</button>
+
+<dialog class="dialog" id="form-dialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">Rename project</h3>
+  </div>
+  <div class="field">
+    <label class="label" for="dialog-name">Name</label>
+    <input class="input" id="dialog-name" value="partialkit" />
+  </div>
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn" data-pk-dialog-close="save">Save</button>
+  </div>
+</dialog>`} />
+
+## Events
+
+| Event | Cancelable | Detail |
+| --- | --- | --- |
+| `pk:dialog:before-open` | yes | — |
+| `pk:dialog:open` | no | — |
+| `pk:dialog:close` | no | `{ returnValue }` |
+
+```js
+document.getElementById("demo-dialog").addEventListener("pk:dialog:close", (event) => {
+  if (event.detail.returnValue === "confirm") deleteProject();
+});
+```
+
+## Programmatic control
+
+```js
+import { openDialog, closeDialog } from "partialkit";
+
+openDialog("demo-dialog", triggerElement); // triggerElement gets focus back on close
+closeDialog("demo-dialog", "confirm");
+```
+
+Pass the opener when you open a dialog from code. WebKit does not focus a button when it is
+clicked, so `document.activeElement` alone is not a reliable record of where focus should return.

@@ -1,0 +1,102 @@
+---
+title: Dropdown Menu
+description: Displays a menu to the user — such as a set of actions — triggered by a button.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview code={`<button class="btn btn-outline" popovertarget="demo-menu">Account</button>
+
+<div class="dropdown-menu" id="demo-menu" popover style="width: 13rem">
+  <div class="dropdown-menu-label">My account</div>
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button">
+    Profile <span class="dropdown-menu-shortcut">⇧P</span>
+  </button>
+  <button class="dropdown-menu-item" type="button">Settings</button>
+  <button class="dropdown-menu-item" type="button" data-disabled>Billing</button>
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button" data-variant="destructive">Sign out</button>
+</div>`} />
+
+<Aside title="The trigger is native">
+`popovertarget` opens and light-dismisses the menu with no JavaScript at all. partialkit positions
+the panel and adds the WAI-ARIA menu button pattern: roles, `aria-expanded`, arrow keys, `Home`,
+`End`, type-ahead and focus return.
+</Aside>
+
+## Parts
+
+| Class | Part |
+| --- | --- |
+| `.dropdown-menu` | The popover panel |
+| `.dropdown-menu-item` | An action |
+| `.dropdown-menu-label` | Group heading — names the menu |
+| `.dropdown-menu-separator` | Divider |
+| `.dropdown-menu-shortcut` | Right-aligned key hint |
+
+## Attributes
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-pk-placement` | the panel | `bottom-start` (default), `bottom-end`, `top-start`, `top-end` |
+| `data-pk-offset` | the panel | Gap from the trigger in pixels. Defaults to `4` |
+| `data-pk-anchor` | the panel | Selector to position against, when the trigger is not the `popovertarget` button |
+| `data-pk-keep-open` | an item | Activating it does not close the menu |
+| `data-variant="destructive"` | an item | Danger styling |
+| `data-inset` | an item or label | Aligns with items that have icons |
+| `data-disabled` | an item | Mirrored to `aria-disabled`, skipped by arrow keys |
+| `data-state="open" \| "closed"` | panel and trigger | Set by the runtime |
+
+The panel flips above the trigger when there is not enough room below, and is clamped to stay
+inside the viewport.
+
+## Alignment
+
+<Preview code={`<div style="display: flex; gap: 0.5rem">
+  <button class="btn btn-outline" popovertarget="align-start">bottom-start</button>
+  <div class="dropdown-menu" id="align-start" popover style="width: 11rem">
+    <button class="dropdown-menu-item" type="button">Left edges align</button>
+  </div>
+
+  <button class="btn btn-outline" popovertarget="align-end">bottom-end</button>
+  <div class="dropdown-menu" id="align-end" popover data-pk-placement="bottom-end" style="width: 11rem">
+    <button class="dropdown-menu-item" type="button">Right edges align</button>
+  </div>
+</div>`} />
+
+## With icons
+
+Give every item an icon, or use `data-inset` on the ones without so the labels still line up.
+
+<Preview code={`<button class="btn btn-outline" popovertarget="icon-menu">Actions</button>
+
+<div class="dropdown-menu" id="icon-menu" popover style="width: 13rem">
+  <button class="dropdown-menu-item" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+    </svg>
+    Edit
+  </button>
+  <button class="dropdown-menu-item" type="button" data-inset>Duplicate</button>
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button" data-variant="destructive">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"></path>
+    </svg>
+    Delete
+  </button>
+</div>`} />
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `↓` / `↑` | Move between enabled items, wrapping at the ends |
+| `Home` / `End` | First / last enabled item |
+| a–z, 0–9 | Type-ahead to the first item starting with what you type |
+| `Esc` / `Tab` | Close and return focus to the trigger |
+
+Items are real `<button>` elements, so `Enter` and `Space` activate them without extra code.
+Disabled items keep `aria-disabled="true"` rather than `disabled`, staying announced but skipped.

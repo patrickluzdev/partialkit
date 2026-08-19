@@ -1,0 +1,81 @@
+---
+title: Theming
+description: partialkit uses the same OKLCH design tokens as shadcn/ui, so a theme ports straight over.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+## Tokens
+
+Every component reads CSS custom properties. Override them anywhere after the stylesheet and the
+whole set follows.
+
+```css
+:root {
+  --primary: oklch(0.55 0.2 264);
+  --primary-foreground: oklch(0.98 0 0);
+  --radius: 0.5rem;
+}
+```
+
+| Token | Used for |
+| --- | --- |
+| `--background` / `--foreground` | Page surface and its text |
+| `--card` / `--card-foreground` | Card surface |
+| `--popover` / `--popover-foreground` | Dropdown menu surface |
+| `--primary` / `--primary-foreground` | Primary button, focus accents |
+| `--secondary` / `--secondary-foreground` | Secondary button |
+| `--muted` / `--muted-foreground` | Descriptions, placeholders |
+| `--accent` / `--accent-foreground` | Hover and focus states |
+| `--destructive` / `--destructive-foreground` | Danger surfaces and text |
+| `--border` / `--input` / `--ring` | Borders, field borders, focus ring |
+| `--radius` | Base corner radius; `sm`/`md`/`lg`/`xl` derive from it |
+
+Because the names match shadcn/ui, a palette generated for shadcn drops in unchanged.
+
+## Dark mode
+
+Dark tokens live under the `.dark` class on `<html>`.
+
+```html
+<html class="dark">
+```
+
+partialkit ships a toggle that persists the choice under `pk-theme` in `localStorage`:
+
+```html
+<button class="btn btn-outline btn-icon" data-pk-theme aria-label="Toggle theme">☾</button>
+```
+
+| Value | Behaviour |
+| --- | --- |
+| `data-pk-theme` | Flips between light and dark |
+| `data-pk-theme="dark"` | Forces dark |
+| `data-pk-theme="light"` | Forces light |
+| `data-pk-theme="system"` | Clears the choice and follows the OS |
+
+Add this to `<head>` so the page does not flash before the runtime loads:
+
+```html
+<script>
+  if (localStorage.getItem("pk-theme") === "dark"
+    || (!localStorage.getItem("pk-theme") && matchMedia("(prefers-color-scheme: dark)").matches)) {
+    document.documentElement.classList.add("dark");
+  }
+</script>
+```
+
+A `pk:theme:change` event fires on `<html>` with `{ theme, dark }` whenever it changes.
+
+## Contrast is tested, not assumed
+
+The dark palette is not a mirror of the light one. Lightening an accent means its foreground has
+to invert too — `--destructive-foreground` goes dark in dark mode for exactly this reason. axe-core
+runs against every example in both modes on each build, so a token change that breaks WCAG AA
+fails CI.
+
+<Preview code={`<div style="display: flex; gap: 0.5rem; align-items: center">
+  <button class="btn btn-destructive">Delete</button>
+  <span class="badge badge-destructive">Danger</span>
+  <span class="text-destructive" style="font-size: 0.875rem">Destructive text</span>
+</div>`} />

@@ -1,0 +1,65 @@
+---
+title: Accessibility
+description: What the browser provides, what partialkit adds on top, and what is left to you.
+---
+
+shadcn/ui gets its behaviour from Radix, which only runs in React. partialkit reaches the same
+place from two directions: browser primitives where the platform already implements the pattern,
+and an explicit ARIA layer where it does not.
+
+Attributes you set yourself are never overwritten — every ARIA attribute is applied only when
+absent.
+
+## Where each piece comes from
+
+| Concern | Source |
+| --- | --- |
+| Modal semantics, focus trap, `Esc`, background `inert`, focus restore | `<dialog>.showModal()` |
+| Menu top layer, light dismiss | popover API |
+| `aria-labelledby` / `aria-describedby` on dialogs | wired from `.dialog-title` / `.dialog-description` |
+| `role="menu"`, `role="menuitem"`, `role="separator"` | applied on mount and on every open |
+| `aria-haspopup`, `aria-controls`, `aria-expanded` on triggers | kept in sync on toggle |
+| `data-state="open" \| "closed"` on overlays and triggers | the runtime |
+| `data-disabled` mirrored to `aria-disabled`, skipped by keyboard nav | dropdown menu runtime |
+| Focus rings, `:disabled`, `aria-invalid` error state | component CSS, on native elements |
+| `prefers-reduced-motion` | transitions collapse to 1 ms |
+
+## Cross-engine gaps partialkit fills
+
+The platform is not uniform, and the test suite runs on Chromium, Firefox and WebKit to catch it.
+
+- **WebKit does not focus a button when you click it** (a macOS convention), so `document.activeElement`
+  is not a reliable record of what opened a dialog. partialkit tracks the opener explicitly.
+- **WebKit clears focus after `close`** instead of returning it. partialkit restores it, checking
+  both during and after the event.
+- **`Tab` inside a menu** would let the default action move focus on before the trigger is restored,
+  so the runtime handles it directly.
+
+## Keyboard support
+
+### Dialog
+
+| Key | Action |
+| --- | --- |
+| `Esc` | Closes and returns focus to whatever opened it |
+| `Tab` | Cycles within the dialog; the rest of the page is inert |
+
+### Dropdown Menu
+
+| Key | Action |
+| --- | --- |
+| `↓` / `↑` | Move between enabled items, wrapping at the ends |
+| `Home` / `End` | First / last enabled item |
+| a–z, 0–9 | Type-ahead to the first item starting with what you type |
+| `Esc` | Closes and returns focus to the trigger |
+| `Tab` | Closes and returns focus to the trigger |
+| `Enter` / `Space` | Activates the item — it is a real `<button>` |
+
+Disabled items carry `aria-disabled="true"` rather than `disabled`, so a screen reader still
+announces them while arrow navigation skips them.
+
+## What is still yours
+
+- **Accessible names for icon-only controls.** Use `aria-label`, or `.sr-only` text inside the button.
+- **A heading in every dialog.** `.dialog-title` becomes the accessible name.
+- **`lang` on `<html>`.**

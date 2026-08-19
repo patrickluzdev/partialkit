@@ -1,0 +1,67 @@
+---
+title: Card
+description: Displays a card with header, content, and footer.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview code={`<div class="card" style="max-width: 24rem">
+  <div class="card-header">
+    <h3 class="card-title">Create account</h3>
+    <p class="card-description">Enter your details below.</p>
+  </div>
+  <div class="card-content">
+    <div class="field">
+      <label class="label" for="card-email">Email</label>
+      <input class="input" id="card-email" type="email" placeholder="you@example.com" />
+    </div>
+  </div>
+  <div class="card-footer" style="justify-content: flex-end">
+    <button class="btn btn-ghost">Cancel</button>
+    <button class="btn">Create</button>
+  </div>
+</div>`} />
+
+| Class | Part |
+| --- | --- |
+| `.card` | Container |
+| `.card-header` | Title area |
+| `.card-title` | Heading |
+| `.card-description` | Supporting line |
+| `.card-action` | Control pinned to the header's right edge |
+| `.card-content` | Body |
+| `.card-footer` | Actions row |
+
+## With an action
+
+`.card-action` sits in a second header column, which only appears when the class is present.
+
+<Preview code={`<div class="card" style="max-width: 24rem">
+  <div class="card-header">
+    <h3 class="card-title">Billing</h3>
+    <p class="card-description">Next invoice on 1 September.</p>
+    <div class="card-action">
+      <button class="btn btn-ghost btn-sm">Manage</button>
+    </div>
+  </div>
+  <div class="card-content">
+    <p style="color: var(--muted-foreground)">Pro plan · $20 per month</p>
+  </div>
+</div>`} />
+
+## As a form
+
+The card is a plain container, so it takes any element — a `<form>` here, so the footer's submit
+button posts without extra wiring.
+
+```html
+<form class="card" method="post" action="/projects">
+  <div class="card-header">
+    <h3 class="card-title">New project</h3>
+  </div>
+  <div class="card-content">…</div>
+  <div class="card-footer">
+    <button class="btn" type="submit">Create</button>
+  </div>
+</form>
+```

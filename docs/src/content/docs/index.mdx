@@ -1,0 +1,56 @@
+---
+title: partialkit
+description: shadcn-inspired UI components for HTML you render on the server. Tailwind CSS classes plus a small ESM runtime, built for htmx and Go templates.
+template: splash
+hero:
+  tagline: shadcn-inspired components for HTML you render on the server. No React, no Vue, no build step in your app.
+  actions:
+    - text: Get started
+      link: /installation/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/patrickluzdev/partialkit
+      icon: external
+      variant: minimal
+---
+
+import Preview from "../../components/Preview.astro";
+
+## Why it exists
+
+shadcn/ui gets its behaviour from Radix, which only runs in React. partialkit reaches the same
+place from two directions: **browser primitives** where the platform already implements the
+pattern, and an **explicit ARIA layer** where it does not.
+
+<Preview code={`<div class="card" style="max-width: 24rem">
+  <div class="card-header">
+    <h3 class="card-title">Delete project</h3>
+    <p class="card-description">This action cannot be undone.</p>
+    <div class="card-action">
+      <span class="badge badge-destructive">Danger</span>
+    </div>
+  </div>
+  <div class="card-footer" style="justify-content: flex-end">
+    <button class="btn btn-outline">Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-open="hero-dialog">Delete</button>
+  </div>
+</div>
+
+<dialog class="dialog" id="hero-dialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">Delete project</h3>
+    <p class="dialog-description">Every deployment and log will be removed.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+  </div>
+</dialog>`} />
+
+## What you get
+
+- **Semantic classes** — `class="btn btn-outline"`, not twenty utilities in every template.
+- **shadcn tokens** — the same OKLCH variables, so a theme ports straight over.
+- **Names you already know** — components, parts and states match shadcn/ui.
+- **htmx-safe** — swapped markup mounts itself, with no re-init call.
+- **~8 kB of JS**, minified and unzipped.

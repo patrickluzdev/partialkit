@@ -1,0 +1,37 @@
+---
+title: Input
+description: A text input for forms and user data entry.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview code={`<input class="input" placeholder="you@example.com" style="max-width: 22rem" />`} />
+
+## Types
+
+The class styles a native `<input>`, so every type keeps its own behaviour and mobile keyboard.
+
+<Preview code={`<div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 22rem">
+  <input class="input" type="email" placeholder="Email" />
+  <input class="input" type="password" placeholder="Password" />
+  <input class="input" type="number" placeholder="Quantity" />
+  <input class="input" type="date" aria-label="Start date" />
+  <input class="input" type="file" aria-label="Attachment" />
+</div>`} />
+
+## States
+
+<Preview code={`<div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 22rem">
+  <input class="input" value="Read only" readonly aria-label="Read only example" />
+  <input class="input" value="Disabled" disabled aria-label="Disabled example" />
+  <input class="input" value="Invalid" aria-invalid="true" aria-label="Invalid example" />
+</div>`} />
+
+| State | How |
+| --- | --- |
+| Error | `aria-invalid="true"` |
+| Disabled | the native `disabled` attribute |
+| Focus ring | automatic, on `:focus-visible` |
+
+Always pair an input with a [`.label`](/components/label/), or give it an `aria-label` when the
+design has no visible label.

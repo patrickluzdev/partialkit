@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const LAB = "/tests/fixtures/lab.html";
+const LAB = "/tests/lab.html";
 
 test.beforeEach(async ({ page }) => {
   // partialkit collapses its transitions under reduced motion, which also keeps

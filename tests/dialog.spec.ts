@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const LAB = "/tests/fixtures/lab.html";
+const LAB = "/tests/lab.html";
 
 test.beforeEach(async ({ page }) => {
   await page.goto(LAB);
