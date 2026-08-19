@@ -1,0 +1,59 @@
+---
+title: Hover Card
+description: For sighted users to preview content available behind a link.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="hover-card/overview" layout="row" />
+
+## Usage
+
+```html
+<a class="btn btn-link" href="/about" id="profile">@partialkit</a>
+
+<div class="hover-card" popover data-pk-anchor="#profile" data-pk-placement="bottom">…</div>
+```
+
+It opens when the pointer rests on the link, and stays open while the pointer travels into it — a
+preview is something you read, and sometimes click inside.
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-pk-anchor` | Selector for the trigger |
+| `data-pk-placement` | A side — `top`, `bottom`, `left`, `right` — optionally with `-start` or `-end` |
+| `data-pk-delay` | Milliseconds before it opens. Defaults to `700` |
+
+## Placement
+
+<Preview src="hover-card/placement" layout="row" />
+
+## Hover Card or Tooltip?
+
+A [tooltip](/components/tooltip/) is a short label you cannot touch: no links, no buttons, and it
+closes the moment you move. A hover card is a **surface** — an avatar, a description, actions —
+that survives the trip from the link and dismisses on Escape or a click outside.
+
+<Aside type="caution" title="Hover is not an interaction everyone has">
+There is no hover on a touch screen, and a preview that only appears after resting a mouse is
+invisible to most people on a phone. Everything in the card must also be at the other end of the
+link. Treat it as a shortcut for people who happen to have a pointer, never as the only route.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the card follows the reading direction and flips
+when it would overflow. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The trigger is a link, so it stays a link.** No `aria-expanded`, no button role: it navigates,
+  and the card is a preview of where it goes.
+- **The card is a `dialog` role**, labelled by its own heading when it has one. It is a surface
+  with content, not a description of the link.
+- **It opens on focus too**, not only on hover, so a keyboard user reaching the link sees the same
+  preview. Focus is never moved into it — that would trap someone tabbing through a paragraph.
+- **Escape closes it**, and a click outside dismisses it, both from the browser's popover.
+- **The content is a shortcut, never the only copy.** Anything a person must have is behind the
+  link as well.

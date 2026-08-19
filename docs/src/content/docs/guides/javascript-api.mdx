@@ -14,8 +14,8 @@ register(dropdownMenu);
 start();
 ```
 
-The components are `checkbox`, `contextMenu`, `dialog`, `dropdownMenu`, `popover`, `slider`,
-`tabs`, `theme`, `toggle` and `tooltip`. Everything else is CSS only and needs no registration.
+The components are `carousel`, `checkbox`, `contextMenu`, `dialog`, `dropdownMenu`, `hoverCard`,
+`inputOtp`, `menubar`, `popover`, `slider`, `tabs`, `theme`, `toggle` and `tooltip`. Everything else is CSS only and needs no registration.
 
 ## Exports
 
@@ -41,6 +41,8 @@ The components are `checkbox`, `contextMenu`, `dialog`, `dropdownMenu`, `popover
 | `pk:menu:change` | the item | `{ checked, value }` |
 | `pk:tabs:change` | the trigger | `{ value }` |
 | `pk:toggle:change` | the button | `{ pressed, value }` |
+| `pk:carousel:change` | the carousel | `{ index, atStart, atEnd }` |
+| `pk:otp:change` | the field | `{ value, complete }` |
 | `pk:theme:change` | `<html>` | `{ theme, dark }` |
 
 ## Writing a component

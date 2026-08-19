@@ -1,0 +1,84 @@
+---
+title: Carousel
+description: A carousel with motion and swipe built using CSS scroll snapping.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="carousel/overview" />
+
+## Usage
+
+```html
+<div class="carousel">
+  <div class="carousel-content" aria-label="Featured">
+    <div class="carousel-item">…</div>
+    <div class="carousel-item">…</div>
+  </div>
+
+  <button class="btn btn-outline btn-icon carousel-previous" type="button">…</button>
+  <button class="btn btn-outline btn-icon carousel-next" type="button">…</button>
+</div>
+```
+
+| Class | Part |
+| --- | --- |
+| `.carousel` | The wrapper the buttons are positioned against |
+| `.carousel-content` | The scroller |
+| `.carousel-item` | One slide |
+| `.carousel-previous` / `.carousel-next` | The buttons |
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-orientation="vertical"` | `.carousel` | Scrolls down instead of across |
+| `data-index` | `.carousel` | Which slide is showing. Set by the runtime |
+
+## Sizes
+
+A slide is `basis-full` by default. Change the basis and several fit at once.
+
+<Preview src="carousel/sizes" />
+
+## Vertical
+
+<Preview src="carousel/vertical" />
+
+## Events
+
+```js
+document.addEventListener("pk:carousel:change", (event) => {
+  console.log(event.detail.index, event.detail.atEnd);
+});
+```
+
+## Scroll snapping, not a slider library
+
+The movement is `scroll-snap-type` — the browser owns it. That means swipe on a phone, momentum on
+a trackpad, the scrollbar if the user wants it, and `scroll-behavior: smooth` that goes instant
+under reduced motion. The runtime only drives the buttons and reports which slide is showing;
+remove the script and the carousel still scrolls.
+
+<Aside type="caution" title="No auto-play here, on purpose">
+Content that moves on its own is a WCAG failure unless it can be paused, and it is a usability
+failure regardless — people miss what they were reading. If a rotation is genuinely wanted, build
+it on top and give it a real pause control.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the buttons swap ends and the arrow keys follow
+the reading direction. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The region announces itself** as a carousel, and each slide as a slide with its position —
+  "2 of 5" — so the count is known without seeing it.
+- **The scroller is focusable** and takes the arrow keys, so it can be moved through without a
+  pointer and without reaching for the buttons.
+- **Name the scroller.** `aria-label` on `.carousel-content` says what the set is; "carousel" alone
+  says nothing.
+- **The buttons disable at the ends** rather than wrapping, so a keyboard user can tell where the
+  set finishes.
+- **Off-screen slides are still in the DOM** and still tabbable. If a slide holds links, that is
+  what you want; if it holds a form, consider whether a carousel is the right shape at all.

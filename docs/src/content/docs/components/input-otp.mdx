@@ -1,0 +1,83 @@
+---
+title: Input OTP
+description: Accessible one-time password component with copy paste functionality.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="input-otp/overview" layout="row" />
+
+## Usage
+
+```html
+<div class="input-otp">
+  <div class="input-otp-group" role="group" aria-label="One-time code">
+    <input class="input-otp-slot" aria-label="Digit 1" />
+    <input class="input-otp-slot" aria-label="Digit 2" />
+    …
+  </div>
+</div>
+```
+
+Every slot is a real `<input>`. The code reaches a form with no JavaScript at all — the runtime
+only adds what HTML cannot say: advancing between slots, backspacing into the one before, and
+spreading a pasted code across all of them at once.
+
+| Class | Part |
+| --- | --- |
+| `.input-otp` | The whole field |
+| `.input-otp-group` | Slots that sit flush, sharing their edges |
+| `.input-otp-slot` | One character |
+| `.input-otp-separator` | A mark between groups |
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-pk-otp-value` | A hidden input | Receives the joined code on every change |
+| `pattern` | A slot | Characters allowed when pasting |
+| `aria-invalid="true"` | A slot | Marks it as rejected |
+
+## With a separator
+
+<Preview src="input-otp/separator" layout="row" />
+
+## In a form
+
+Slots submit one field each, which is rarely what a server wants. A hidden input carrying
+`data-pk-otp-value` receives the joined code, so the form posts `code=1234`.
+
+<Preview src="input-otp/form" />
+
+## Events
+
+```js
+document.addEventListener("pk:otp:change", (event) => {
+  if (event.detail.complete) submit(event.detail.value);
+});
+```
+
+<Aside title="Why not one input with fake slots?">
+The library it is modelled on renders a single hidden input under boxes that only look like
+fields. That reproduces the design exactly, and needs JavaScript before anything is usable. Real
+inputs work when the script has not loaded, autofill lands in them, and the browser's own
+one-time-code suggestion appears — `autocomplete="one-time-code"` is set for you.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — slots round on the correct outer edges and the
+arrow keys follow the reading direction. See [the button page](/components/button/#rtl) for a live
+example.
+
+## Accessibility
+
+- **Every slot needs a name.** "Digit 1", "Digit 2" — a screen reader otherwise announces six
+  identical unlabelled fields.
+- **Group them and name the group**, so the field is announced as one thing rather than as
+  scattered inputs.
+- **`inputmode="numeric"`** brings up the number pad on a phone, and is set for you unless you say
+  otherwise — set `inputmode="text"` for an alphanumeric code.
+- **Paste works from any slot**, which matters: people paste from a message app, not always into
+  the first box.
+- **Do not clear every slot on a wrong code.** Mark them `aria-invalid` and say what happened
+  next to the field; wiping the input silently is how people give up.

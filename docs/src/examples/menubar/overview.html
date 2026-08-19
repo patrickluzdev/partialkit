@@ -1,0 +1,83 @@
+<div class="menubar">
+  <button class="menubar-trigger" type="button" popovertarget="menubar-file">File</button>
+  <div class="dropdown-menu" id="menubar-file" popover>
+    <button class="dropdown-menu-item" type="button">
+      New Tab <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">T</kbd></span>
+    </button>
+    <button class="dropdown-menu-item" type="button">
+      New Window <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">N</kbd></span>
+    </button>
+    <button class="dropdown-menu-item" type="button" aria-disabled="true">New Incognito Window</button>
+
+    <hr class="dropdown-menu-separator" />
+
+    <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button" popovertarget="menubar-share">
+      Share
+    </button>
+    <div class="dropdown-menu" id="menubar-share" popover>
+      <button class="dropdown-menu-item" type="button">Email link</button>
+      <button class="dropdown-menu-item" type="button">Messages</button>
+      <button class="dropdown-menu-item" type="button">Notes</button>
+    </div>
+
+    <hr class="dropdown-menu-separator" />
+
+    <button class="dropdown-menu-item" type="button">
+      Print… <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">P</kbd></span>
+    </button>
+  </div>
+
+  <button class="menubar-trigger" type="button" popovertarget="menubar-edit">Edit</button>
+  <div class="dropdown-menu" id="menubar-edit" popover>
+    <button class="dropdown-menu-item" type="button">
+      Undo <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">Z</kbd></span>
+    </button>
+    <button class="dropdown-menu-item" type="button">
+      Redo <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⇧</kbd><kbd class="kbd">⌘</kbd><kbd class="kbd">Z</kbd></span>
+    </button>
+    <hr class="dropdown-menu-separator" />
+    <button class="dropdown-menu-item" type="button">Cut</button>
+    <button class="dropdown-menu-item" type="button">Copy</button>
+    <button class="dropdown-menu-item" type="button">Paste</button>
+  </div>
+
+  <button class="menubar-trigger" type="button" popovertarget="menubar-view">View</button>
+  <div class="dropdown-menu" id="menubar-view" popover>
+    <button class="dropdown-menu-checkbox-item" type="button" aria-checked="true" data-pk-keep-open>
+      <span class="dropdown-menu-item-indicator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </span>
+      Always Show Bookmarks Bar
+    </button>
+    <button class="dropdown-menu-checkbox-item" type="button" data-pk-keep-open>
+      <span class="dropdown-menu-item-indicator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </span>
+      Always Show Full URLs
+    </button>
+    <hr class="dropdown-menu-separator" />
+    <button class="dropdown-menu-item" type="button">
+      Reload <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">R</kbd></span>
+    </button>
+  </div>
+
+  <button class="menubar-trigger" type="button" popovertarget="menubar-profiles">Profiles</button>
+  <div class="dropdown-menu" id="menubar-profiles" popover>
+    <div class="dropdown-menu-radio-group">
+      <button class="dropdown-menu-radio-item" type="button" aria-checked="true" data-value="ada">
+        <span class="dropdown-menu-item-indicator"><span></span></span>
+        Ada Lovelace
+      </button>
+      <button class="dropdown-menu-radio-item" type="button" data-value="grace">
+        <span class="dropdown-menu-item-indicator"><span></span></span>
+        Grace Hopper
+      </button>
+    </div>
+    <hr class="dropdown-menu-separator" />
+    <button class="dropdown-menu-item" type="button">Edit…</button>
+  </div>
+</div>

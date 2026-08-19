@@ -1,0 +1,23 @@
+@layer components {
+  /* The bar. Its menus are dropdown menus — same panel, same items, same
+     keyboard; only the way they are summoned differs. */
+  .menubar {
+    @apply flex h-8 items-center gap-0.5 rounded-lg border p-[3px];
+  }
+
+  .menubar-trigger {
+    @apply flex items-center rounded-sm px-1.5 py-[2px];
+    @apply text-sm font-medium outline-hidden select-none;
+    @apply hover:bg-muted;
+    @apply focus-visible:ring-[3px] focus-visible:ring-ring/50;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .menubar-trigger[aria-expanded="true"] {
+    @apply bg-muted;
+  }
+
+  .menubar .dropdown-menu {
+    @apply min-w-36;
+  }
+}

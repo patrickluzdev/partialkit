@@ -53,10 +53,14 @@ const code = source.replace(/\n+$/, "");
   // Not `auto`: that registers partialkit's own theme component, which would fight
   // Starlight for the dark class and win on reload. Starlight owns the theme here.
   import {
+    carousel,
     checkbox,
     contextMenu,
     dialog,
     dropdownMenu,
+    hoverCard,
+    inputOtp,
+    menubar,
     popover,
     register,
     slider,
@@ -70,8 +74,12 @@ const code = source.replace(/\n+$/, "");
   register(dialog);
   register(dropdownMenu);
   register(contextMenu);
+  register(menubar);
   register(popover);
+  register(hoverCard);
   register(tooltip);
+  register(carousel);
+  register(inputOtp);
   register(tabs);
   register(toggle);
   register(slider);

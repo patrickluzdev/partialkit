@@ -1,0 +1,48 @@
+@layer components {
+  /* The browser's own scroller, restyled. Radix draws its own bars because it
+     wants them identical everywhere; the platform now exposes enough to skip
+     that, and keeps native momentum, keyboard scrolling and overscroll. */
+  .scroll-area {
+    @apply relative overflow-auto rounded-[inherit] outline-none;
+    @apply transition-[color,box-shadow];
+    @apply focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:outline-ring;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .scroll-area[data-orientation="horizontal"] {
+    @apply overflow-x-auto overflow-y-hidden;
+  }
+
+  .scroll-area[data-orientation="vertical"] {
+    @apply overflow-x-hidden overflow-y-auto;
+  }
+
+  /* WebKit ignores scrollbar-color, so the same bar is drawn its way: a 10px
+     track with a rounded thumb inset by the 3px border. */
+  .scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll-area::-webkit-scrollbar-track,
+  .scroll-area::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .scroll-area::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background-color: var(--border);
+    background-clip: content-box;
+  }
+
+  .scroll-area[data-bars="hidden"] {
+    scrollbar-width: none;
+  }
+
+  .scroll-area[data-bars="hidden"]::-webkit-scrollbar {
+    display: none;
+  }
+}

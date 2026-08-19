@@ -1,0 +1,66 @@
+---
+title: Menubar
+description: A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="menubar/overview" layout="row" />
+
+## Usage
+
+```html
+<div class="menubar">
+  <button class="menubar-trigger" type="button" popovertarget="file-menu">File</button>
+  <div class="dropdown-menu" id="file-menu" popover>…</div>
+
+  <button class="menubar-trigger" type="button" popovertarget="edit-menu">Edit</button>
+  <div class="dropdown-menu" id="edit-menu" popover>…</div>
+</div>
+```
+
+The panels are [dropdown menus](/components/dropdown-menu/) — same classes, same items, same
+keyboard. The bar adds what makes it a bar: one stop in the tab order, arrows between menus, and
+menus that swap as the pointer crosses once any of them is open.
+
+| Class | Part |
+| --- | --- |
+| `.menubar` | The bar |
+| `.menubar-trigger` | One menu's button |
+
+Keep each panel **inside** the `.menubar` element, next to its trigger. That is what lets the bar
+see the keys pressed inside an open menu.
+
+## What the bar adds
+
+| Key | Action |
+| --- | --- |
+| <kbd class="kbd">Tab</kbd> | Reaches the bar once, not once per menu |
+| <kbd class="kbd">←</kbd> / <kbd class="kbd">→</kbd> | Moves between menus — and swaps them while one is open |
+| <kbd class="kbd">↓</kbd> | Opens the menu under focus |
+
+Everything inside a panel — arrows, type-ahead, submenus, Escape, Tab — is the dropdown menu's
+own, and is documented on [its page](/components/dropdown-menu/).
+
+<Aside title="Menubar or Dropdown Menu?">
+A menubar is for an **application**: a persistent set of commands, always in the same place,
+grouped the way a desktop app groups them. One button that opens one menu is a dropdown menu, and
+dressing it up as a bar of one only costs a tab stop.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the arrow keys follow the reading direction, so
+Left moves forward. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The bar is a `menubar`, each trigger a `menuitem`** — applied for you, along with the roving
+  tab order.
+- **One stop in the tab order.** Tab reaches the bar and leaves it; arrows move within. A bar of
+  six menus that costs six tab stops is the mistake this pattern exists to avoid.
+- **A menu opened from the keyboard focuses its first item**, and Escape returns focus to the
+  trigger it came from.
+- **Commands need a home outside the bar.** On a phone the bar is cramped and its menus are the
+  only route to those actions — check they are reachable another way.

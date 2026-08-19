@@ -1,0 +1,32 @@
+@layer components {
+  .hover-card {
+    @apply z-50 w-64 rounded-lg p-2.5;
+    @apply bg-popover text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none;
+
+    position: fixed;
+    margin: 0;
+    inset: auto;
+    opacity: 0;
+    scale: 0.95;
+    transition:
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  /* A closed popover is display:none by UA rule, so only the open state may set
+     a layout display. */
+  .hover-card:popover-open {
+    @apply block;
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .hover-card:popover-open {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+}

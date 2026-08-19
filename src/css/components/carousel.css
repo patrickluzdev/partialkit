@@ -1,0 +1,60 @@
+@layer components {
+  .carousel {
+    @apply relative;
+  }
+
+  /* Scroll snapping is the carousel: the browser owns the movement, the
+     momentum and the touch gestures, and the runtime only drives the buttons. */
+  .carousel-content {
+    @apply flex overflow-x-auto;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  .carousel-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel[data-orientation="vertical"] .carousel-content {
+    @apply h-full flex-col overflow-x-hidden overflow-y-auto;
+
+    scroll-snap-type: y mandatory;
+  }
+
+  .carousel-item {
+    @apply min-w-0 shrink-0 grow-0 basis-full;
+
+    scroll-snap-align: start;
+  }
+
+  .carousel-previous,
+  .carousel-next {
+    @apply absolute rounded-full;
+
+    touch-action: manipulation;
+  }
+
+  .carousel-previous {
+    @apply inset-y-0 -start-12 my-auto;
+  }
+
+  .carousel-next {
+    @apply inset-y-0 -end-12 my-auto;
+  }
+
+  .carousel[data-orientation="vertical"] .carousel-previous {
+    @apply inset-x-0 inset-y-auto -top-12 mx-auto rotate-90;
+  }
+
+  .carousel[data-orientation="vertical"] .carousel-next {
+    @apply inset-x-0 inset-y-auto -bottom-12 mx-auto rotate-90;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-content {
+      scroll-behavior: auto;
+    }
+  }
+}

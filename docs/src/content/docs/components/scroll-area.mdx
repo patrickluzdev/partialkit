@@ -1,0 +1,62 @@
+---
+title: Scroll Area
+description: Augments native scroll functionality for custom, cross-browser styling.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="scroll-area/overview" />
+
+## Usage
+
+```html
+<div class="scroll-area" tabindex="0" style="height: 12rem">…</div>
+```
+
+The element scrolls itself — this only restyles the bar. Give it a height (or a `max-height`), and
+`tabindex="0"` so it can be scrolled from the keyboard.
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-orientation="horizontal"` | Scrolls sideways only |
+| `data-orientation="vertical"` | Scrolls down only |
+| `data-bars="hidden"` | No visible bar, same scrolling |
+
+## Horizontal
+
+<Preview src="scroll-area/horizontal" />
+
+## Without a visible bar
+
+<Preview src="scroll-area/hidden-bars" />
+
+<Aside type="caution" title="A hidden bar hides that there is more">
+The bar is the only thing telling a mouse user the content continues. Take it away and something
+else has to say so — a fading edge, a peeking next item, a button. Nothing worse than a list that
+looks finished and is not.
+</Aside>
+
+## Why there is no JavaScript here
+
+Radix draws its own scrollbars, so they look identical in every browser. That costs the native
+scroll: momentum on a trackpad, overscroll, the platform's own keyboard handling, and correct
+behaviour when the page is zoomed. `scrollbar-width` and `scrollbar-color` are now supported
+everywhere, and WebKit takes `::-webkit-scrollbar` — enough to get the same look and keep the
+scroller the browser gave you.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the bar moves to the left edge, which the browser
+does on its own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **A scrollable box must be focusable.** `tabindex="0"` is what lets a keyboard user reach it and
+  scroll it; without it, content inside is unreachable unless it holds its own controls.
+- **Give it a name when it is focusable** — `aria-label` or `aria-labelledby` — so a screen reader
+  says what the region is rather than announcing a bare group.
+- **Do not turn off overflow to hide the bar.** `data-bars="hidden"` keeps the element scrollable;
+  `overflow: hidden` would trap the content.
+- **The bar respects the theme**, drawn from `--border`, so it stays visible in dark mode instead
+  of inheriting whatever the OS decided.

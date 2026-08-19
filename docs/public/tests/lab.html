@@ -631,6 +631,91 @@
       </label>
     </section>
 
+    <section style="display: block">
+      <h2>Scroll area</h2>
+      <div class="scroll-area" id="lab-scroll-area" tabindex="0" style="height: 6rem; width: 14rem">
+        <div style="height: 24rem">Tall</div>
+      </div>
+      <div class="scroll-area" id="lab-scroll-area-hidden" data-bars="hidden" tabindex="0" style="height: 6rem; width: 14rem">
+        <div style="height: 24rem">Tall</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Hover card</h2>
+      <a class="btn btn-link" href="#lab-hover-card" id="lab-hover-trigger">@partialkit</a>
+      <div
+        class="hover-card"
+        id="lab-hover-card"
+        popover
+        data-pk-anchor="#lab-hover-trigger"
+        data-pk-placement="bottom"
+        data-pk-delay="0"
+      >
+        <h4 id="lab-hover-title">partialkit</h4>
+        <p>Components for plain HTML.</p>
+        <a href="#lab-hover-card" id="lab-hover-link">Read more</a>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Menubar</h2>
+      <div class="menubar" id="lab-menubar">
+        <button class="menubar-trigger" type="button" popovertarget="lab-menu-file" id="lab-menu-file-trigger">
+          File
+        </button>
+        <div class="dropdown-menu" id="lab-menu-file" popover>
+          <button class="dropdown-menu-item" type="button" id="lab-menu-file-first">New Tab</button>
+          <button class="dropdown-menu-item" type="button">New Window</button>
+        </div>
+
+        <button class="menubar-trigger" type="button" popovertarget="lab-menu-edit" id="lab-menu-edit-trigger">
+          Edit
+        </button>
+        <div class="dropdown-menu" id="lab-menu-edit" popover>
+          <button class="dropdown-menu-item" type="button" id="lab-menu-edit-first">Undo</button>
+          <button class="dropdown-menu-item" type="button">Redo</button>
+        </div>
+
+        <button class="menubar-trigger" type="button" popovertarget="lab-menu-view" id="lab-menu-view-trigger">
+          View
+        </button>
+        <div class="dropdown-menu" id="lab-menu-view" popover>
+          <button class="dropdown-menu-item" type="button">Reload</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Carousel</h2>
+      <div class="carousel" id="lab-carousel" style="width: 12rem; margin: 0 3.5rem">
+        <div class="carousel-content" id="lab-carousel-content" aria-label="Numbers">
+          <div class="carousel-item" id="lab-slide-1" style="height: 4rem">One</div>
+          <div class="carousel-item" id="lab-slide-2" style="height: 4rem">Two</div>
+          <div class="carousel-item" id="lab-slide-3" style="height: 4rem">Three</div>
+        </div>
+        <button class="btn btn-outline btn-icon carousel-previous" type="button" id="lab-carousel-previous">
+          <span class="sr-only">Previous slide</span>
+        </button>
+        <button class="btn btn-outline btn-icon carousel-next" type="button" id="lab-carousel-next">
+          <span class="sr-only">Next slide</span>
+        </button>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Input OTP</h2>
+      <div class="input-otp" id="lab-otp">
+        <input type="hidden" name="code" data-pk-otp-value id="lab-otp-value" />
+        <div class="input-otp-group" role="group" aria-label="One-time code">
+          <input class="input-otp-slot" id="lab-otp-1" aria-label="Digit 1" />
+          <input class="input-otp-slot" id="lab-otp-2" aria-label="Digit 2" />
+          <input class="input-otp-slot" id="lab-otp-3" aria-label="Digit 3" />
+          <input class="input-otp-slot" id="lab-otp-4" aria-label="Digit 4" />
+        </div>
+      </div>
+    </section>
+
     <section>
       <h2>Swap</h2>
       <button class="btn" id="swap">Swap</button>

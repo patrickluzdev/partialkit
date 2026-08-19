@@ -1,0 +1,19 @@
+<form class="field-group" style="width: fit-content" onsubmit="return false">
+  <div class="field">
+    <span class="label" id="otp-label">Verification code</span>
+
+    <div class="input-otp" aria-labelledby="otp-label">
+      <input type="hidden" name="code" data-pk-otp-value />
+      <div class="input-otp-group">
+        <input class="input-otp-slot" aria-label="Digit 1" />
+        <input class="input-otp-slot" aria-label="Digit 2" />
+        <input class="input-otp-slot" aria-label="Digit 3" />
+        <input class="input-otp-slot" aria-label="Digit 4" />
+      </div>
+    </div>
+
+    <p class="field-description">Sent to ada@example.com. Paste it and every slot fills at once.</p>
+  </div>
+
+  <button class="btn" type="submit">Verify</button>
+</form>

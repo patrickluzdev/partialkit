@@ -22,6 +22,8 @@ absent.
 | `data-state="open" \| "closed"` on overlays and triggers | the runtime |
 | `data-disabled` mirrored to `aria-disabled`, skipped by keyboard nav | dropdown menu runtime |
 | `role="tab"`, `role="tabpanel"`, `aria-selected`, roving `tabindex` | tabs runtime |
+| `role="menubar"` and a roving tab order across its triggers | menubar runtime |
+| `aria-roledescription="carousel"`, and "n of m" on every slide | carousel runtime |
 | `aria-describedby` from a trigger to its tooltip | tooltip runtime |
 | Disclosure semantics on `<details>` / `<summary>` | the browser — accordion and collapsible add none |
 | Focus rings, `:disabled`, `aria-invalid` error state | component CSS, on native elements |
