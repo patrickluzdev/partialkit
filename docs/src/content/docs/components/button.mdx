@@ -128,6 +128,17 @@ An anchor takes the classes and keeps its own semantics — it navigates, it is 
 a screen reader announces it as a link. Do not put `role="button"` on it to make it look right;
 that is exactly the semantic the anchor should keep.
 
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree. partialkit is written with logical properties, so
+padding, corners, absolute positions and menu placement all follow the reading direction — nothing
+to configure.
+
+<Preview src="rtl/overview" />
+
+The pieces that are drawn rather than laid out — the select's chevron and a submenu's arrow — are
+mirrored explicitly, and the menu positioner flips `right-start` to `left-start` on its own.
+
 ## States
 
 <Preview src="button/states" layout="row" />

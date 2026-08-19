@@ -18,11 +18,11 @@
   }
 
   .badge:has([data-icon="inline-start"]) {
-    @apply pl-1.5;
+    @apply ps-1.5;
   }
 
   .badge:has([data-icon="inline-end"]) {
-    @apply pr-1.5;
+    @apply pe-1.5;
   }
 
   .badge-secondary {

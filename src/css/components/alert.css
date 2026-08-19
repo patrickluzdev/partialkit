@@ -1,6 +1,6 @@
 @layer components {
   .alert {
-    @apply relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm;
+    @apply relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-start text-sm;
     @apply bg-card text-card-foreground;
   }
 
@@ -18,11 +18,11 @@
 
   /* Reserves the corner so a long title never runs under the action. */
   .alert:has(> .alert-action) {
-    @apply pr-18;
+    @apply pe-18;
   }
 
   .alert-action {
-    @apply absolute top-2 right-2;
+    @apply absolute top-2 end-2;
   }
 
   .alert-title {

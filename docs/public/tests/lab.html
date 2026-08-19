@@ -34,6 +34,47 @@
   <body>
     <h1>partialkit lab</h1>
 
+    <section style="display: block" dir="rtl" id="rtl-section">
+      <h2>RTL</h2>
+      <button class="btn" id="rtl-icon-button">
+        <svg data-icon="inline-start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14"></path>
+        </svg>
+        <span id="rtl-icon-label">متابعة</span>
+      </button>
+
+      <button class="btn" data-pk-dialog-open="rtl-dialog" id="open-rtl-dialog">حوار</button>
+      <dialog class="dialog" id="rtl-dialog">
+        <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close
+                aria-label="إغلاق" id="rtl-dialog-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+        <div class="dialog-header">
+          <h3 class="dialog-title">عنوان</h3>
+        </div>
+      </dialog>
+
+      <button class="btn btn-outline" popovertarget="rtl-menu" id="rtl-trigger">قائمة</button>
+      <div class="dropdown-menu" id="rtl-menu" popover style="width: 12rem">
+        <button class="dropdown-menu-checkbox-item" type="button" id="rtl-check"
+                aria-checked="true" data-pk-keep-open>
+          <span class="dropdown-menu-item-indicator" id="rtl-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6 9 17l-5-5"></path>
+            </svg>
+          </span>
+          خيار
+        </button>
+      </div>
+
+      <div class="button-group" id="rtl-group">
+        <button class="btn btn-outline" type="button" id="rtl-group-first">واحد</button>
+        <button class="btn btn-outline" type="button" id="rtl-group-last">اثنان</button>
+      </div>
+    </section>
+
     <section>
       <h2>Theme</h2>
       <button class="btn" data-pk-theme id="theme-toggle">Toggle</button>

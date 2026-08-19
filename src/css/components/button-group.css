@@ -18,15 +18,15 @@
   }
 
   .button-group:not([data-orientation="vertical"]) > * {
-    @apply rounded-r-none;
+    @apply rounded-e-none;
   }
 
   .button-group:not([data-orientation="vertical"]) > *:last-child {
-    @apply rounded-r-lg;
+    @apply rounded-e-lg;
   }
 
   .button-group:not([data-orientation="vertical"]) > * + * {
-    @apply rounded-l-none border-l-0;
+    @apply rounded-s-none border-s-0;
   }
 
   .button-group[data-orientation="vertical"] {

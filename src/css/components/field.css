@@ -70,7 +70,7 @@
   }
 
   .field-description {
-    @apply text-left text-sm leading-normal font-normal text-muted-foreground;
+    @apply text-start text-sm leading-normal font-normal text-muted-foreground;
   }
 
   .field-description a {

@@ -65,7 +65,7 @@
   }
 
   .alert-dialog:not([data-size="sm"]) .alert-dialog-header {
-    @apply sm:place-items-start sm:text-left;
+    @apply sm:place-items-start sm:text-start;
   }
 
   .alert-dialog-media {

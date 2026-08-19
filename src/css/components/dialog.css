@@ -55,7 +55,7 @@
   }
 
   .dialog-close {
-    @apply absolute top-2 right-2 z-10;
+    @apply absolute top-2 end-2 z-10;
   }
 
   .dialog-header {
@@ -63,7 +63,7 @@
   }
 
   .dialog:has(> .dialog-close) .dialog-header {
-    @apply pr-8;
+    @apply pe-8;
   }
 
   .dialog-title {

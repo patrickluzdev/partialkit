@@ -1,6 +1,6 @@
 @layer components {
   .native-select {
-    @apply h-8 w-full min-w-0 rounded-lg border border-input bg-transparent py-1 pr-8 pl-2.5 text-sm;
+    @apply h-8 w-full min-w-0 rounded-lg border border-input bg-transparent py-1 pe-8 ps-2.5 text-sm;
     @apply appearance-none transition-colors outline-none select-none;
     @apply selection:bg-primary selection:text-primary-foreground;
     @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
@@ -14,6 +14,12 @@
     background-repeat: no-repeat;
     background-position: right 0.625rem center;
     background-size: 1rem;
+  }
+
+  /* :dir() follows the computed direction, so it works whether the attribute
+     sits on the control or an ancestor. */
+  .native-select:dir(rtl) {
+    background-position: left 0.625rem center;
   }
 
   .native-select[data-size="sm"] {
@@ -30,6 +36,6 @@
   }
 
   .native-select[multiple] {
-    @apply bg-none py-1 pr-2.5;
+    @apply bg-none py-1 pe-2.5;
   }
 }

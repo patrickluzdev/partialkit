@@ -31,11 +31,11 @@
   }
 
   .btn:has([data-icon="inline-start"]) {
-    @apply pl-2;
+    @apply ps-2;
   }
 
   .btn:has([data-icon="inline-end"]) {
-    @apply pr-2;
+    @apply pe-2;
   }
 
   .btn-outline {
@@ -78,11 +78,11 @@
   }
 
   .btn-xs:has([data-icon="inline-start"]) {
-    @apply pl-1.5;
+    @apply ps-1.5;
   }
 
   .btn-xs:has([data-icon="inline-end"]) {
-    @apply pr-1.5;
+    @apply pe-1.5;
   }
 
   .btn-sm {
@@ -94,11 +94,11 @@
   }
 
   .btn-sm:has([data-icon="inline-start"]) {
-    @apply pl-1.5;
+    @apply ps-1.5;
   }
 
   .btn-sm:has([data-icon="inline-end"]) {
-    @apply pr-1.5;
+    @apply pe-1.5;
   }
 
   .btn-lg {

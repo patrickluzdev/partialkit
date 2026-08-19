@@ -322,7 +322,11 @@ function position(element: HTMLElement): void {
   );
   const anchorRect = anchor.getBoundingClientRect();
   const { offsetWidth: width, offsetHeight: height } = element;
-  const [side, align] = placement.split("-");
+  const [physicalSide, align] = placement.split("-");
+  // Placements are authored in reading order, so a side flips with direction.
+  const rtl = getComputedStyle(element).direction === "rtl";
+  const side =
+    rtl && physicalSide === "right" ? "left" : rtl && physicalSide === "left" ? "right" : physicalSide;
 
   let top: number;
   let left: number;
@@ -342,8 +346,9 @@ function position(element: HTMLElement): void {
     const placeAbove = side === "top" ? fitsAbove || !fitsBelow : !fitsBelow && fitsAbove;
 
     top = placeAbove ? anchorRect.top - height - offset : anchorRect.bottom + offset;
+    const alignEnd = rtl ? align !== "end" : align === "end";
     left = clamp(
-      align === "end" ? anchorRect.right - width : anchorRect.left,
+      alignEnd ? anchorRect.right - width : anchorRect.left,
       window.innerWidth - width - VIEWPORT_PADDING,
     );
   }

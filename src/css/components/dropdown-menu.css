@@ -37,7 +37,7 @@
   .dropdown-menu-checkbox-item,
   .dropdown-menu-radio-item {
     @apply relative flex w-full cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm;
-    @apply text-left outline-hidden select-none;
+    @apply text-start outline-hidden select-none;
     @apply focus:bg-accent focus:text-accent-foreground;
     @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
     @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
@@ -52,7 +52,7 @@
   }
 
   :is(.dropdown-menu-item, .dropdown-menu-label)[data-inset] {
-    @apply pl-7;
+    @apply ps-7;
   }
 
   .dropdown-menu-item[data-variant="destructive"] {
@@ -68,11 +68,11 @@
   /* The indicator sits on the trailing edge, so labels align with plain items. */
   .dropdown-menu-checkbox-item,
   .dropdown-menu-radio-item {
-    @apply py-1 pr-8 pl-1.5;
+    @apply py-1 pe-8 ps-1.5;
   }
 
   .dropdown-menu-item-indicator {
-    @apply pointer-events-none absolute right-2 flex items-center justify-center;
+    @apply pointer-events-none absolute end-2 flex items-center justify-center;
   }
 
   .dropdown-menu-item-indicator > * {
@@ -97,8 +97,13 @@
     @apply bg-accent text-accent-foreground;
   }
 
+  /* The arrow points the way the submenu opens, which reverses in RTL. */
+  .dropdown-menu-sub-trigger:dir(rtl)::after {
+    scale: -1 1;
+  }
+
   .dropdown-menu-sub-trigger::after {
-    @apply ml-auto size-4 shrink-0;
+    @apply ms-auto size-4 shrink-0;
 
     content: "";
     background-color: currentColor;
@@ -121,7 +126,7 @@
   }
 
   .dropdown-menu-shortcut {
-    @apply ml-auto text-xs tracking-widest text-muted-foreground;
+    @apply ms-auto text-xs tracking-widest text-muted-foreground;
   }
 
   :is(.dropdown-menu-item, .dropdown-menu-checkbox-item, .dropdown-menu-radio-item):focus

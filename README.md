@@ -47,7 +47,10 @@ import "partialkit/auto";
 Alert · Alert Dialog · Badge · Button · Button Group · Card · Dialog · Dropdown Menu · Field · Input · Label · Native Select · Spinner · Textarea
 
 Each one has a page with live examples, its classes and its state contract in the
-[documentation](https://patrickluzdev.github.io/partialkit/).
+[documentation](https://patrickluzdev.github.io/partialkit/), following the same sections
+shadcn/ui documents.
+
+Everything is written with logical properties, so `dir="rtl"` works without configuration.
 
 ## Browser support
 
