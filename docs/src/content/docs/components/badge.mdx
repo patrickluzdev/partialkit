@@ -5,12 +5,7 @@ description: Displays a badge or a component that looks like a badge.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview code={`<div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center">
-  <span class="badge">Default</span>
-  <span class="badge badge-secondary">Secondary</span>
-  <span class="badge badge-destructive">Destructive</span>
-  <span class="badge badge-outline">Outline</span>
-</div>`} />
+<Preview src="badge/overview" layout="row" />
 
 | Class | Use |
 | --- | --- |
@@ -21,20 +16,7 @@ import Preview from "../../../components/Preview.astro";
 
 ## With an icon
 
-<Preview code={`<div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center">
-  <span class="badge badge-secondary">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 6 9 17l-5-5"></path>
-    </svg>
-    Deployed
-  </span>
-  <span class="badge badge-destructive">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M18 6 6 18M6 6l12 12"></path>
-    </svg>
-    Failed
-  </span>
-</div>`} />
+<Preview src="badge/with-an-icon" layout="row" />
 
 A badge is decorative markup. When it carries state a user must know about, put that state in text
 as well, or give the badge an accessible name.

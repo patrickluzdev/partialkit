@@ -70,6 +70,23 @@
     font-family: var(--sl-font);
   }
 
+  .pk-preview[data-layout="row"] {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  .pk-preview[data-layout="stack"] {
+    @apply flex flex-col gap-3;
+  }
+
+  /* A modal dialog is positioned by the top layer, so it never takes the constraint. */
+  .pk-preview[data-width="sm"] > :not(dialog) {
+    @apply w-full max-w-[22rem];
+  }
+
+  .pk-preview[data-width="md"] > :not(dialog) {
+    @apply w-full max-w-[24rem];
+  }
+
   .pk-example-bar {
     @apply mt-3 flex items-center justify-end gap-2;
   }

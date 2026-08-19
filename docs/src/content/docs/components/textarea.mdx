@@ -5,25 +5,17 @@ description: Displays a form textarea.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview code={`<div class="field" style="max-width: 22rem">
-  <label class="label" for="textarea-bio">Bio</label>
-  <textarea class="textarea" id="textarea-bio" placeholder="Tell us about yourself"></textarea>
-  <p class="field-description">Markdown is supported.</p>
-</div>`} />
+<Preview src="textarea/overview" width="sm" />
 
 The textarea grows with its content through `field-sizing: content`, so there is no resize script
 to wire up. `min-height` keeps it from collapsing when empty.
 
 ## States
 
-<Preview code={`<div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 22rem">
-  <textarea class="textarea" disabled aria-label="Disabled example">Disabled</textarea>
-  <textarea class="textarea" aria-invalid="true" aria-label="Invalid example">Invalid</textarea>
-</div>`} />
+<Preview src="textarea/states" layout="stack" width="sm" />
 
 ## Fixed height
 
 Override `field-sizing` when you want a stable box.
 
-<Preview code={`<textarea class="textarea" style="field-sizing: fixed; height: 8rem; max-width: 22rem"
-  placeholder="Fixed height" aria-label="Fixed height example"></textarea>`} />
+<Preview src="textarea/fixed-height" width="sm" />

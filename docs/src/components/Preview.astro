@@ -2,15 +2,35 @@
 import { Code } from "@astrojs/starlight/components";
 
 interface Props {
-  /** Markup rendered live and shown in the code panel. One source, two views. */
-  code: string;
+  /** Path under src/examples, without the .html extension. Rendered live and shown as code. */
+  src: string;
+  /** Arrangement of the example itself. Never leaks into the code panel. */
+  layout?: "block" | "row" | "stack";
+  /** Constrains the rendered example, for components that would otherwise span the page. */
+  width?: "sm" | "md";
 }
 
-const { code } = Astro.props;
+// Examples live as real .html files: the code panel then shows exactly what the
+// file contains, indentation included, and the preview renders the same string.
+const examples = import.meta.glob<string>("../examples/**/*.html", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+const { src, layout = "block", width } = Astro.props;
+const key = `../examples/${src}.html`;
+const source = examples[key];
+
+if (source === undefined) {
+  throw new Error(`Unknown example "${src}". Expected docs/src/examples/${src}.html`);
+}
+
+const code = source.replace(/\n+$/, "");
 ---
 
 <div class="pk-example not-content">
-  <div class="pk-preview pk-surface" set:html={code} />
+  <div class="pk-preview pk-surface" data-layout={layout} data-width={width} set:html={code} />
 
   <div class="pk-example-bar">
     <button class="pk-example-toggle" type="button" data-pk-code-toggle aria-expanded="false">

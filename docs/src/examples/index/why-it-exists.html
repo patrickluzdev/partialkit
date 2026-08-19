@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Delete project</h3>
+    <p class="card-description">This action cannot be undone.</p>
+    <div class="card-action">
+      <span class="badge badge-destructive">Danger</span>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-outline">Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-open="hero-dialog">Delete</button>
+  </div>
+</div>
+
+<dialog class="dialog" id="hero-dialog">
+  <div class="dialog-header">
+    <h3 class="dialog-title">Delete project</h3>
+    <p class="dialog-description">Every deployment and log will be removed.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+  </div>
+</dialog>

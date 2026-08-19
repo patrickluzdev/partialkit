@@ -5,10 +5,7 @@ description: Renders an accessible label associated with a control.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview code={`<div class="field" style="max-width: 22rem">
-  <label class="label" for="label-name">Full name</label>
-  <input class="input" id="label-name" placeholder="Ada Lovelace" />
-</div>`} />
+<Preview src="label/overview" width="sm" />
 
 Use a real `<label>` with `for` pointing at the control's `id`. That association is what makes the
 label clickable and what a screen reader announces — no class can substitute for it.
@@ -17,21 +14,12 @@ label clickable and what a screen reader announces — no class can substitute f
 
 When there is no `id` to point at, wrap the control instead.
 
-<Preview code={`<label class="label">
-  <input type="checkbox" />
-  Remember this device
-</label>`} />
+<Preview src="label/wrapping-the-control" />
 
 ## With extra content
 
 The label is a flex row, so hints sit inline.
 
-<Preview code={`<div class="field" style="max-width: 22rem">
-  <label class="label" for="label-key">
-    API key
-    <span class="badge badge-outline">Required</span>
-  </label>
-  <input class="input" id="label-key" placeholder="pk_live_…" />
-</div>`} />
+<Preview src="label/with-extra-content" width="sm" />
 
 A disabled control dims its label automatically when both sit inside a `.field`.

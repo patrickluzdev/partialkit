@@ -287,8 +287,11 @@ npm run docs:build   # static docs into docs/dist
 npm run typecheck
 ```
 
-The docs are an Astro + Starlight site under `docs/`. Every example is a single string that is
-both rendered live and shown as code, so a preview can never drift from the snippet beside it.
+The docs are an Astro + Starlight site under `docs/`. Every example is a real file in
+`docs/src/examples/`, rendered live and shown as code from that same file — so a preview can
+never drift from the snippet beside it, and the snippet is exactly what you would paste.
+Layout belongs to the `<Preview>` component (`layout`, `width`), never to the example, so no
+demo scaffolding leaks into the code panel.
 
 ### Tests
 

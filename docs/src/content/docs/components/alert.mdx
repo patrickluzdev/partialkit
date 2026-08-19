@@ -5,17 +5,7 @@ description: Displays a callout for user attention.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview code={`<div style="display: flex; flex-direction: column; gap: 0.75rem">
-  <div class="alert">
-    <h3 class="alert-title">Heads up</h3>
-    <p class="alert-description">Your changes are saved as a draft.</p>
-  </div>
-
-  <div class="alert alert-destructive">
-    <h3 class="alert-title">Something failed</h3>
-    <p class="alert-description">Your session expired. Sign in again.</p>
-  </div>
-</div>`} />
+<Preview src="alert/overview" layout="stack" />
 
 | Class | Part |
 | --- | --- |
@@ -28,20 +18,11 @@ import Preview from "../../../components/Preview.astro";
 
 An `svg` as the first child shifts the layout into its icon column automatically.
 
-<Preview code={`<div class="alert">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="12" r="10"></circle>
-    <path d="M12 16v-4M12 8h.01"></path>
-  </svg>
-  <h3 class="alert-title">Scheduled maintenance</h3>
-  <p class="alert-description">The API is read-only between 02:00 and 03:00 UTC.</p>
-</div>`} />
+<Preview src="alert/with-an-icon" />
 
 ## Title only
 
-<Preview code={`<div class="alert">
-  <h3 class="alert-title">Draft saved</h3>
-</div>`} />
+<Preview src="alert/title-only" />
 
 An alert that appears after page load should be announced. Add `role="alert"` for errors, or
 `role="status"` for confirmations, so assistive tech reads it without moving focus.

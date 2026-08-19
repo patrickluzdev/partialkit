@@ -5,14 +5,7 @@ description: A styled native select element.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview code={`<div class="field" style="max-width: 22rem">
-  <label class="label" for="select-role">Role</label>
-  <select class="native-select" id="select-role">
-    <option>Developer</option>
-    <option>Designer</option>
-    <option>Product</option>
-  </select>
-</div>`} />
+<Preview src="native-select/overview" width="sm" />
 
 This is the platform `<select>`: keyboard behaviour, type-ahead, and the native picker on mobile
 all come free, and it submits with a plain form post. Reach for it first — a custom listbox is
@@ -20,35 +13,14 @@ worth building only when you need rich option content.
 
 ## States
 
-<Preview code={`<div style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 22rem">
-  <select class="native-select" disabled aria-label="Disabled example">
-    <option>Disabled</option>
-  </select>
-  <select class="native-select" aria-invalid="true" aria-label="Invalid example">
-    <option>Invalid</option>
-  </select>
-</div>`} />
+<Preview src="native-select/states" layout="stack" width="sm" />
 
 ## Grouped options
 
-<Preview code={`<select class="native-select" style="max-width: 22rem" aria-label="City">
-  <optgroup label="Europe">
-    <option>Lisbon</option>
-    <option>Berlin</option>
-  </optgroup>
-  <optgroup label="South America">
-    <option>Porto Alegre</option>
-    <option>São Paulo</option>
-  </optgroup>
-</select>`} />
+<Preview src="native-select/grouped-options" width="sm" />
 
 ## Multiple
 
 `multiple` grows the control into a list box. Set an explicit height so it does not collapse.
 
-<Preview code={`<select class="native-select" multiple style="max-width: 22rem; height: 8rem" aria-label="Permissions">
-  <option>Read</option>
-  <option>Write</option>
-  <option>Deploy</option>
-  <option>Admin</option>
-</select>`} />
+<Preview src="native-select/multiple" width="sm" />

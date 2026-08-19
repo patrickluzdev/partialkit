@@ -6,19 +6,7 @@ description: Displays a menu to the user — such as a set of actions — trigge
 import Preview from "../../../components/Preview.astro";
 import { Aside } from "@astrojs/starlight/components";
 
-<Preview code={`<button class="btn btn-outline" popovertarget="demo-menu">Account</button>
-
-<div class="dropdown-menu" id="demo-menu" popover style="width: 13rem">
-  <div class="dropdown-menu-label">My account</div>
-  <hr class="dropdown-menu-separator" />
-  <button class="dropdown-menu-item" type="button">
-    Profile <span class="dropdown-menu-shortcut">⇧P</span>
-  </button>
-  <button class="dropdown-menu-item" type="button">Settings</button>
-  <button class="dropdown-menu-item" type="button" data-disabled>Billing</button>
-  <hr class="dropdown-menu-separator" />
-  <button class="dropdown-menu-item" type="button" data-variant="destructive">Sign out</button>
-</div>`} />
+<Preview src="dropdown-menu/overview" />
 
 <Aside title="The trigger is native">
 `popovertarget` opens and light-dismisses the menu with no JavaScript at all. partialkit positions
@@ -54,40 +42,13 @@ inside the viewport.
 
 ## Alignment
 
-<Preview code={`<div style="display: flex; gap: 0.5rem">
-  <button class="btn btn-outline" popovertarget="align-start">bottom-start</button>
-  <div class="dropdown-menu" id="align-start" popover style="width: 11rem">
-    <button class="dropdown-menu-item" type="button">Left edges align</button>
-  </div>
-
-  <button class="btn btn-outline" popovertarget="align-end">bottom-end</button>
-  <div class="dropdown-menu" id="align-end" popover data-pk-placement="bottom-end" style="width: 11rem">
-    <button class="dropdown-menu-item" type="button">Right edges align</button>
-  </div>
-</div>`} />
+<Preview src="dropdown-menu/alignment" layout="row" />
 
 ## With icons
 
 Give every item an icon, or use `data-inset` on the ones without so the labels still line up.
 
-<Preview code={`<button class="btn btn-outline" popovertarget="icon-menu">Actions</button>
-
-<div class="dropdown-menu" id="icon-menu" popover style="width: 13rem">
-  <button class="dropdown-menu-item" type="button">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
-    </svg>
-    Edit
-  </button>
-  <button class="dropdown-menu-item" type="button" data-inset>Duplicate</button>
-  <hr class="dropdown-menu-separator" />
-  <button class="dropdown-menu-item" type="button" data-variant="destructive">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"></path>
-    </svg>
-    Delete
-  </button>
-</div>`} />
+<Preview src="dropdown-menu/with-icons" />
 
 ## Keyboard
 

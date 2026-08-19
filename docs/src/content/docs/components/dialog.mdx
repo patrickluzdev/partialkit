@@ -6,18 +6,7 @@ description: A window overlaid on the page, rendering the content underneath ine
 import Preview from "../../../components/Preview.astro";
 import { Aside } from "@astrojs/starlight/components";
 
-<Preview code={`<button class="btn btn-destructive" data-pk-dialog-open="demo-dialog">Delete project</button>
-
-<dialog class="dialog" id="demo-dialog">
-  <div class="dialog-header">
-    <h3 class="dialog-title">Delete project</h3>
-    <p class="dialog-description">This action cannot be undone.</p>
-  </div>
-  <div class="dialog-footer">
-    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
-    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
-  </div>
-</dialog>`} />
+<Preview src="dialog/overview" />
 
 <Aside title="It is a real <dialog>">
 Focus trapping, `Esc`, the top layer and making the rest of the page inert all come from
@@ -49,35 +38,11 @@ and the state attribute.
 
 Use it when dismissing by accident would lose work.
 
-<Preview code={`<button class="btn" data-pk-dialog-open="static-dialog">Open static dialog</button>
-
-<dialog class="dialog" id="static-dialog" data-pk-dialog-static>
-  <div class="dialog-header">
-    <h3 class="dialog-title">Unsaved changes</h3>
-    <p class="dialog-description">Clicking outside will not close this one.</p>
-  </div>
-  <div class="dialog-footer">
-    <button class="btn" data-pk-dialog-close>Got it</button>
-  </div>
-</dialog>`} />
+<Preview src="dialog/static-backdrop" />
 
 ## With a form
 
-<Preview code={`<button class="btn" data-pk-dialog-open="form-dialog">Rename project</button>
-
-<dialog class="dialog" id="form-dialog">
-  <div class="dialog-header">
-    <h3 class="dialog-title">Rename project</h3>
-  </div>
-  <div class="field">
-    <label class="label" for="dialog-name">Name</label>
-    <input class="input" id="dialog-name" value="partialkit" />
-  </div>
-  <div class="dialog-footer">
-    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
-    <button class="btn" data-pk-dialog-close="save">Save</button>
-  </div>
-</dialog>`} />
+<Preview src="dialog/with-a-form" />
 
 ## Events
 
