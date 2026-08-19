@@ -133,4 +133,14 @@
     .dropdown-menu-shortcut {
     @apply text-accent-foreground;
   }
+
+  /* Keys carry their own box, so the hint drops the letter-spacing meant for
+     bare glyphs. */
+  .dropdown-menu-shortcut:has(.kbd) {
+    @apply tracking-normal;
+  }
+
+  :is(.dropdown-menu-item, .dropdown-menu-checkbox-item, .dropdown-menu-radio-item):focus .kbd {
+    @apply bg-accent-foreground/10 text-accent-foreground;
+  }
 }

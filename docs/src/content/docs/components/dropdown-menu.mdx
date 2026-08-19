@@ -52,8 +52,15 @@ inside the viewport.
 
 ## Shortcuts
 
-`.dropdown-menu-shortcut` pushes a key hint to the trailing edge. It is a hint, not a binding —
-register the actual shortcut yourself.
+`.dropdown-menu-shortcut` pushes a key hint to the trailing edge. Put the keys inside it as
+[Kbd](/components/kbd/) elements — one per key — and add `kbd-group` so they sit together. It is a
+hint, not a binding: register the actual shortcut yourself.
+
+```html
+<span class="dropdown-menu-shortcut kbd-group">
+  <kbd class="kbd">⌘</kbd><kbd class="kbd">S</kbd>
+</span>
+```
 
 <Preview src="dropdown-menu/shortcuts" />
 
