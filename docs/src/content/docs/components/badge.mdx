@@ -13,8 +13,11 @@ import Preview from "../../../components/Preview.astro";
 | `.badge-secondary` | Lower emphasis |
 | `.badge-destructive` | Errors and danger states |
 | `.badge-outline` | Border only |
-| `.badge-ghost` | Muted fill, no border |
+| `.badge-ghost` | No surface until hovered |
 | `.badge-link` | Reads as a link; put it on an `<a>` |
+
+Only `.badge-ghost` and `.badge-link` react to the pointer on their own. The filled variants take a
+hover surface when the badge is an `<a>`, since a plain `<span>` is not something you can activate.
 
 Give an icon `data-icon="inline-start"` or `data-icon="inline-end"` to tighten its spacing on that
 side.

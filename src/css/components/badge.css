@@ -5,6 +5,11 @@
     @apply transition-all;
     @apply focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
     @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40;
+  }
+
+  /* The default variant, applied only when no other one is: on the base class its
+     hover would reach every variant that does not set one of its own. */
+  .badge:not(.badge-secondary, .badge-destructive, .badge-outline, .badge-ghost, .badge-link) {
     @apply bg-primary text-primary-foreground;
   }
 
@@ -30,19 +35,20 @@
   }
 
   .badge-outline {
-    @apply border-border bg-transparent text-foreground;
+    @apply border-border text-foreground;
   }
 
+  /* Ghost is the one variant that reacts to the pointer whatever element it is on. */
   .badge-ghost {
-    @apply bg-transparent text-foreground hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50;
+    @apply hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50;
   }
 
   .badge-link {
-    @apply bg-transparent text-primary underline-offset-4 hover:underline;
+    @apply text-primary underline-offset-4 hover:underline;
   }
 
-  /* Only an interactive badge reacts to the pointer. */
-  a.badge:hover {
+  /* Only a badge that navigates gets a hover surface. */
+  a.badge:not(.badge-secondary, .badge-destructive, .badge-outline, .badge-ghost, .badge-link):hover {
     @apply bg-primary/80;
   }
 
