@@ -35,8 +35,9 @@ the focus move.
 
 | Attribute | Meaning |
 | --- | --- |
-| `data-pk-placement` | `bottom` (default), `bottom-start`, `bottom-end`, `top`, `top-start`, `top-end`, `left-start`, `right-start` |
+| `data-pk-placement` | A side — `top`, `bottom`, `left`, `right` — optionally with `-start` or `-end`. Defaults to `bottom-start` |
 | `data-pk-offset` | Distance from the trigger, in pixels |
+| `data-pk-align-offset` | Nudge along the other axis, in pixels |
 | `data-pk-anchor` | Selector for the element to measure against, when it is not the trigger |
 
 ## Placement
@@ -63,7 +64,7 @@ Interrupting for something optional is what makes a dialog annoying.
 
 ## RTL
 
-Set `dir="rtl"` on the page or on any subtree — `left-start` and `right-start` are read in reading
+Set `dir="rtl"` on the page or on any subtree — `left` and `right` are read in reading
 order, so they swap sides. See [the button page](/components/button/#rtl) for a live example.
 
 ## Accessibility

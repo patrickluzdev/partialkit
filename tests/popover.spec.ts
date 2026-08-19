@@ -71,3 +71,30 @@ test("tabbing out of it does not trap, because it is not modal", async ({ page }
 
   await expect(page.locator("#lab-popover-input")).not.toBeFocused();
 });
+
+test("a bare side centres on the trigger", async ({ page }) => {
+  await page.locator("#lab-popover").evaluate((element) => {
+    element.setAttribute("data-pk-placement", "right");
+  });
+  await open(page, "#lab-popover-trigger", "#lab-popover");
+
+  const trigger = (await page.locator("#lab-popover-trigger").boundingBox())!;
+  const panel = (await page.locator("#lab-popover").boundingBox())!;
+
+  const triggerMiddle = trigger.y + trigger.height / 2;
+  const panelMiddle = panel.y + panel.height / 2;
+  expect(Math.abs(panelMiddle - triggerMiddle)).toBeLessThanOrEqual(1);
+  expect(panel.x).toBeGreaterThanOrEqual(trigger.x + trigger.width);
+});
+
+test("a -start side lines its top edge up with the trigger", async ({ page }) => {
+  await page.locator("#lab-popover").evaluate((element) => {
+    element.setAttribute("data-pk-placement", "right-start");
+  });
+  await open(page, "#lab-popover-trigger", "#lab-popover");
+
+  const trigger = (await page.locator("#lab-popover-trigger").boundingBox())!;
+  const panel = (await page.locator("#lab-popover").boundingBox())!;
+
+  expect(Math.abs(panel.y - trigger.y)).toBeLessThanOrEqual(1);
+});

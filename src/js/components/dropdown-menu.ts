@@ -261,6 +261,10 @@ function applyRoles(element: HTMLElement): void {
     setDefaultAttribute(trigger, "aria-controls", ensureId(submenu, "pk-dropdown-menu"));
     setDefaultAttribute(trigger, "aria-expanded", String(submenu.matches(":popover-open")));
     setDefaultAttribute(submenu, "data-pk-placement", "right-start");
+    // A submenu sits flush against its parent, and its own padding is cancelled
+    // so the first item lines up with the trigger.
+    setDefaultAttribute(submenu, "data-pk-offset", "0");
+    setDefaultAttribute(submenu, "data-pk-align-offset", "-4");
   }
 
   for (const separator of element.querySelectorAll(".dropdown-menu-separator")) {

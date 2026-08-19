@@ -62,6 +62,7 @@ const code = source.replace(/\n+$/, "");
     slider,
     start,
     tabs,
+    toggle,
     tooltip,
   } from "../../../src/js/index.ts";
 
@@ -72,18 +73,19 @@ const code = source.replace(/\n+$/, "");
   register(popover);
   register(tooltip);
   register(tabs);
+  register(toggle);
   register(slider);
   start();
 
   document.addEventListener("click", (event) => {
-    const toggle = (event.target as Element | null)?.closest<HTMLElement>("[data-pk-code-toggle]");
-    if (!toggle) return;
+    const button = (event.target as Element | null)?.closest<HTMLElement>("[data-pk-code-toggle]");
+    if (!button) return;
 
-    const panel = toggle.closest(".pk-example")?.querySelector<HTMLElement>(".pk-example-code");
+    const panel = button.closest(".pk-example")?.querySelector<HTMLElement>(".pk-example-code");
     if (!panel) return;
 
     panel.hidden = !panel.hidden;
-    toggle.setAttribute("aria-expanded", String(!panel.hidden));
-    toggle.textContent = panel.hidden ? "Show code" : "Hide code";
+    button.setAttribute("aria-expanded", String(!panel.hidden));
+    button.textContent = panel.hidden ? "Show code" : "Hide code";
   });
 </script>

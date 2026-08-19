@@ -6,6 +6,7 @@ import { popover } from "./components/popover.js";
 import { slider } from "./components/slider.js";
 import { tabs } from "./components/tabs.js";
 import { theme } from "./components/theme.js";
+import { toggle } from "./components/toggle.js";
 import { tooltip } from "./components/tooltip.js";
 import { register, start } from "./core/registry.js";
 
@@ -19,6 +20,7 @@ register(contextMenu);
 register(popover);
 register(tooltip);
 register(tabs);
+register(toggle);
 register(slider);
 
 if (document.readyState === "loading") {

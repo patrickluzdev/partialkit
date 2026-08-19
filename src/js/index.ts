@@ -5,6 +5,7 @@ export { contextMenu } from "./components/context-menu.js";
 export { popover } from "./components/popover.js";
 export { tooltip } from "./components/tooltip.js";
 export { tabs } from "./components/tabs.js";
+export { toggle } from "./components/toggle.js";
 export { slider } from "./components/slider.js";
 export { theme, applyTheme, getTheme, setTheme } from "./components/theme.js";
 export type { Theme } from "./components/theme.js";

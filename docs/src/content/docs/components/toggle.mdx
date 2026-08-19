@@ -15,7 +15,23 @@ import { Aside } from "@astrojs/starlight/components";
 ```
 
 `aria-pressed` is both the state and the styling hook, so flipping the attribute is the whole
-update — there is no second class to keep in sync.
+update — there is no second class to keep in sync. A `<button>` that carries the attribute is
+flipped for you on click, because nothing in the platform does it: a pressed button holds its own
+state, unlike a checkbox.
+
+| Attribute | Meaning |
+| --- | --- |
+| `aria-pressed` | The state, and what the styling reads |
+| `data-pk-controlled` | Leave the state alone — you set `aria-pressed` yourself |
+| `data-value` | Carried in the change event |
+
+Each press fires `pk:toggle:change` on the button:
+
+```js
+document.addEventListener("pk:toggle:change", (event) => {
+  console.log(event.detail.pressed, event.detail.value);
+});
+```
 
 ## Variants
 
@@ -42,7 +58,8 @@ label and the styling follows `:checked` instead of `aria-pressed`.
 <Aside title="Which one to write">
 `aria-pressed` on a `<button>` is the ARIA pattern for a toolbar control that acts immediately.
 A checkbox inside a label is for a value that travels with a form. Both are styled by `.toggle`;
-pick by what the control does, not by how it looks.
+pick by what the control does, not by how it looks. Only the button form needs the runtime — a
+checkbox already toggles itself.
 </Aside>
 
 ## Toggle or Switch?

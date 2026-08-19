@@ -1,18 +1,9 @@
-export type Placement =
-  | "bottom-start"
-  | "bottom-end"
-  | "bottom"
-  | "top-start"
-  | "top-end"
-  | "top"
-  | "right-start"
-  | "left-start";
+export type Side = "top" | "bottom" | "left" | "right";
+export type Align = "start" | "center" | "end";
+export type Placement = Side | `${Side}-${Exclude<Align, "center">}`;
 
 const DEFAULT_OFFSET = 4;
-const SIDE_OFFSET = 0;
 const VIEWPORT_PADDING = 8;
-/** Cancels a panel's own padding so its first item lines up with the trigger. */
-const PANEL_PADDING = 4;
 
 /**
  * The element a floating panel is measured against: whatever `data-pk-anchor`
@@ -29,10 +20,33 @@ function clamp(value: number, max: number): number {
   return Math.min(Math.max(value, VIEWPORT_PADDING), Math.max(max, VIEWPORT_PADDING));
 }
 
+/**
+ * Where a panel sits along the axis it is not opening on: flush with the
+ * anchor's start or end, or centred on it.
+ */
+function alignTo(
+  anchorStart: number,
+  anchorSize: number,
+  panelSize: number,
+  align: Align,
+  offset: number,
+  viewport: number,
+): number {
+  const raw =
+    align === "end"
+      ? anchorStart + anchorSize - panelSize
+      : align === "center"
+        ? anchorStart + anchorSize / 2 - panelSize / 2
+        : anchorStart;
+
+  return clamp(raw + offset, viewport - panelSize - VIEWPORT_PADDING);
+}
+
 /** Places a panel against a rectangle, flipping and clamping to stay on screen. */
 export function positionAgainst(element: HTMLElement, anchorRect: DOMRect): void {
   const placement = (element.getAttribute("data-pk-placement") ?? "bottom-start") as Placement;
-  const [physicalSide, align] = placement.split("-");
+  const [physicalSide, alignName] = placement.split("-");
+  const align = (alignName ?? "center") as Align;
 
   // Placements are authored in reading order, so a side flips with direction.
   const rtl = getComputedStyle(element).direction === "rtl";
@@ -43,23 +57,25 @@ export function positionAgainst(element: HTMLElement, anchorRect: DOMRect): void
         ? "right"
         : physicalSide;
 
-  const offset = Number(
-    element.getAttribute("data-pk-offset") ??
-      (side === "right" || side === "left" ? SIDE_OFFSET : DEFAULT_OFFSET),
-  );
+  const horizontal = side === "right" || side === "left";
+  const offset = Number(element.getAttribute("data-pk-offset") ?? DEFAULT_OFFSET);
+  // Nudge along the cross axis, for a panel whose own padding has to be
+  // cancelled before its first item lines up with the trigger.
+  const alignOffset = Number(element.getAttribute("data-pk-align-offset") ?? 0);
   const { offsetWidth: width, offsetHeight: height } = element;
 
   let top: number;
   let left: number;
 
-  if (side === "right" || side === "left") {
+  if (horizontal) {
     const needed = width + offset + VIEWPORT_PADDING;
     const fitsRight = window.innerWidth - anchorRect.right >= needed;
     const fitsLeft = anchorRect.left >= needed;
     const placeLeft = side === "left" ? fitsLeft || !fitsRight : !fitsRight && fitsLeft;
 
     left = placeLeft ? anchorRect.left - width - offset : anchorRect.right + offset;
-    top = clamp(anchorRect.top - PANEL_PADDING, window.innerHeight - height - VIEWPORT_PADDING);
+    // Reading order runs down either way, so this axis never flips with direction.
+    top = alignTo(anchorRect.top, anchorRect.height, height, align, alignOffset, window.innerHeight);
   } else {
     const needed = height + offset + VIEWPORT_PADDING;
     const fitsBelow = window.innerHeight - anchorRect.bottom >= needed;
@@ -68,22 +84,15 @@ export function positionAgainst(element: HTMLElement, anchorRect: DOMRect): void
 
     top = placeAbove ? anchorRect.top - height - offset : anchorRect.bottom + offset;
 
-    const alignEnd = rtl ? align !== "end" : align === "end";
-    const centred = align === undefined;
-    const start = centred
-      ? anchorRect.left + anchorRect.width / 2 - width / 2
-      : alignEnd
-        ? anchorRect.right - width
-        : anchorRect.left;
-
-    left = clamp(start, window.innerWidth - width - VIEWPORT_PADDING);
+    const inline = rtl && align !== "center" ? (align === "end" ? "start" : "end") : align;
+    left = alignTo(anchorRect.left, anchorRect.width, width, inline, alignOffset, window.innerWidth);
   }
 
   element.style.top = `${Math.round(top)}px`;
   element.style.left = `${Math.round(left)}px`;
 
   // Which way it actually opened, for the animation to slide from.
-  element.setAttribute("data-side", side === "right" || side === "left" ? side : top < anchorRect.top ? "top" : "bottom");
+  element.setAttribute("data-side", horizontal ? side : top < anchorRect.top ? "top" : "bottom");
 }
 
 /**

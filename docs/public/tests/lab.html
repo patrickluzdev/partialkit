@@ -618,6 +618,20 @@
     </section>
 
     <section>
+      <h2>Toggle</h2>
+      <button class="toggle toggle-outline" type="button" aria-pressed="false" id="lab-toggle">Bold</button>
+      <button class="toggle" type="button" aria-pressed="true" id="lab-toggle-on" data-value="italic">Italic</button>
+      <button class="toggle" type="button" aria-pressed="false" id="lab-toggle-disabled" disabled>Disabled</button>
+      <button class="toggle" type="button" aria-pressed="false" id="lab-toggle-controlled" data-pk-controlled>
+        Controlled
+      </button>
+      <label class="toggle toggle-outline" id="lab-toggle-checkbox">
+        <input class="sr-only" type="checkbox" id="lab-toggle-input" />
+        Email
+      </label>
+    </section>
+
+    <section>
       <h2>Swap</h2>
       <button class="btn" id="swap">Swap</button>
       <button class="btn" id="remove">Remove</button>

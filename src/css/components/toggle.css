@@ -53,6 +53,14 @@
     @apply size-3.5;
   }
 
+  .toggle-sm:has([data-icon="inline-start"]) {
+    @apply ps-1.5;
+  }
+
+  .toggle-sm:has([data-icon="inline-end"]) {
+    @apply pe-1.5;
+  }
+
   .toggle-lg {
     @apply h-9 min-w-9 px-2.5;
   }
