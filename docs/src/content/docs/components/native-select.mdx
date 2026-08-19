@@ -4,23 +4,73 @@ description: A styled native select element.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="native-select/overview" width="sm" />
 
-This is the platform `<select>`: keyboard behaviour, type-ahead, and the native picker on mobile
-all come free, and it submits with a plain form post. Reach for it first — a custom listbox is
-worth building only when you need rich option content.
+## Usage
 
-## States
+```html
+<select class="native-select">
+  <option>Developer</option>
+  <option>Designer</option>
+</select>
+```
 
-<Preview src="native-select/states" layout="stack" width="sm" />
+## Composition
 
-## Grouped options
+<Preview src="native-select/composition" width="sm" />
+
+The class resets the platform arrow and draws its own on the trailing edge, so the control matches
+the inputs beside it. Everything else is the browser's.
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-size="sm"` | The shorter height, to match `.btn-sm` |
+| `multiple` | Grows into a list box; give it a height |
+
+## Groups
 
 <Preview src="native-select/grouped-options" width="sm" />
 
+## Disabled
+
+<Preview src="native-select/disabled" width="sm" />
+
+## Invalid
+
+<Preview src="native-select/invalid" width="sm" />
+
 ## Multiple
 
-`multiple` grows the control into a list box. Set an explicit height so it does not collapse.
-
 <Preview src="native-select/multiple" width="sm" />
+
+## Native Select vs Select
+
+There is no custom select in partialkit, and that is deliberate for now.
+
+| | Native select | A custom listbox |
+| --- | --- | --- |
+| Keyboard, type-ahead, screen reader | From the platform | You implement all of it |
+| Mobile | The system picker, which users already know | A panel you have to make work on touch |
+| Option content | Text only | Anything |
+| Styling of the open list | Barely | Complete |
+| Submits in a plain form | Yes | Needs a hidden input |
+
+Reach for the native one unless you need rich option content — icons, avatars, two lines of text.
+The custom version costs a lot of behaviour to rebuild, and rebuilding it badly is worse than a
+plain select.
+
+<Aside title="The popup is painted by the platform">
+An `<option>` is drawn by the operating system, not the page. partialkit gives options the system
+`Canvas` and `CanvasText` colours, and sets `color-scheme` on the root so those follow the theme.
+Without it a transparent option is invisible until the pointer highlights it — a bug the test suite
+now guards against.
+</Aside>
+
+## Accessibility
+
+A select needs a name like any control. When there is no visible label, use `aria-label`.
+
+An empty first option is how you say "nothing chosen yet" — `<option value="">Choose one</option>`
+— so `required` can actually reject it. There is no placeholder attribute on a select.

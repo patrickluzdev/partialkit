@@ -7,15 +7,46 @@ import Preview from "../../../components/Preview.astro";
 
 <Preview src="textarea/overview" width="sm" />
 
+## Usage
+
+```html
+<textarea class="textarea" placeholder="Tell us about yourself"></textarea>
+```
+
 The textarea grows with its content through `field-sizing: content`, so there is no resize script
 to wire up. `min-height` keeps it from collapsing when empty.
 
-## States
+## Field
 
-<Preview src="textarea/states" layout="stack" width="sm" />
+<Preview src="textarea/field" width="sm" />
+
+## Disabled
+
+<Preview src="textarea/disabled" width="sm" />
+
+## Invalid
+
+<Preview src="textarea/invalid" width="sm" />
+
+`aria-invalid` on the control recolours the border and ring; `data-invalid` on the `.field` carries
+it to the label too.
+
+## Button
+
+A submit control below the textarea, aligned to the trailing edge.
+
+<Preview src="textarea/with-button" width="sm" />
 
 ## Fixed height
 
 Override `field-sizing` when you want a stable box.
 
 <Preview src="textarea/fixed-height" width="sm" />
+
+## Accessibility
+
+The same rules as any control: a real `<label>` with `for`, `aria-describedby` pointing at the help
+or error text, and `aria-invalid` when it is wrong.
+
+Growing with its content is also an accessibility win — a fixed box that hides what the user typed
+is harder to review, especially at large text sizes.

@@ -1,0 +1,32 @@
+<button class="btn btn-outline" data-pk-dialog-open="scrollable">Open long dialog</button>
+
+<dialog class="dialog" id="scrollable">
+  <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6 6 18M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <div class="dialog-header">
+    <h3 class="dialog-title">Terms of service</h3>
+    <p class="dialog-description">The panel scrolls once it runs out of room.</p>
+  </div>
+
+  <div style="display: grid; gap: 0.75rem">
+    <p class="card-description">Section one. Everything here is ordinary body copy.</p>
+    <p class="card-description">Section two. The dialog never grows past the viewport.</p>
+    <p class="card-description">Section three. It caps at the screen height minus a margin.</p>
+    <p class="card-description">Section four. Past that, this area scrolls.</p>
+    <p class="card-description">Section five. Focus stays trapped while you scroll.</p>
+    <p class="card-description">Section six. The header scrolls away with the rest.</p>
+    <p class="card-description">Section seven.</p>
+    <p class="card-description">Section eight.</p>
+    <p class="card-description">Section nine.</p>
+    <p class="card-description">Section ten.</p>
+  </div>
+
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Decline</button>
+    <button class="btn" data-pk-dialog-close="accept">Accept</button>
+  </div>
+</dialog>

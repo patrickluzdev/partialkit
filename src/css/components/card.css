@@ -18,6 +18,27 @@
     @apply pb-0;
   }
 
+  /* An image at either end runs to the edge and takes the card's corners. */
+  .card:has(> img:first-child) {
+    @apply pt-0;
+  }
+
+  .card:has(> img:last-child) {
+    @apply pb-0;
+  }
+
+  .card > img {
+    @apply block w-full;
+  }
+
+  .card > img:first-child {
+    @apply rounded-t-xl;
+  }
+
+  .card > img:last-child {
+    @apply rounded-b-xl;
+  }
+
   .card-header {
     @apply grid auto-rows-min items-start gap-1 rounded-t-xl;
     @apply has-[.card-action]:grid-cols-[1fr_auto];

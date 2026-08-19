@@ -7,42 +7,76 @@ import Preview from "../../../components/Preview.astro";
 
 <Preview src="card/overview" width="md" />
 
+## Usage
+
+```html
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Title</h3>
+    <p class="card-description">Supporting line.</p>
+  </div>
+  <div class="card-content">…</div>
+  <div class="card-footer">…</div>
+</div>
+```
+
+## Composition
+
+<Preview src="card/composition" width="md" />
+
 | Class | Part |
 | --- | --- |
 | `.card` | Container |
 | `.card-header` | Title area |
 | `.card-title` | Heading |
 | `.card-description` | Supporting line |
-| `.card-action` | Control pinned to the header's right edge |
+| `.card-action` | Control pinned to the header's trailing edge |
 | `.card-content` | Body |
-| `.card-footer` | Actions row |
+| `.card-footer` | A bar across the bottom, with its own surface |
 
-## With an action
+The footer is not just a row: it takes the card's full width, carries a top border and a muted
+surface, and the card drops its own bottom padding to make room. The same happens for an image at
+either end.
 
-`.card-action` sits in a second header column, which only appears when the class is present.
-
-<Preview src="card/with-an-action" width="md" />
-
-## Sizes
-
-`data-size="sm"` lowers `--card-spacing`, and every section follows: padding, gaps and the space
-between header, content and footer.
+## Size
 
 <Preview src="card/sizes" layout="stack" width="md" />
 
-## As a form
+`data-size="sm"` lowers `--card-spacing`, and every section follows: padding, gaps and the space
+between header, content and footer. The title steps down a size with it.
 
-The card is a plain container, so it takes any element — a `<form>` here, so the footer's submit
-button posts without extra wiring.
+## Spacing
+
+Nothing stops you setting the variable yourself, for a card that has to match a layout the two
+presets do not.
+
+<Preview src="card/spacing" width="md" />
 
 ```html
-<form class="card" method="post" action="/projects">
-  <div class="card-header">
-    <h3 class="card-title">New project</h3>
-  </div>
-  <div class="card-content">…</div>
-  <div class="card-footer">
-    <button class="btn" type="submit">Create</button>
-  </div>
-</form>
+<div class="card" style="--card-spacing: 1.5rem">
 ```
+
+## Image
+
+An `img` as the first or last child runs edge to edge and takes the card's corners.
+
+<Preview src="card/image" width="md" />
+
+Give a decorative image `alt=""` so it is skipped, and set `width` and `height` so the card does
+not jump when it loads.
+
+## Form
+
+The card is a plain container, so it takes any element — a `<form>` here, and the footer's submit
+button posts without extra wiring.
+
+<Preview src="card/form" width="md" />
+
+## Accessibility
+
+A card is a container, not a landmark: it has no role of its own, and the heading inside it is what
+gives it a name in a document outline. Use a real heading level that fits the page rather than
+picking one for its size.
+
+If the whole card is a link, wrap the *heading* in the anchor rather than the card — a link the size
+of a card is hard to escape with a screen reader, and it swallows any control inside it.

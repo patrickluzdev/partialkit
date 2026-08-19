@@ -4,22 +4,47 @@ description: Renders an accessible label associated with a control.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="label/overview" width="sm" />
 
-Use a real `<label>` with `for` pointing at the control's `id`. That association is what makes the
-label clickable and what a screen reader announces — no class can substitute for it.
+## Usage
+
+```html
+<label class="label" for="name">Full name</label>
+<input class="input" id="name" />
+```
+
+<Aside type="caution" title="The class is not what makes it a label">
+`for` pointing at the control's `id` is. That association is what makes the label clickable and
+what a screen reader announces — no class can substitute for it.
+</Aside>
 
 ## Wrapping the control
 
 When there is no `id` to point at, wrap the control instead.
 
-<Preview src="label/wrapping-the-control" />
+<Preview src="label/wrapping-the-control" width="sm" />
 
 ## With extra content
 
-The label is a flex row, so hints sit inline.
+The label is a flex row, so a qualifier sits inline.
 
 <Preview src="label/with-extra-content" width="sm" />
 
-A disabled control dims its label automatically when both sit inside a `.field`.
+## Disabled
+
+A disabled control dims its own label when both sit inside a `.field`, read from the control's
+state rather than a second attribute to keep in sync.
+
+<Preview src="field/disabled" width="sm" />
+
+## Accessibility
+
+- One label per control, and one control per label.
+- Clicking the label focuses the control. If that does not happen, the association is broken — that
+  is the quickest way to check it by hand.
+- A label is not a heading for a group. That is `<fieldset>` and `<legend>`, which the
+  [field](/components/field/) covers.
+- A placeholder is not a label. It disappears as soon as the user types, and it is not announced as
+  a name.

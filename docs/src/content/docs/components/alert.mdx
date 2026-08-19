@@ -4,32 +4,81 @@ description: Displays a callout for user attention.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="alert/overview" layout="stack" />
+
+## Usage
+
+```html
+<div class="alert" role="alert">
+  <h3 class="alert-title">Heads up</h3>
+  <p class="alert-description">Your changes are saved as a draft.</p>
+</div>
+```
+
+## Composition
+
+<Preview src="alert/composition" />
 
 | Class | Part |
 | --- | --- |
 | `.alert` | Container |
 | `.alert-title` | Heading line |
 | `.alert-description` | Body copy |
-| `.alert-action` | Control pinned to the trailing edge |
+| `.alert-action` | Control pinned to the trailing corner |
 | `.alert-destructive` | Error variant |
 
-## With an icon
+An `svg` as the first child takes its own column and the text shifts across; `.alert-action` takes
+the trailing corner and reserves room so a long title never runs under it.
 
-An `svg` as the first child shifts the layout into its icon column automatically.
+## Basic
 
-<Preview src="alert/with-an-icon" />
+<Preview src="alert/basic" layout="stack" />
 
-## With an action
+A title on its own is a complete alert. The description is for the consequence, not a restatement.
 
-`.alert-action` takes a trailing column, leaving the icon and text columns untouched.
+## Destructive
+
+<Preview src="alert/destructive" />
+
+The variant recolours the text and the icon. The surface stays the card colour, so the alert does
+not turn into a solid block of red.
+
+## Action
 
 <Preview src="alert/with-an-action" />
 
-## Title only
+## Custom Colors
 
-<Preview src="alert/title-only" />
+`light-dark()` picks the pair for the theme in use, which works because partialkit sets
+`color-scheme` on the root.
 
-An alert that appears after page load should be announced. Add `role="alert"` for errors, or
-`role="status"` for confirmations, so assistive tech reads it without moving focus.
+<Preview src="alert/custom-colors" />
+
+<Aside type="caution" title="Colour is not the message">
+Around 1 in 12 men cannot separate red from green. Whatever palette you use, the title has to say
+what happened — the colour only reinforces it.
+</Aside>
+
+## Accessibility
+
+An alert that is on the page from the start needs nothing. One that appears in response to
+something must be announced, and the role decides how:
+
+| Role | When |
+| --- | --- |
+| `role="alert"` | Errors and anything the user must act on. Interrupts what is being read. |
+| `role="status"` | Confirmations and progress. Waits for a pause. |
+
+```html
+<div class="alert alert-destructive" role="alert">
+  <h3 class="alert-title">Payment failed</h3>
+</div>
+```
+
+Put the element in the DOM before you fill it, or the announcement can be missed — assistive tech
+watches an existing live region for changes rather than discovering a new one.
+
+If the alert has a dismiss control, that control needs a name: `aria-label="Dismiss"` on an
+icon-only button.

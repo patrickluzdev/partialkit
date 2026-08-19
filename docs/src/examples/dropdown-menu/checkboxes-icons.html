@@ -1,0 +1,31 @@
+<button class="btn btn-outline" popovertarget="filters-menu">Filters</button>
+
+<div class="dropdown-menu" id="filters-menu" popover style="width: 14rem">
+  <div class="dropdown-menu-label">Show</div>
+  <hr class="dropdown-menu-separator" />
+
+  <button class="dropdown-menu-checkbox-item" type="button" data-value="open"
+          aria-checked="true" data-pk-keep-open>
+    <span class="dropdown-menu-item-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+    </svg>
+    Open issues
+  </button>
+
+  <button class="dropdown-menu-checkbox-item" type="button" data-value="closed" data-pk-keep-open>
+    <span class="dropdown-menu-item-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 6 9 17l-5-5"></path>
+    </svg>
+    Closed issues
+  </button>
+</div>

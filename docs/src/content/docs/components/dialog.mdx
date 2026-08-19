@@ -18,18 +18,30 @@ A dialog is a place to do something, and it can be dismissed. When the user has 
 question before anything else happens — anything destructive, in particular — use an
 [alert dialog](/components/alert-dialog/) instead.
 
-## Parts
+## Usage
+
+```html
+<button class="btn" data-pk-dialog-open="my-dialog">Open</button>
+
+<dialog class="dialog" id="my-dialog">
+  <div class="dialog-header">
+    <h2 class="dialog-title">Title</h2>
+  </div>
+</dialog>
+```
+
+## Composition
+
+<Preview src="dialog/composition" />
 
 | Class | Part |
 | --- | --- |
 | `.dialog` | The `<dialog>` element itself |
+| `.dialog-close` | Position for the corner dismiss control |
 | `.dialog-header` | Title area |
 | `.dialog-title` | Heading — becomes the accessible name |
 | `.dialog-description` | Supporting line — becomes `aria-describedby` |
-| `.dialog-close` | Corner dismiss control |
-| `.dialog-footer` | Actions row |
-
-## Attributes
+| `.dialog-footer` | A bar across the bottom, with its own surface |
 
 | Attribute | On | Meaning |
 | --- | --- | --- |
@@ -39,25 +51,45 @@ question before anything else happens — anything destructive, in particular �
 | `data-pk-dialog-static` | the dialog | Clicking the backdrop does not close it |
 | `data-state="open" \| "closed"` | the dialog | Set by the runtime |
 
-## Close button
+## Custom Close Button
 
-`.dialog-close` only positions; the control itself is a button, so combine it with the button
-classes the way shadcn/ui composes a ghost icon button:
+`.dialog-close` only positions; the control itself is yours. shadcn/ui composes a ghost icon
+button, which is what the examples here use:
 
 ```html
 <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
 ```
 
-It is plain markup, so leave it out when a dialog must be answered rather than dismissed. The
-`aria-label` is not optional — the icon carries no text.
+Anything else works the same way:
 
-## Static backdrop
+<Preview src="dialog/custom-close" />
 
-Use it when dismissing by accident would lose work.
+The `aria-label` is not optional on an icon-only control — the icon carries no text.
+
+## No Close Button
+
+Leave it out. `Esc` and the backdrop still dismiss the dialog, so the user is never trapped.
+
+<Preview src="dialog/no-close" />
+
+To stop the backdrop dismissing it — when clicking away would lose work — add
+`data-pk-dialog-static`:
 
 <Preview src="dialog/static-backdrop" />
 
-## With a form
+## Sticky Footer
+
+The footer is already full-bleed: it cancels the dialog's padding, carries a top border and its own
+surface. In a scrolling dialog it scrolls with the content rather than pinning, which keeps the
+whole panel one scroll context instead of two.
+
+## Scrollable Content
+
+The panel caps at the viewport height minus a margin and scrolls past that. Nothing to configure.
+
+<Preview src="dialog/scrollable" />
+
+## With a Form
 
 <Preview src="dialog/with-a-form" />
 
@@ -71,7 +103,7 @@ Use it when dismissing by accident would lose work.
 
 ```js
 document.getElementById("demo-dialog").addEventListener("pk:dialog:close", (event) => {
-  if (event.detail.returnValue === "confirm") deleteProject();
+  if (event.detail.returnValue === "save") save();
 });
 ```
 
@@ -81,8 +113,20 @@ document.getElementById("demo-dialog").addEventListener("pk:dialog:close", (even
 import { openDialog, closeDialog } from "partialkit";
 
 openDialog("demo-dialog", triggerElement); // triggerElement gets focus back on close
-closeDialog("demo-dialog", "confirm");
+closeDialog("demo-dialog", "save");
 ```
 
 Pass the opener when you open a dialog from code. WebKit does not focus a button when it is
 clicked, so `document.activeElement` alone is not a reliable record of where focus should return.
+
+## Accessibility
+
+Most of it is the platform's, but three things are yours:
+
+- **A title.** `.dialog-title` becomes the accessible name. A dialog without one is announced as
+  just "dialog".
+- **A heading level that fits the page**, not one picked for its size.
+- **A name on the close control**, since the icon has none.
+
+Everything else — the focus trap, focus returning to whatever opened it, `Esc`, and the rest of the
+page going inert — comes from `showModal()`, with partialkit filling the gaps where engines differ.

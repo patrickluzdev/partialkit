@@ -17,6 +17,27 @@ announces it as an interruption rather than a container.
 Reach for this one whenever the choice is destructive or otherwise cannot be undone.
 </Aside>
 
+## Usage
+
+```html
+<button class="btn btn-destructive" data-pk-dialog-open="confirm-delete">Delete</button>
+
+<dialog class="alert-dialog" id="confirm-delete">
+  <div class="alert-dialog-header">
+    <h3 class="alert-dialog-title">Delete this project?</h3>
+    <p class="alert-dialog-description">This cannot be undone.</p>
+  </div>
+  <div class="alert-dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+  </div>
+</dialog>
+```
+
+## Composition
+
+<Preview src="alert-dialog/composition" />
+
 ## Parts
 
 | Class | Part |
@@ -39,19 +60,33 @@ Reach for this one whenever the choice is destructive or otherwise cannot be und
 
 The events are the dialog's: `pk:dialog:before-open`, `pk:dialog:open` and `pk:dialog:close`.
 
-## With an icon
+## Basic
+
+<Preview src="alert-dialog/basic" />
+
+## Small
+
+`data-size="sm"` keeps the panel narrow at every width and gives the two actions equal halves,
+which suits a short yes-or-no.
+
+<Preview src="alert-dialog/compact" />
+
+## Media
 
 `.alert-dialog-media` sits above the title on a small screen and moves beside it once there is
 room.
 
 <Preview src="alert-dialog/with-media" />
 
-## Compact
+## Small with Media
 
-`data-size="sm"` keeps the panel narrow at every width and gives the two actions equal halves,
-which suits a short yes-or-no.
+<Preview src="alert-dialog/small-with-media" />
 
-<Preview src="alert-dialog/compact" />
+## Destructive
+
+The confirm button carries the destructive variant, and the description says exactly what is lost.
+
+<Preview src="alert-dialog/destructive" />
 
 ## Writing the question
 

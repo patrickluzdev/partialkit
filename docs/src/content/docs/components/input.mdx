@@ -5,23 +5,80 @@ description: A text input for forms and user data entry.
 
 import Preview from "../../../components/Preview.astro";
 
-<Preview src="input/overview" width="sm" />
+<Preview src="input/basic" width="sm" />
 
-## Types
+## Usage
 
-The class styles a native `<input>`, so every type keeps its own behaviour and mobile keyboard.
+```html
+<input class="input" type="email" placeholder="you@example.com" />
+```
+
+The class styles a native `<input>`, so every type keeps its own behaviour, its own mobile keyboard
+and its own validation.
+
+## Basic
 
 <Preview src="input/types" layout="stack" width="sm" />
 
-## States
+## Field
 
-<Preview src="input/states" layout="stack" width="sm" />
+Pair it with a [field](/components/field/) for a label and help text.
 
-| State | How |
-| --- | --- |
-| Error | `aria-invalid="true"` |
-| Disabled | the native `disabled` attribute |
-| Focus ring | automatic, on `:focus-visible` |
+<Preview src="input/field" width="sm" />
 
-Always pair an input with a [`.label`](/components/label/), or give it an `aria-label` when the
-design has no visible label.
+## Field Group
+
+<Preview src="input/field-group" width="sm" />
+
+## Disabled
+
+<Preview src="input/disabled" width="sm" />
+
+The control stops taking input and dims, and the label inside the same `.field` dims with it —
+read from the control's own state, so there is no second attribute to keep in sync.
+
+## Invalid
+
+<Preview src="input/invalid" width="sm" />
+
+`aria-invalid` on the control recolours the border and the ring. `data-invalid` on the `.field`
+carries it to the label as well. Point `aria-describedby` at the message so it is announced with
+the control.
+
+## File
+
+<Preview src="input/file" width="sm" />
+
+## Inline
+
+`data-orientation="horizontal"` on the field puts the label beside the control.
+
+<Preview src="input/inline" width="sm" />
+
+## Required
+
+<Preview src="input/required" width="sm" />
+
+Mark it in the markup with `required` so the browser and assistive tech both know. A visual marker
+alone is not the same thing — and an asterisk with no explanation is not a label.
+
+## Badge
+
+A badge inside the label is a place for a short qualifier: required, beta, admin only.
+
+## Button Group
+
+Sit an input flush with controls using a [button group](/components/button-group/). The input takes
+the free space.
+
+<Preview src="input/with-button-group" />
+
+## Form
+
+<Preview src="input/form" width="sm" />
+
+## Accessibility
+
+Every input needs a name. A visible `<label>` with `for` is the first choice, because it is also a
+click target. When the design has no visible label, `aria-label` is the fallback — a placeholder is
+not a label, it disappears as soon as the user types.

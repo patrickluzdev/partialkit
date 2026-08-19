@@ -1,0 +1,33 @@
+<button class="btn btn-outline" popovertarget="complex-menu">Account</button>
+
+<div class="dropdown-menu" id="complex-menu" popover style="width: 15rem">
+  <div class="dropdown-menu-label">patrick@example.com</div>
+  <hr class="dropdown-menu-separator" />
+
+  <div class="dropdown-menu-group">
+    <button class="dropdown-menu-item" type="button">
+      Profile <span class="dropdown-menu-shortcut">⇧⌘P</span>
+    </button>
+    <button class="dropdown-menu-item" type="button">
+      Settings <span class="dropdown-menu-shortcut">⌘,</span>
+    </button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+
+  <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button" popovertarget="complex-sub">
+    Invite people
+  </button>
+
+  <div class="dropdown-menu" id="complex-sub" popover style="width: 12rem">
+    <button class="dropdown-menu-item" type="button">Email</button>
+    <button class="dropdown-menu-item" type="button">Copy invite link</button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+
+  <button class="dropdown-menu-item" type="button" data-disabled>API access</button>
+  <button class="dropdown-menu-item" type="button" data-variant="destructive">
+    Sign out <span class="dropdown-menu-shortcut">⇧⌘Q</span>
+  </button>
+</div>

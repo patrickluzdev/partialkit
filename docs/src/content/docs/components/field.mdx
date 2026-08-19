@@ -4,51 +4,138 @@ description: Combine labels, controls and help text into accessible form fields.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="field/overview" width="sm" />
+
+## Usage
+
+```html
+<div class="field">
+  <label class="label" for="email">Email</label>
+  <input class="input" id="email" type="email" />
+  <p class="field-description">We only use it for billing receipts.</p>
+</div>
+```
+
+## Composition
 
 | Class | Part |
 | --- | --- |
 | `.field` | One label, control and its help text |
-| `.field-group` | Several fields stacked with wider spacing |
-| `.field-description` | Help text |
-| `.field-error` | Validation message |
+| `.field-group` | Several fields stacked, and the container a responsive field measures |
 | `.field-set` | A semantic `<fieldset>` with the same spacing |
 | `.field-legend` | Its `<legend>`; `data-variant="legend"` or `"label"` sizes it |
-| `.field-content` | Groups control and description when the label sits beside them |
+| `.field-content` | Groups title and description when the label sits beside the control |
 | `.field-title` | Title with label styling inside `.field-content` |
-| `.field-separator` | Divider between groups |
+| `.field-description` | Help text |
+| `.field-error` | Validation message |
+| `.field-separator` | Divider between sections |
 
-## Error state
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-orientation="horizontal"` | `.field` | Label beside the control |
+| `data-orientation="responsive"` | `.field` | Stacked, switching at the group's width |
+| `data-invalid` | `.field` | Marks the whole block as in error |
+| `data-disabled` | `.field` | Dims the block; a disabled control does this on its own |
 
-Set `aria-invalid` on the control. The border and ring follow, so a server-rendered error needs no
-extra class — and screen readers get the state from the same attribute.
+## Anatomy
 
-<Preview src="field/error-state" width="sm" />
+<Preview src="field/anatomy" width="sm" />
 
-Point `aria-describedby` at the error so it is announced with the control.
+Three parts, in this order: the label names the control, the control is the control, and the
+description explains it. `aria-describedby` is what ties the third to the second — the layout alone
+does not.
 
-## Groups
+## Form
+
+<Preview src="field/form" width="sm" />
+
+## Input
+
+<Preview src="field/input" width="sm" />
+
+## Textarea
+
+<Preview src="field/textarea" width="sm" />
+
+## Select
+
+<Preview src="field/select" width="sm" />
+
+## Fieldset
+
+A `<fieldset>` groups related fields and its `<legend>` names the group. Screen readers announce
+that name with every control inside, which a heading would not do.
+
+<Preview src="field/fieldsets" width="sm" />
+
+## Field Content
+
+When the label sits beside the control, `.field-content` keeps the title and description together
+on one side.
+
+<Preview src="field/content" />
+
+## Field Group
 
 <Preview src="field/groups" width="sm" />
 
 ## Orientation
 
-`data-orientation="horizontal"` puts the label beside the control. `"responsive"` starts stacked and
-switches at the container's width — a container query, so it reacts to its own column rather than the
-viewport, which needs a `.field-group` around it.
-
 <Preview src="field/orientation" layout="stack" />
 
-## Fieldsets
+## Responsive Layout
 
-<Preview src="field/fieldsets" width="sm" />
+`data-orientation="responsive"` starts stacked and switches to a row at the container's width —
+a container query, so it reacts to its own column rather than the viewport. It needs a
+`.field-group` around it to measure.
 
-`data-invalid` on the `.field` marks the whole block, so the label turns with the control instead of
-each part being styled separately.
+<Preview src="field/responsive" width="sm" />
+
+## Validation and Errors
+
+<Preview src="field/validation" width="sm" />
+
+Three attributes do the work, and each has a different job:
+
+| Attribute | On | Does |
+| --- | --- | --- |
+| `aria-invalid="true"` | the control | Announces the control as invalid; recolours border and ring |
+| `aria-describedby` | the control | Points at the message so it is read with the control |
+| `data-invalid` | the `.field` | Carries the error colour to the label |
+
+```html
+<div class="field" data-invalid>
+  <label class="label" for="email">Email</label>
+  <input class="input" id="email" aria-invalid="true" aria-describedby="email-error" />
+  <p class="field-error" id="email-error">Enter a valid email address.</p>
+</div>
+```
+
+Since these are plain attributes, a server-rendered form needs no client-side state — the same
+markup describes the error on the first paint.
+
+<Aside type="caution" title="Colour is not the error">
+`data-invalid` turns things red. The message is what tells the user what went wrong, and
+`aria-describedby` is what gets it read out. A red border on its own says nothing to a screen
+reader, and nothing at all to someone who cannot separate red from grey.
+</Aside>
 
 ## Disabled
 
-A disabled control dims its own label, read from the control's state rather than a marker class.
-
 <Preview src="field/disabled" width="sm" />
+
+## Not here yet
+
+shadcn/ui's Field page also covers Checkbox, Radio, Switch, Slider and Choice Card. Those need
+components partialkit does not have yet — this page grows when they land.
+
+## Accessibility
+
+- **Every control needs a name.** A `<label>` with `for` is the first choice; `aria-label` when
+  there is no visible label.
+- **Tie the description to the control** with `aria-describedby`, or it is just text nearby.
+- **Group related fields** in a `<fieldset>` with a `<legend>` rather than a heading.
+- **Do not disable your way out of a problem.** A disabled control is not focusable, so a keyboard
+  user cannot reach it to find out why it is off. Explain it in a description instead.

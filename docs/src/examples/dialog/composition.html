@@ -1,0 +1,21 @@
+<button class="btn btn-outline" data-pk-dialog-open="composition-dialog">Open</button>
+
+<dialog class="dialog" id="composition-dialog">
+  <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6 6 18M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <div class="dialog-header">
+    <h3 class="dialog-title">Title</h3>
+    <p class="dialog-description">The description sits under the title.</p>
+  </div>
+
+  <p class="card-description">Anything between the header and the footer is the body.</p>
+
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn" data-pk-dialog-close="save">Save</button>
+  </div>
+</dialog>

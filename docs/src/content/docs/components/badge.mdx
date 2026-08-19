@@ -4,14 +4,26 @@ description: Displays a badge or a component that looks like a badge.
 ---
 
 import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
 
 <Preview src="badge/overview" layout="row" />
+
+## Usage
+
+```html
+<span class="badge">Default</span>
+<span class="badge badge-secondary">Secondary</span>
+```
+
+## Variants
+
+<Preview src="badge/variants" layout="row" />
 
 | Class | Use |
 | --- | --- |
 | `.badge` | Default, filled with the primary colour |
 | `.badge-secondary` | Lower emphasis |
-| `.badge-destructive` | Errors and danger states |
+| `.badge-destructive` | Errors and danger states — a wash, not a solid fill |
 | `.badge-outline` | Border only |
 | `.badge-ghost` | No surface until hovered |
 | `.badge-link` | Reads as a link; put it on an `<a>` |
@@ -19,12 +31,48 @@ import Preview from "../../../components/Preview.astro";
 Only `.badge-ghost` and `.badge-link` react to the pointer on their own. The filled variants take a
 hover surface when the badge is an `<a>`, since a plain `<span>` is not something you can activate.
 
-Give an icon `data-icon="inline-start"` or `data-icon="inline-end"` to tighten its spacing on that
-side.
+## With Icon
 
-## With an icon
+Mark the icon with `data-icon="inline-start"` or `data-icon="inline-end"` so the padding tightens on
+that side. An `svg` child is sized to 12px automatically.
 
-<Preview src="badge/with-an-icon" layout="row" />
+<Preview src="badge/with-icon" layout="row" />
 
-A badge is decorative markup. When it carries state a user must know about, put that state in text
-as well, or give the badge an accessible name.
+## With Spinner
+
+<Preview src="badge/with-spinner" layout="row" />
+
+The badge's text already says what is happening, so the [spinner](/components/spinner/) takes
+`aria-hidden="true"` rather than announcing itself a second time.
+
+## Link
+
+<Preview src="badge/link" layout="row" />
+
+An anchor keeps its own semantics — it navigates and is in the tab order. That is also what turns
+on the hover surface for the filled variants.
+
+## Custom Colors
+
+The classes set colour last, so an inline style or a class of your own overrides them. Reach for
+`light-dark()` rather than one fixed pair — partialkit sets `color-scheme` on the root, so the
+function resolves to the theme in use without a media query or a second class.
+
+<Preview src="badge/custom-colors" layout="row" />
+
+<Aside type="caution" title="Check the pair, not the colour">
+A badge is small text. Whatever colours you pick, the text has to reach 4.5:1 against the surface
+you put behind it — the examples above are measured.
+</Aside>
+
+## Accessibility
+
+A badge is decorative markup: it has no role and is not focusable. When it carries state a user
+must know about, put that state in text as well, or give the badge an accessible name.
+
+```html
+<span class="badge badge-destructive">
+  <span class="sr-only">Build status:</span>
+  Failed
+</span>
+```

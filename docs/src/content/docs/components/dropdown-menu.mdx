@@ -46,6 +46,17 @@ the panel and adds the WAI-ARIA menu button pattern: roles, `aria-expanded`, arr
 The panel flips above the trigger when there is not enough room below, and is clamped to stay
 inside the viewport.
 
+## Basic
+
+<Preview src="dropdown-menu/basic" />
+
+## Shortcuts
+
+`.dropdown-menu-shortcut` pushes a key hint to the trailing edge. It is a hint, not a binding —
+register the actual shortcut yourself.
+
+<Preview src="dropdown-menu/shortcuts" />
+
 ## Alignment
 
 <Preview src="dropdown-menu/alignment" layout="row" />
@@ -81,6 +92,29 @@ parent and child, so opening the submenu does not dismiss the menu it came from.
 
 `→` opens a submenu and focuses its first item; `←` closes it and returns to the trigger. Moving
 the pointer to a different item closes it too.
+
+## Checkboxes Icons
+
+An item can carry both: the indicator on the trailing edge and its own icon inline.
+
+<Preview src="dropdown-menu/checkboxes-icons" />
+
+## Radio Icons
+
+<Preview src="dropdown-menu/radio-icons" />
+
+## Destructive
+
+`data-variant="destructive"` recolours the item and its icon, and gives it a destructive surface
+when focused.
+
+<Preview src="dropdown-menu/destructive" />
+
+## Complex
+
+Labels, groups, shortcuts, a submenu, a disabled item and a destructive action in one menu.
+
+<Preview src="dropdown-menu/complex" />
 
 ## Keyboard
 
