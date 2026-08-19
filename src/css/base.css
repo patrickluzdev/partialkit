@@ -30,7 +30,7 @@
 @media (prefers-reduced-motion: reduce) {
   .dialog,
   .dialog::backdrop,
-  .menu {
+  .dropdown-menu {
     transition-duration: 1ms;
   }
 }

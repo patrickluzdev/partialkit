@@ -2,9 +2,11 @@
   .dialog {
     @apply fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] sm:max-w-lg;
     @apply -translate-x-1/2 -translate-y-1/2;
-    @apply grid gap-4 rounded-lg border bg-background p-6 text-foreground shadow-lg;
-    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto p-6;
+    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border p-6;
+    @apply bg-background text-foreground shadow-lg;
 
+    /* A closed <dialog> is display:none by UA rule; only [open] may set a layout display. */
+    display: none;
     opacity: 0;
     scale: 0.96;
     transition:
@@ -15,6 +17,7 @@
   }
 
   .dialog[open] {
+    @apply grid gap-4;
     opacity: 1;
     scale: 1;
   }
@@ -41,7 +44,7 @@
 
   @starting-style {
     .dialog[open]::backdrop {
-      opacity: 1;
+      opacity: 0;
     }
   }
 
@@ -55,10 +58,6 @@
 
   .dialog-description {
     @apply text-sm text-muted-foreground;
-  }
-
-  .dialog-body {
-    @apply grid gap-4;
   }
 
   .dialog-footer {

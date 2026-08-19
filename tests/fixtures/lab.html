@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>partialkit lab</title>
+    <!-- Loads the standalone build, so this page also proves dist/ works with no Tailwind utilities. -->
+    <link rel="stylesheet" href="/dist/partialkit.css" />
+    <script type="module" src="/dist/partialkit.js"></script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 1.5rem;
+      }
+      section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 1rem 0;
+      }
+      h2 {
+        width: 100%;
+        margin: 0;
+        font-size: 0.875rem;
+      }
+      #bottom-anchor {
+        margin-top: 90vh;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>partialkit lab</h1>
+
+    <section>
+      <h2>Theme</h2>
+      <button class="btn" data-pk-theme id="theme-toggle">Toggle</button>
+      <button class="btn" data-pk-theme="dark" id="theme-dark">Dark</button>
+      <button class="btn" data-pk-theme="light" id="theme-light">Light</button>
+      <button class="btn" data-pk-theme="system" id="theme-system">System</button>
+    </section>
+
+    <section>
+      <h2>Dialog</h2>
+      <button class="btn" data-pk-dialog-open="basic" id="open-basic">Open basic</button>
+      <dialog class="dialog" id="basic">
+        <div class="dialog-header">
+          <h3 class="dialog-title">Basic dialog</h3>
+          <p class="dialog-description">Describes the basic dialog.</p>
+        </div>
+        <div class="field">
+          <label class="label" for="basic-input">Basic field</label>
+          <input class="input" id="basic-input" name="basic" />
+        </div>
+        <div class="dialog-footer">
+          <button class="btn btn-outline" data-pk-dialog-close id="basic-cancel">Cancel</button>
+          <button class="btn" data-pk-dialog-close="confirmed" id="basic-confirm">Confirm</button>
+        </div>
+      </dialog>
+
+      <button class="btn" data-pk-dialog-open="static" id="open-static">Open static</button>
+      <dialog class="dialog" id="static" data-pk-dialog-static>
+        <div class="dialog-header">
+          <h3 class="dialog-title">Static dialog</h3>
+        </div>
+        <div class="dialog-footer">
+          <button class="btn" data-pk-dialog-close id="static-close">Close</button>
+        </div>
+      </dialog>
+
+      <button class="btn" data-pk-dialog-open="labelled" id="open-labelled">Open pre-labelled</button>
+      <dialog class="dialog" id="labelled" aria-labelledby="custom-label">
+        <div class="dialog-header">
+          <h3 class="dialog-title" id="custom-label">Author-set label</h3>
+        </div>
+        <div class="dialog-footer">
+          <button class="btn" data-pk-dialog-close>Close</button>
+        </div>
+      </dialog>
+    </section>
+
+    <section>
+      <h2>Dropdown Menu</h2>
+      <button class="btn" popovertarget="start-menu" id="start-trigger">Start</button>
+      <div class="dropdown-menu" id="start-menu" popover style="width: 12rem">
+        <div class="dropdown-menu-label">Group</div>
+        <hr class="dropdown-menu-separator" />
+        <button class="dropdown-menu-item" type="button">Alpha</button>
+        <button class="dropdown-menu-item" type="button">Beta</button>
+        <button class="dropdown-menu-item" type="button" data-disabled>Gamma</button>
+        <button class="dropdown-menu-item" type="button">Delta</button>
+        <button class="dropdown-menu-item" type="button" data-pk-keep-open id="sticky-item">Sticky</button>
+      </div>
+
+      <button class="btn" popovertarget="offset-menu" id="offset-trigger">Offset 24</button>
+      <div class="dropdown-menu" id="offset-menu" popover data-pk-offset="24" style="width: 12rem">
+        <button class="dropdown-menu-item" type="button">Far below</button>
+      </div>
+    </section>
+
+    <section style="justify-content: flex-end">
+      <h2>End aligned</h2>
+      <button class="btn" popovertarget="end-menu" id="end-trigger">End aligned</button>
+      <div class="dropdown-menu" id="end-menu" popover data-pk-placement="bottom-end" style="width: 12rem">
+        <button class="dropdown-menu-item" type="button">Right edge</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Swap</h2>
+      <button class="btn" id="swap">Swap</button>
+      <button class="btn" id="remove">Remove</button>
+      <div id="swap-target">empty</div>
+    </section>
+
+    <section id="bottom-anchor">
+      <h2>Flip</h2>
+      <button class="btn" popovertarget="flip-menu" id="flip-trigger">Near the bottom</button>
+      <div class="dropdown-menu" id="flip-menu" popover style="width: 12rem">
+        <button class="dropdown-menu-item" type="button">One</button>
+        <button class="dropdown-menu-item" type="button">Two</button>
+        <button class="dropdown-menu-item" type="button">Three</button>
+      </div>
+    </section>
+
+    <template id="swapped">
+      <button class="btn" data-pk-dialog-open="swapped-dialog" id="swapped-open">Swapped dialog</button>
+      <dialog class="dialog" id="swapped-dialog">
+        <div class="dialog-header">
+          <h3 class="dialog-title">Swapped in</h3>
+        </div>
+        <div class="dialog-footer">
+          <button class="btn" data-pk-dialog-close id="swapped-close">Close</button>
+        </div>
+      </dialog>
+      <button class="btn" popovertarget="swapped-menu" id="swapped-trigger">Swapped menu</button>
+      <div class="dropdown-menu" id="swapped-menu" popover style="width: 12rem">
+        <button class="dropdown-menu-item" type="button">Swapped item</button>
+      </div>
+    </template>
+
+    <script type="module">
+      const template = document.getElementById("swapped");
+      const target = document.getElementById("swap-target");
+
+      document.getElementById("swap").addEventListener("click", () => {
+        target.replaceChildren(template.content.cloneNode(true));
+      });
+      document.getElementById("remove").addEventListener("click", () => {
+        target.replaceChildren("empty");
+      });
+    </script>
+  </body>
+</html>

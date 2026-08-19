@@ -4,7 +4,12 @@
   }
 
   .card-header {
-    @apply flex flex-col gap-1.5 px-6;
+    @apply grid auto-rows-min items-start gap-1.5 px-6;
+    @apply has-[.card-action]:grid-cols-[1fr_auto];
+  }
+
+  .card-action {
+    @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
   }
 
   .card-title {

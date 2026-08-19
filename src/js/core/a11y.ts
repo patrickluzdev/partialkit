@@ -20,6 +20,12 @@ export function setDefaultAttribute(element: Element, name: string, value: strin
   if (!element.hasAttribute(name)) element.setAttribute(name, value);
 }
 
+/** True when focus fell back to the document instead of landing on a control. */
+export function focusIsLoose(): boolean {
+  const active = document.activeElement;
+  return !active || active === document.body || active === document.documentElement;
+}
+
 export function focusableWithin(container: ParentNode): HTMLElement[] {
   return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE));
 }

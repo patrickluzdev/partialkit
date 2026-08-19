@@ -1,4 +1,4 @@
-import { createTypeahead, ensureId, setDefaultAttribute } from "../core/a11y.js";
+import { createTypeahead, ensureId, focusIsLoose, setDefaultAttribute } from "../core/a11y.js";
 import type { Cleanup, Component } from "../core/types.js";
 
 type Placement = "bottom-start" | "bottom-end" | "top-start" | "top-end";
@@ -7,14 +7,14 @@ interface ToggleLikeEvent extends Event {
   readonly newState: string;
 }
 
-const ITEM_SELECTOR = ".menu-item";
-const ENABLED_ITEM_SELECTOR = ".menu-item:not([aria-disabled='true'])";
+const ITEM_SELECTOR = ".dropdown-menu-item";
+const ENABLED_ITEM_SELECTOR = ".dropdown-menu-item:not([aria-disabled='true'])";
 const DEFAULT_OFFSET = 4;
 const VIEWPORT_PADDING = 8;
 
-export const menu: Component = {
-  name: "menu",
-  selector: ".menu[popover]",
+export const dropdownMenu: Component = {
+  name: "dropdown-menu",
+  selector: ".dropdown-menu[popover]",
 
   mount(element) {
     const typeahead = createTypeahead();
@@ -25,14 +25,18 @@ export const menu: Component = {
     const onToggle = (event: Event) => {
       const open = (event as ToggleLikeEvent).newState === "open";
       const trigger = triggerOf(element);
+      const state = open ? "open" : "closed";
+      element.setAttribute("data-state", state);
+      trigger?.setAttribute("data-state", state);
       trigger?.setAttribute("aria-expanded", String(open));
 
       if (!open) {
         detachReposition?.();
         detachReposition = undefined;
 
-        // The popover only restores focus on light dismiss, not on item activation.
-        if (element.contains(document.activeElement)) trigger?.focus();
+        // The popover restores focus on light dismiss in some engines only, and
+        // never when an item was activated.
+        if (element.contains(document.activeElement) || focusIsLoose()) trigger?.focus();
         return;
       }
 
@@ -50,7 +54,11 @@ export const menu: Component = {
 
     const onKeydown = (event: KeyboardEvent) => {
       if (event.key === "Tab") {
+        // The default action would move focus on before the async toggle runs,
+        // so the trigger is restored here instead.
+        event.preventDefault();
         element.hidePopover();
+        triggerOf(element)?.focus();
         return;
       }
 
@@ -118,8 +126,8 @@ function items(element: HTMLElement): HTMLElement[] {
 function applyRoles(element: HTMLElement): void {
   setDefaultAttribute(element, "role", "menu");
 
-  const label = element.querySelector(".menu-label");
-  if (label) setDefaultAttribute(element, "aria-labelledby", ensureId(label, "pk-menu-label"));
+  const label = element.querySelector(".dropdown-menu-label");
+  if (label) setDefaultAttribute(element, "aria-labelledby", ensureId(label, "pk-dropdown-menu-label"));
 
   for (const item of element.querySelectorAll<HTMLElement>(ITEM_SELECTOR)) {
     setDefaultAttribute(item, "role", "menuitem");
@@ -131,7 +139,7 @@ function applyRoles(element: HTMLElement): void {
     }
   }
 
-  for (const separator of element.querySelectorAll(".menu-separator")) {
+  for (const separator of element.querySelectorAll(".dropdown-menu-separator")) {
     setDefaultAttribute(separator, "role", "separator");
   }
 }
@@ -141,8 +149,12 @@ function prepareTrigger(element: HTMLElement): void {
   if (!trigger) return;
 
   setDefaultAttribute(trigger, "aria-haspopup", "menu");
-  setDefaultAttribute(trigger, "aria-controls", ensureId(element, "pk-menu"));
-  trigger.setAttribute("aria-expanded", String(element.matches(":popover-open")));
+  setDefaultAttribute(trigger, "aria-controls", ensureId(element, "pk-dropdown-menu"));
+  const open = element.matches(":popover-open");
+  const state = open ? "open" : "closed";
+  element.setAttribute("data-state", state);
+  trigger.setAttribute("data-state", state);
+  trigger.setAttribute("aria-expanded", String(open));
 }
 
 function triggerOf(element: HTMLElement): HTMLElement | null {

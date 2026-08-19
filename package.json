@@ -50,11 +50,20 @@
     "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\"",
     "dev": "npm run build && npm run build:site && node site/serve.js",
     "watch:site": "tailwindcss -i site/site.css -o site/dist/site.css --watch",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",
+    "test": "playwright test --grep-invert @visual",
+    "test:visual": "playwright test --grep @visual",
+    "test:all": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:update": "playwright test --grep @visual --update-snapshots",
+    "test:docker": "docker run --rm --network host -v \"$PWD\":/work -w /work mcr.microsoft.com/playwright:v1.62.1-noble npx playwright test",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/cli": "^4.3.3",
+    "@types/node": "^26.2.0",
     "esbuild": "^0.28.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2"

@@ -1,0 +1,21 @@
+@layer components {
+  .field {
+    @apply flex w-full flex-col gap-2;
+  }
+
+  .field-group {
+    @apply flex w-full flex-col gap-6;
+  }
+
+  .field-description {
+    @apply text-sm leading-normal font-normal text-muted-foreground;
+  }
+
+  .field-error {
+    @apply text-sm font-normal text-destructive;
+  }
+
+  .field-separator {
+    @apply h-px w-full bg-border;
+  }
+}

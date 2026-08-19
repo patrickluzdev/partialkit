@@ -193,7 +193,7 @@ cp node_modules/partialkit/dist/partialkit.min.js  static/</code></pre>
         <article class="flex flex-col gap-3" data-example id="card">
           <div class="flex items-end justify-between gap-4">
             <div>
-              <h3 class="font-medium">Card &amp; form</h3>
+              <h3 class="font-medium">Card, Field &amp; Input</h3>
               <p class="text-sm text-muted-foreground">
                 Inputs read <code class="text-xs">aria-invalid</code> for their error state, so server-side
                 validation needs no extra class.
@@ -218,7 +218,7 @@ cp node_modules/partialkit/dist/partialkit.min.js  static/</code></pre>
                 </div>
                 <div class="field">
                   <label class="label" for="role">Role</label>
-                  <select class="select" id="role" name="role">
+                  <select class="native-select" id="role" name="role">
                     <option>Developer</option>
                     <option>Designer</option>
                   </select>
@@ -280,10 +280,10 @@ cp node_modules/partialkit/dist/partialkit.min.js  static/</code></pre>
           ><code></code></pre>
         </article>
 
-        <article class="flex flex-col gap-3" data-example id="menu">
+        <article class="flex flex-col gap-3" data-example id="dropdown-menu">
           <div class="flex items-end justify-between gap-4">
             <div>
-              <h3 class="font-medium">Menu</h3>
+              <h3 class="font-medium">Dropdown Menu</h3>
               <p class="text-sm text-muted-foreground">
                 Built on the popover API. Opening and light dismiss are native; partialkit positions it and adds
                 the WAI-ARIA menu button pattern — roles, <code class="text-xs">aria-expanded</code>, arrow keys,
@@ -298,14 +298,14 @@ cp node_modules/partialkit/dist/partialkit.min.js  static/</code></pre>
           </div>
           <div class="rounded-lg border p-6" data-panel="preview">
             <button class="btn btn-outline" popovertarget="account-menu">Account</button>
-            <div class="menu w-52" id="account-menu" popover data-pk-placement="bottom-start">
-              <div class="menu-label">My account</div>
-              <hr class="menu-separator" />
-              <button class="menu-item" type="button">Profile <span class="menu-shortcut">⇧P</span></button>
-              <button class="menu-item" type="button">Settings</button>
-              <button class="menu-item" type="button" data-disabled>Billing</button>
-              <hr class="menu-separator" />
-              <button class="menu-item menu-item-destructive" type="button">Sign out</button>
+            <div class="dropdown-menu w-52" id="account-menu" popover data-pk-placement="bottom-start">
+              <div class="dropdown-menu-label">My account</div>
+              <hr class="dropdown-menu-separator" />
+              <button class="dropdown-menu-item" type="button">Profile <span class="dropdown-menu-shortcut">⇧P</span></button>
+              <button class="dropdown-menu-item" type="button">Settings</button>
+              <button class="dropdown-menu-item" type="button" data-disabled>Billing</button>
+              <hr class="dropdown-menu-separator" />
+              <button class="dropdown-menu-item" data-variant="destructive" type="button">Sign out</button>
             </div>
           </div>
           <pre
@@ -377,8 +377,8 @@ cp node_modules/partialkit/dist/partialkit.min.js  static/</code></pre>
       <div class="flex flex-wrap items-center gap-2">
         <button class="btn btn-sm" data-pk-dialog-open="swapped-dialog">Dialog from replaced HTML</button>
         <button class="btn btn-sm btn-outline" popovertarget="swapped-menu">Menu from replaced HTML</button>
-        <div class="menu w-44" id="swapped-menu" popover>
-          <button class="menu-item" type="button">Still mounted</button>
+        <div class="dropdown-menu w-44" id="swapped-menu" popover>
+          <button class="dropdown-menu-item" type="button">Still mounted</button>
         </div>
       </div>
       <dialog class="dialog" id="swapped-dialog">

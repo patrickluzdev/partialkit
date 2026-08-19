@@ -8,7 +8,7 @@ Tailwind CSS classes plus a small ESM runtime, built for htmx and Go templates. 
 - **shadcn tokens** — the same OKLCH variables (`--background`, `--primary`, `--radius`, …), so themes port over.
 - **Accessible by construction** — the platform handles focus trapping, Escape and the top layer; partialkit adds the WAI-ARIA roles, states and keyboard patterns on top. See [Accessibility](#accessibility).
 - **htmx-safe** — triggers use event delegation; anything needing per-element state is mounted by a MutationObserver. Swapped markup just works, with no re-init call.
-- **~7 kB of JS**, minified and unzipped.
+- **~8 kB of JS**, minified and unzipped.
 
 ## Install
 
@@ -84,16 +84,34 @@ Inputs style their error state from `aria-invalid`, so a re-render needs no extr
 
 ## Components
 
+Component and part names follow shadcn/ui, so what you know there maps over directly.
+
 | Component | Classes | JS |
 | --- | --- | --- |
-| Button | `.btn` + `.btn-secondary` `.btn-outline` `.btn-ghost` `.btn-destructive` `.btn-link` `.btn-sm` `.btn-lg` `.btn-icon` | — |
-| Badge | `.badge` + `.badge-secondary` `.badge-destructive` `.badge-outline` | — |
 | Alert | `.alert` `.alert-title` `.alert-description` + `.alert-destructive` | — |
-| Card | `.card` `.card-header` `.card-title` `.card-description` `.card-content` `.card-footer` | — |
-| Form | `.field` `.label` `.input` `.textarea` `.select` `.field-description` `.field-error` | — |
-| Dialog | `.dialog` `.dialog-header` `.dialog-title` `.dialog-description` `.dialog-body` `.dialog-footer` | yes |
-| Menu | `.menu` `.menu-item` `.menu-label` `.menu-separator` `.menu-shortcut` + `.menu-item-destructive` | yes |
+| Badge | `.badge` + `.badge-secondary` `.badge-destructive` `.badge-outline` | — |
+| Button | `.btn` + `.btn-secondary` `.btn-outline` `.btn-ghost` `.btn-destructive` `.btn-link` `.btn-sm` `.btn-lg` `.btn-icon` | — |
+| Card | `.card` `.card-header` `.card-title` `.card-description` `.card-action` `.card-content` `.card-footer` | — |
+| Dialog | `.dialog` `.dialog-header` `.dialog-title` `.dialog-description` `.dialog-footer` | yes |
+| Dropdown Menu | `.dropdown-menu` `.dropdown-menu-item` `.dropdown-menu-label` `.dropdown-menu-separator` `.dropdown-menu-shortcut` | yes |
+| Field | `.field` `.field-group` `.field-description` `.field-error` `.field-separator` | — |
+| Input | `.input` | — |
+| Label | `.label` | — |
+| Native Select | `.native-select` | — |
+| Textarea | `.textarea` | — |
 | Utility | `.sr-only` | — |
+
+### States
+
+States follow shadcn/ui too, so the same selectors work:
+
+| Attribute | Set on | Meaning |
+| --- | --- | --- |
+| `data-state="open" \| "closed"` | dialogs, dropdown menus, and their triggers | Managed by partialkit. |
+| `data-variant="destructive"` | `.dropdown-menu-item` | Destructive item styling. |
+| `data-inset` | `.dropdown-menu-item`, `.dropdown-menu-label` | Aligns with items that have icons. |
+| `data-disabled` | `.dropdown-menu-item` | You set it; partialkit mirrors it to `aria-disabled`. |
+| `aria-invalid` | `.input`, `.textarea`, `.native-select` | You set it; drives the error styling. |
 
 ### Dialog
 
@@ -118,20 +136,20 @@ Inputs style their error state from `aria-invalid`, so a re-render needs no extr
 
 Events: `pk:dialog:before-open` (cancelable), `pk:dialog:open`, `pk:dialog:close`.
 
-### Menu
+### Dropdown Menu
 
-The trigger uses the native `popovertarget`, so opening and light dismiss need no JS at all. partialkit positions the panel and adds the [menu button pattern](#menu-keyboard-support) on top.
+The trigger uses the native `popovertarget`, so opening and light dismiss need no JS at all. partialkit positions the panel and adds the [menu button pattern](#dropdown-menu-keyboard-support) on top.
 
 ```html
 <button class="btn btn-outline" popovertarget="account-menu">Account</button>
 
-<div class="menu w-52" id="account-menu" popover data-pk-placement="bottom-start">
-  <div class="menu-label">My account</div>
-  <hr class="menu-separator" />
-  <button class="menu-item" type="button">Profile</button>
-  <button class="menu-item" type="button" data-disabled>Billing</button>
-  <hr class="menu-separator" />
-  <button class="menu-item menu-item-destructive" type="button">Sign out</button>
+<div class="dropdown-menu w-52" id="account-menu" popover data-pk-placement="bottom-start">
+  <div class="dropdown-menu-label">My account</div>
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button">Profile</button>
+  <button class="dropdown-menu-item" type="button" data-disabled>Billing</button>
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button" data-variant="destructive">Sign out</button>
 </div>
 ```
 
@@ -166,10 +184,10 @@ Add this to `<head>` to avoid a flash before the runtime loads:
 `partialkit/auto` registers every component and starts the observer on load. Import `partialkit` instead when you want to pick components yourself:
 
 ```js
-import { register, start, dialog, menu } from "partialkit";
+import { register, start, dialog, dropdownMenu } from "partialkit";
 
 register(dialog);
-register(menu);
+register(dropdownMenu);
 start();
 ```
 
@@ -179,8 +197,8 @@ start();
 | `start({ root })` | Mounts everything under `root` and observes it. Defaults to `document.body`. |
 | `mount(root)` / `unmount(root)` | Manual control, if you would rather not observe. |
 | `stop()` | Disconnects the observer and runs every cleanup. |
-| `openDialog(id)` / `closeDialog(id, value)` | Programmatic dialog control. |
-| `ensureId`, `setDefaultAttribute`, `focusableWithin`, `focusFirst`, `createTypeahead` | ARIA helpers, for your own components. |
+| `openDialog(id, opener?)` / `closeDialog(id, value)` | Programmatic dialog control. `opener` is the element focus returns to. |
+| `ensureId`, `setDefaultAttribute`, `focusIsLoose`, `focusableWithin`, `focusFirst`, `createTypeahead` | ARIA helpers, for your own components. |
 | `getTheme()` / `setTheme(theme)` / `applyTheme()` | Theme control. |
 
 ### Custom components
@@ -210,17 +228,18 @@ shadcn/ui gets its behaviour from Radix (now Base UI), which is React-only. part
 | Concern | Where it comes from |
 | --- | --- |
 | Modal semantics, focus trap, `Esc`, background `inert`, focus restore | `<dialog>.showModal()` |
-| Menu top layer, light dismiss, focus restore on dismiss | popover API |
+| Menu top layer, light dismiss, focus restore on dismiss | popover API (partialkit fills the WebKit gap) |
 | `aria-labelledby` / `aria-describedby` on dialogs | wired from `.dialog-title` / `.dialog-description` |
 | `role="menu"`, `role="menuitem"`, `role="separator"`, `aria-labelledby` | applied on mount and on every open |
+| `data-state="open" \| "closed"` on overlays and triggers | kept in sync by the runtime |
 | `aria-haspopup`, `aria-controls`, `aria-expanded` on the trigger | applied on mount, kept in sync on toggle |
-| `data-disabled` mirrored to `aria-disabled`, skipped by keyboard nav | menu runtime |
+| `data-disabled` mirrored to `aria-disabled`, skipped by keyboard nav | dropdown menu runtime |
 | Focus visible rings, `:disabled` styling, `aria-invalid` error state | component CSS, on native elements |
 | `prefers-reduced-motion` | transitions collapse to 1 ms |
 
 Attributes you set yourself are never overwritten — every ARIA attribute is applied only when absent.
 
-### Menu keyboard support
+### Dropdown Menu keyboard support
 
 | Key | Action |
 | --- | --- |
@@ -266,12 +285,40 @@ npm run watch:site # rebuild the site CSS on change
 npm run typecheck
 ```
 
+### Tests
+
+The components are built on `<dialog>`, the popover API and real focus order, none of
+which jsdom or happy-dom implement faithfully, so everything runs in real browsers
+through Playwright — Chromium, Firefox and WebKit.
+
+```sh
+npm test           # behaviour + accessibility, all three engines
+npm run test:visual # screenshot regression, chromium only
+npm run test:all    # both
+npm run test:ui     # Playwright UI mode
+npm run test:update # re-record visual baselines
+```
+
+Accessibility is enforced, not just documented: `tests/a11y.spec.ts` runs axe-core
+against the site and the fixture page in light and dark mode, and again with a dialog
+and a menu open. A WCAG violation fails the build.
+
+Visual baselines live in `tests/__screenshots__/{platform}/` because rendering differs
+per OS. CI runs inside the Playwright container; `npm run test:docker` reproduces that
+environment locally.
+
+| Path | Contents |
+| --- | --- |
+| `tests/fixtures/lab.html` | Edge-case fixture, loaded from `dist/` so it also proves the standalone build. |
+| `tests/*.spec.ts` | Behaviour, accessibility and visual specs. |
+
 | Path | Contents |
 | --- | --- |
 | `src/css/` | Tokens, base layer, one file per component. |
 | `src/js/core/` | Registry, DOM helpers, ARIA helpers, component contract. |
 | `src/js/components/` | Component behaviours. |
 | `site/` | Component gallery with copyable markup. |
+| `tests/` | Playwright specs and the lab fixture. |
 | `dist/` | Build output (git-ignored). |
 
 ## License

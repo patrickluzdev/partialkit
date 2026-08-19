@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # The image ships the browsers, so the suite runs on the same engines locally and here.
+    container: mcr.microsoft.com/playwright:v1.62.1-noble
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,3 +20,11 @@ jobs:
       - run: npm run typecheck
       - run: npm run build
       - run: npm run build:site
+      # Visual baselines are per platform; only linux ones are comparable here.
+      - run: npm test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

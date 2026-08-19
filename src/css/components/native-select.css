@@ -1,0 +1,9 @@
+@layer components {
+  .native-select {
+    @apply flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs;
+    @apply transition-[color,box-shadow] outline-none md:text-sm;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20;
+  }
+}
