@@ -1,0 +1,29 @@
+@layer components {
+  /* An unstyled disclosure: <details> with the marker removed, so whatever is
+     put inside keeps its own layout. */
+  .collapsible {
+    interpolate-size: allow-keywords;
+  }
+
+  .collapsible-trigger {
+    list-style: none;
+  }
+
+  .collapsible-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  @supports selector(::details-content) {
+    .collapsible::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 200ms ease,
+        content-visibility 200ms allow-discrete;
+    }
+
+    .collapsible[open]::details-content {
+      block-size: auto;
+    }
+  }
+}

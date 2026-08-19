@@ -1,0 +1,90 @@
+---
+title: Tabs
+description: A set of layered sections of content — known as tab panels — that are displayed one at a time.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="tabs/overview" />
+
+## Usage
+
+```html
+<div class="tabs">
+  <div class="tabs-list">
+    <button class="tabs-trigger" type="button">Account</button>
+    <button class="tabs-trigger" type="button">Password</button>
+  </div>
+
+  <div class="tabs-content">…</div>
+  <div class="tabs-content">…</div>
+</div>
+```
+
+Triggers and panels are paired in order, so there are no ids to keep in sync. partialkit adds the
+roles, the roving tab order and the arrow keys; write `aria-controls` yourself if the panels are
+not siblings of the list.
+
+| Class | Part |
+| --- | --- |
+| `.tabs` | The wrapper |
+| `.tabs-list` | The row of triggers |
+| `.tabs-trigger` | One tab |
+| `.tabs-content` | Its panel |
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-variant="line"` | `.tabs-list` | Underline instead of the raised pill |
+| `data-orientation="vertical"` | `.tabs` | List beside the panel, arrows move up and down |
+| `data-activation="manual"` | `.tabs` | Arrows move focus; Enter or Space selects |
+| `data-active` | `.tabs-trigger` | Which tab starts selected |
+| `disabled` | `.tabs-trigger` | Skipped by the arrow keys |
+
+## Variants
+
+<Preview src="tabs/variants" />
+
+## Vertical
+
+<Preview src="tabs/vertical" />
+
+## With icons
+
+<Preview src="tabs/icons" />
+
+## Events
+
+Selecting a tab fires `pk:tabs:change` on the trigger, carrying `data-value` — enough to load a
+panel's contents on first open.
+
+```js
+document.addEventListener("pk:tabs:change", (event) => {
+  console.log(event.detail.value);
+});
+```
+
+<Aside title="Tabs or separate pages?">
+Tabs are for **alternative views of one thing**, where the choice is not worth a URL. If the
+sections can be linked to, bookmarked or arrived at from search, they are pages — and a
+[breadcrumb](/components/breadcrumb/) or nav serves them better than a tab strip.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the arrow keys follow the reading direction, so
+Left moves forward. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The list is a `tablist`, each trigger a `tab`, each panel a `tabpanel`** — applied for you,
+  along with `aria-selected` and `aria-controls`.
+- **One stop in the tab order.** Tab reaches the selected trigger, then the panel; arrows move
+  between tabs. Tabbing through six triggers to reach the content is the mistake this pattern
+  exists to avoid.
+- **Panels are focusable.** `tabindex="0"` means a panel with nothing but text can still be
+  reached and scrolled by keyboard.
+- **Automatic activation by default**, which matches the platform and shadcn/ui. Switch to
+  `data-activation="manual"` when a panel is expensive to load, so arrowing past it costs nothing.
+- **A disabled tab stays announced.** It is skipped by the arrow keys but still read, which tells
+  people it exists — unlike removing it.

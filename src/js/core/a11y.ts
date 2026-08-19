@@ -30,9 +30,11 @@ export function focusableWithin(container: ParentNode): HTMLElement[] {
   return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE));
 }
 
-export function focusFirst(container: HTMLElement): void {
+/** Focuses the first control inside a container. False when there is none. */
+export function focusFirst(container: HTMLElement): boolean {
   const target = container.querySelector<HTMLElement>("[autofocus]") ?? focusableWithin(container)[0];
   target?.focus();
+  return Boolean(target);
 }
 
 /**

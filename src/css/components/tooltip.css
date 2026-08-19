@@ -1,0 +1,40 @@
+@layer components {
+  .tooltip {
+    @apply z-50 w-fit max-w-xs rounded-md px-3 py-1.5;
+    @apply bg-foreground text-xs text-background outline-none;
+
+    position: fixed;
+    margin: 0;
+    border: 0;
+    inset: auto;
+    opacity: 0;
+    scale: 0.95;
+    transition:
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  .tooltip:popover-open {
+    @apply inline-flex items-center gap-1.5;
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .tooltip:popover-open {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+
+  /* A key inside a tooltip sits on the dark surface, not on the page. */
+  .tooltip .kbd {
+    @apply rounded-sm bg-background/15 text-background;
+  }
+
+  .tooltip:has(.kbd) {
+    @apply pe-1.5;
+  }
+}

@@ -1,0 +1,48 @@
+@layer components {
+  .popover {
+    @apply z-50 w-72 rounded-lg p-2.5;
+    @apply bg-popover text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none;
+
+    position: fixed;
+    margin: 0;
+    inset: auto;
+    opacity: 0;
+    scale: 0.95;
+    transition:
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  /* A closed popover is display:none by UA rule, so only the open state may
+     set a layout display. */
+  .popover:popover-open {
+    @apply flex flex-col gap-2.5;
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .popover:popover-open {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+
+  .popover-header {
+    @apply flex flex-col gap-0.5 text-sm;
+  }
+
+  .popover-title {
+    @apply font-medium;
+  }
+
+  .popover-description {
+    @apply text-muted-foreground;
+  }
+
+  .popover-description a {
+    @apply underline underline-offset-[3px] hover:text-foreground;
+  }
+}

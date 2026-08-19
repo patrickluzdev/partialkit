@@ -32,7 +32,16 @@
   .dialog::backdrop,
   .alert-dialog,
   .alert-dialog::backdrop,
-  .dropdown-menu {
+  .sheet,
+  .sheet::backdrop,
+  .dropdown-menu,
+  .popover,
+  .tooltip,
+  .accordion-icon,
+  .accordion-item::details-content,
+  .collapsible::details-content,
+  .tabs-trigger,
+  .tabs-trigger::after {
     transition-duration: 1ms;
   }
 

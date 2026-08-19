@@ -21,6 +21,9 @@ absent.
 | `aria-haspopup`, `aria-controls`, `aria-expanded` on triggers | kept in sync on toggle |
 | `data-state="open" \| "closed"` on overlays and triggers | the runtime |
 | `data-disabled` mirrored to `aria-disabled`, skipped by keyboard nav | dropdown menu runtime |
+| `role="tab"`, `role="tabpanel"`, `aria-selected`, roving `tabindex` | tabs runtime |
+| `aria-describedby` from a trigger to its tooltip | tooltip runtime |
+| Disclosure semantics on `<details>` / `<summary>` | the browser — accordion and collapsible add none |
 | Focus rings, `:disabled`, `aria-invalid` error state | component CSS, on native elements |
 | `prefers-reduced-motion` | transitions collapse to 1 ms |
 
@@ -57,6 +60,38 @@ The platform is not uniform, and the test suite runs on Chromium, Firefox and We
 
 Disabled items carry `aria-disabled="true"` rather than `disabled`, so a screen reader still
 announces them while arrow navigation skips them.
+
+The same table applies to the [context menu](/components/context-menu/) — it is the same panel,
+opened by right click instead of by a trigger.
+
+### Tabs
+
+| Key | Action |
+| --- | --- |
+| <kbd class="kbd">Tab</kbd> | Reaches the selected tab, then the panel — one stop for the whole list |
+| <kbd class="kbd">←</kbd> / <kbd class="kbd">→</kbd> | Move between tabs, wrapping and skipping disabled ones |
+| <kbd class="kbd">↑</kbd> / <kbd class="kbd">↓</kbd> | The same, when the list is vertical |
+| <kbd class="kbd">Home</kbd> / <kbd class="kbd">End</kbd> | First / last tab |
+| <kbd class="kbd">Enter</kbd> / <kbd class="kbd">Space</kbd> | Selects, under `data-activation="manual"` |
+
+### Popover and Tooltip
+
+| Key | Action |
+| --- | --- |
+| <kbd class="kbd">Esc</kbd> | Closes either one; a popover returns focus to its trigger |
+| <kbd class="kbd">Tab</kbd> | Moves through a popover and out of it — it is not modal |
+
+A tooltip never takes focus: it opens when its trigger is focused and describes it through
+`aria-describedby`.
+
+### Accordion and Collapsible
+
+| Key | Action |
+| --- | --- |
+| <kbd class="kbd">Enter</kbd> / <kbd class="kbd">Space</kbd> | Toggles the section |
+| <kbd class="kbd">Tab</kbd> | Reaches each trigger, then the revealed content |
+
+Both are `<details>`/`<summary>`, so this comes from the browser rather than from partialkit.
 
 ## What is still yours
 

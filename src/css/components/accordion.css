@@ -1,0 +1,63 @@
+@layer components {
+  .accordion {
+    @apply flex w-full flex-col;
+  }
+
+  /* A <details> element: the browser owns the open state and the toggle. */
+  .accordion-item {
+    @apply not-last:border-b;
+
+    /* Lets the disclosure animate from 0 to its content height. */
+    interpolate-size: allow-keywords;
+  }
+
+  .accordion-trigger {
+    @apply relative flex w-full items-start justify-between gap-2 rounded-lg border border-transparent;
+    @apply py-2.5 text-start text-sm font-medium transition-all;
+    @apply outline-none hover:underline;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
+
+    list-style: none;
+  }
+
+  /* Safari still draws the disclosure triangle without this. */
+  .accordion-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion-icon {
+    @apply pointer-events-none ms-auto size-4 shrink-0 text-muted-foreground transition-transform;
+  }
+
+  /* Chevron down when closed, chevron up when open. */
+  .accordion-item[open] > .accordion-trigger .accordion-icon {
+    rotate: 180deg;
+  }
+
+  .accordion-content {
+    @apply pt-0 pb-2.5 text-sm;
+  }
+
+  .accordion-content a {
+    @apply underline underline-offset-[3px] hover:text-foreground;
+  }
+
+  .accordion-content p:not(:last-child) {
+    @apply mb-4;
+  }
+
+  @supports selector(::details-content) {
+    .accordion-item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 200ms ease,
+        content-visibility 200ms allow-discrete;
+    }
+
+    .accordion-item[open]::details-content {
+      block-size: auto;
+    }
+  }
+}

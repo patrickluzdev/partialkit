@@ -484,6 +484,139 @@
       </div>
     </section>
 
+    <section style="display: block">
+      <h2>Accordion</h2>
+      <div class="accordion" id="lab-accordion" style="max-width: 24rem">
+        <details class="accordion-item" name="lab-accordion-group" id="lab-accordion-first" open>
+          <summary class="accordion-trigger" id="lab-accordion-first-trigger">
+            First
+            <svg class="accordion-icon" id="lab-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </summary>
+          <div class="accordion-content" id="lab-accordion-first-content">First body</div>
+        </details>
+        <details class="accordion-item" name="lab-accordion-group" id="lab-accordion-second">
+          <summary class="accordion-trigger" id="lab-accordion-second-trigger">Second</summary>
+          <div class="accordion-content">Second body</div>
+        </details>
+        <details class="accordion-item" name="lab-accordion-group" id="lab-accordion-disabled">
+          <summary class="accordion-trigger" id="lab-accordion-disabled-trigger" aria-disabled="true" tabindex="-1">
+            Disabled
+          </summary>
+          <div class="accordion-content">Never reached</div>
+        </details>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Collapsible</h2>
+      <details class="collapsible" id="lab-collapsible">
+        <summary class="collapsible-trigger" id="lab-collapsible-trigger">Toggle</summary>
+        <div class="collapsible-content" id="lab-collapsible-content">Revealed</div>
+      </details>
+    </section>
+
+    <section>
+      <h2>Popover</h2>
+      <button class="btn btn-outline" popovertarget="lab-popover" id="lab-popover-trigger">Open popover</button>
+      <div class="popover" id="lab-popover" popover data-pk-placement="bottom">
+        <div class="popover-header">
+          <h4 class="popover-title" id="lab-popover-title">Dimensions</h4>
+          <p class="popover-description" id="lab-popover-description">Set the dimensions.</p>
+        </div>
+        <input class="input" id="lab-popover-input" aria-label="Width" value="100%" />
+      </div>
+    </section>
+
+    <section>
+      <h2>Tooltip</h2>
+      <button class="btn btn-outline" id="lab-tooltip-trigger">Hover me</button>
+      <div
+        class="tooltip"
+        id="lab-tooltip"
+        popover="manual"
+        data-pk-anchor="#lab-tooltip-trigger"
+        data-pk-placement="top"
+        data-pk-delay="0"
+      >
+        Add to library
+      </div>
+    </section>
+
+    <section>
+      <h2>Sheet</h2>
+      <button class="btn btn-outline" data-pk-dialog-open="lab-sheet" id="lab-sheet-trigger">Open sheet</button>
+      <dialog class="sheet" id="lab-sheet" data-side="right">
+        <div class="sheet-header">
+          <h3 class="sheet-title" id="lab-sheet-title">Edit profile</h3>
+          <p class="sheet-description" id="lab-sheet-description">Make changes here.</p>
+        </div>
+        <div class="sheet-body">
+          <input class="input" id="lab-sheet-input" aria-label="Name" />
+        </div>
+        <div class="sheet-footer">
+          <button class="btn" data-pk-dialog-close="save" id="lab-sheet-save">Save</button>
+        </div>
+        <button class="btn btn-ghost btn-icon-sm sheet-close" data-pk-dialog-close id="lab-sheet-close">
+          <span class="sr-only">Close</span>
+        </button>
+      </dialog>
+      <dialog class="sheet" id="lab-sheet-left" data-side="left">
+        <div class="sheet-header"><h3 class="sheet-title">Left</h3></div>
+      </dialog>
+      <dialog class="sheet" id="lab-sheet-bottom" data-side="bottom">
+        <div class="sheet-header"><h3 class="sheet-title">Bottom</h3></div>
+      </dialog>
+    </section>
+
+    <section style="display: block">
+      <h2>Context menu</h2>
+      <div
+        id="lab-context-target"
+        data-pk-context-menu="lab-context-menu"
+        style="width: 16rem; height: 6rem; border: 1px dashed currentColor"
+      >
+        Right click
+      </div>
+      <div class="dropdown-menu" id="lab-context-menu" popover style="width: 12rem">
+        <button class="dropdown-menu-item" type="button" id="lab-context-first">Back</button>
+        <button class="dropdown-menu-item" type="button">Reload</button>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Tabs</h2>
+      <div class="tabs" id="lab-tabs" style="max-width: 24rem">
+        <div class="tabs-list" id="lab-tabs-list">
+          <button class="tabs-trigger" type="button" id="lab-tab-one" data-value="one">One</button>
+          <button class="tabs-trigger" type="button" id="lab-tab-two" data-value="two">Two</button>
+          <button class="tabs-trigger" type="button" id="lab-tab-three" data-value="three" disabled>Three</button>
+        </div>
+        <div class="tabs-content" id="lab-panel-one">Panel one</div>
+        <div class="tabs-content" id="lab-panel-two">Panel two</div>
+        <div class="tabs-content" id="lab-panel-three">Panel three</div>
+      </div>
+
+      <div class="tabs" id="lab-tabs-manual" data-activation="manual" style="max-width: 24rem">
+        <div class="tabs-list">
+          <button class="tabs-trigger" type="button" id="lab-manual-one">One</button>
+          <button class="tabs-trigger" type="button" id="lab-manual-two">Two</button>
+        </div>
+        <div class="tabs-content">Manual one</div>
+        <div class="tabs-content">Manual two</div>
+      </div>
+
+      <div class="tabs" id="lab-tabs-vertical" data-orientation="vertical" style="max-width: 24rem">
+        <div class="tabs-list">
+          <button class="tabs-trigger" type="button" id="lab-vertical-one">One</button>
+          <button class="tabs-trigger" type="button" id="lab-vertical-two">Two</button>
+        </div>
+        <div class="tabs-content">Vertical one</div>
+        <div class="tabs-content">Vertical two</div>
+      </div>
+    </section>
+
     <section>
       <h2>Swap</h2>
       <button class="btn" id="swap">Swap</button>

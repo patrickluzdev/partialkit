@@ -1,14 +1,7 @@
 import { createTypeahead, ensureId, focusIsLoose, setDefaultAttribute } from "../core/a11y.js";
+import { anchorOf, position, track } from "../core/anchor.js";
 import { dispatch } from "../core/dom.js";
 import type { Cleanup, Component } from "../core/types.js";
-
-type Placement =
-  | "bottom-start"
-  | "bottom-end"
-  | "top-start"
-  | "top-end"
-  | "right-start"
-  | "left-start";
 
 interface ToggleLikeEvent extends Event {
   readonly newState: string;
@@ -24,10 +17,6 @@ const ENABLED_ITEM = [
   .join(", ");
 
 const SUB_TRIGGER = ".dropdown-menu-sub-trigger";
-const DEFAULT_OFFSET = 4;
-const SIDE_OFFSET = 0;
-const VIEWPORT_PADDING = 8;
-const PANEL_PADDING = 4;
 
 export const dropdownMenu: Component = {
   name: "dropdown-menu",
@@ -59,15 +48,8 @@ export const dropdownMenu: Component = {
       }
 
       applyRoles(element);
-      reposition();
+      detachReposition = track(element, reposition);
       items(element)[0]?.focus();
-
-      window.addEventListener("scroll", reposition, { capture: true, passive: true });
-      window.addEventListener("resize", reposition, { passive: true });
-      detachReposition = () => {
-        window.removeEventListener("scroll", reposition, { capture: true });
-        window.removeEventListener("resize", reposition);
-      };
     };
 
     const onKeydown = (event: KeyboardEvent) => {
@@ -301,58 +283,5 @@ function prepareTrigger(element: HTMLElement): void {
 }
 
 function triggerOf(element: HTMLElement): HTMLElement | null {
-  const selector = element.getAttribute("data-pk-anchor");
-  if (selector) return document.querySelector<HTMLElement>(selector);
-  if (!element.id) return null;
-  return document.querySelector<HTMLElement>(`[popovertarget="${CSS.escape(element.id)}"]`);
-}
-
-function clamp(value: number, max: number): number {
-  return Math.min(Math.max(value, VIEWPORT_PADDING), Math.max(max, VIEWPORT_PADDING));
-}
-
-function position(element: HTMLElement): void {
-  const anchor = triggerOf(element);
-  if (!anchor) return;
-
-  const placement = (element.getAttribute("data-pk-placement") ?? "bottom-start") as Placement;
-  const offset = Number(
-    element.getAttribute("data-pk-offset") ??
-      (placement.startsWith("right") || placement.startsWith("left") ? SIDE_OFFSET : DEFAULT_OFFSET),
-  );
-  const anchorRect = anchor.getBoundingClientRect();
-  const { offsetWidth: width, offsetHeight: height } = element;
-  const [physicalSide, align] = placement.split("-");
-  // Placements are authored in reading order, so a side flips with direction.
-  const rtl = getComputedStyle(element).direction === "rtl";
-  const side =
-    rtl && physicalSide === "right" ? "left" : rtl && physicalSide === "left" ? "right" : physicalSide;
-
-  let top: number;
-  let left: number;
-
-  if (side === "right" || side === "left") {
-    const fitsRight = window.innerWidth - anchorRect.right >= width + offset + VIEWPORT_PADDING;
-    const fitsLeft = anchorRect.left >= width + offset + VIEWPORT_PADDING;
-    const placeLeft = side === "left" ? fitsLeft || !fitsRight : !fitsRight && fitsLeft;
-
-    left = placeLeft ? anchorRect.left - width - offset : anchorRect.right + offset;
-    // Line the first item up with the trigger by cancelling the panel's padding.
-    top = clamp(anchorRect.top - PANEL_PADDING, window.innerHeight - height - VIEWPORT_PADDING);
-  } else {
-    const needed = height + offset + VIEWPORT_PADDING;
-    const fitsBelow = window.innerHeight - anchorRect.bottom >= needed;
-    const fitsAbove = anchorRect.top >= needed;
-    const placeAbove = side === "top" ? fitsAbove || !fitsBelow : !fitsBelow && fitsAbove;
-
-    top = placeAbove ? anchorRect.top - height - offset : anchorRect.bottom + offset;
-    const alignEnd = rtl ? align !== "end" : align === "end";
-    left = clamp(
-      alignEnd ? anchorRect.right - width : anchorRect.left,
-      window.innerWidth - width - VIEWPORT_PADDING,
-    );
-  }
-
-  element.style.top = `${Math.round(top)}px`;
-  element.style.left = `${Math.round(left)}px`;
+  return anchorOf(element);
 }

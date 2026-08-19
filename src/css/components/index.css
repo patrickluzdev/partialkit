@@ -1,3 +1,4 @@
+@import "./accordion.css";
 @import "./alert-dialog.css";
 @import "./alert.css";
 @import "./aspect-ratio.css";
@@ -8,6 +9,7 @@
 @import "./button.css";
 @import "./card.css";
 @import "./checkbox.css";
+@import "./collapsible.css";
 @import "./dialog.css";
 @import "./dropdown-menu.css";
 @import "./empty.css";
@@ -19,14 +21,18 @@
 @import "./label.css";
 @import "./native-select.css";
 @import "./pagination.css";
+@import "./popover.css";
 @import "./progress.css";
 @import "./radio-group.css";
 @import "./separator.css";
+@import "./sheet.css";
 @import "./skeleton.css";
 @import "./slider.css";
 @import "./spinner.css";
 @import "./switch.css";
 @import "./table.css";
+@import "./tabs.css";
 @import "./textarea.css";
 @import "./toggle-group.css";
 @import "./toggle.css";
+@import "./tooltip.css";

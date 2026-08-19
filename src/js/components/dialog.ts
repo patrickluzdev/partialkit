@@ -35,7 +35,7 @@ export function closeDialog(target: string | HTMLDialogElement, returnValue?: st
 
 export const dialog: Component = {
   name: "dialog",
-  selector: "dialog.dialog, dialog.alert-dialog",
+  selector: "dialog.dialog, dialog.alert-dialog, dialog.sheet",
 
   setup() {
     const onClick = (event: MouseEvent) => {
@@ -106,7 +106,7 @@ export const dialog: Component = {
 
 /** Points the dialog at its own heading and description, so it is announced with both. */
 function applyLabels(element: HTMLDialogElement, isAlert: boolean): void {
-  const prefix = isAlert ? "alert-dialog" : "dialog";
+  const prefix = isAlert ? "alert-dialog" : element.classList.contains("sheet") ? "sheet" : "dialog";
 
   const title = element.querySelector(`.${prefix}-title`);
   if (title) setDefaultAttribute(element, "aria-labelledby", ensureId(title, `pk-${prefix}-title`));

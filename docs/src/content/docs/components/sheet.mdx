@@ -1,0 +1,82 @@
+---
+title: Sheet
+description: Extends the Dialog component to display content that complements the main content of the screen.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="sheet/overview" />
+
+## Usage
+
+```html
+<button class="btn btn-outline" data-pk-dialog-open="filters">Open sheet</button>
+
+<dialog class="sheet" id="filters" data-side="right">
+  <div class="sheet-header">
+    <h3 class="sheet-title">Edit profile</h3>
+    <p class="sheet-description">Make changes to your profile here.</p>
+  </div>
+  <div class="sheet-body">…</div>
+  <div class="sheet-footer">…</div>
+</dialog>
+```
+
+A sheet is a `<dialog>` pinned to an edge, so it is modal for free: the page behind it is inert,
+Escape closes it, and focus is trapped and restored by the browser.
+
+| Class | Part |
+| --- | --- |
+| `.sheet` | The panel |
+| `.sheet-header` | Title and description |
+| `.sheet-title` | Names the panel, and labels it for screen readers |
+| `.sheet-description` | Supporting line |
+| `.sheet-body` | The scrolling middle |
+| `.sheet-footer` | Actions, pushed to the bottom |
+| `.sheet-close` | The close button in the corner |
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-side="right"` | Default. Also `left`, `top`, `bottom` |
+| `data-side="inline-start"` / `"inline-end"` | Sides that follow the reading direction |
+| `data-pk-dialog-open` | On the trigger: the id of the sheet |
+| `data-pk-dialog-close` | On a control inside: closes, with an optional return value |
+| `data-pk-static` | Clicking the backdrop does not close it |
+
+## Sides
+
+<Preview src="sheet/sides" layout="row" />
+
+`left` and `right` are literal: a right sheet stays on the right in Arabic. Use `inline-start` and
+`inline-end` when the panel should follow the reading direction instead.
+
+## Size
+
+Width is not baked in — a side sheet is three quarters of the screen up to `sm`, and anything
+beyond that is yours to set.
+
+<Preview src="sheet/size" />
+
+<Aside title="Sheet or Dialog?">
+Both are modal and both interrupt. A [dialog](/components/dialog/) is centred and short: a
+question, a confirmation, a couple of fields. A sheet is edge-anchored and tall, for a panel of
+work — filters, a form, a detail view — that would be cramped in a box.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree. Named sides stay physical; the `inline-*` sides
+swap. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **`.sheet-title` labels the panel** through `aria-labelledby`, so it is announced by name.
+  Without a title, give the sheet an `aria-label`.
+- **The browser makes it modal.** `showModal()` marks the rest of the page inert, traps Tab, and
+  returns focus to whatever opened it — none of which needs a focus-trap library.
+- **A close button needs text.** The × is an icon; keep the `.sr-only` label beside it.
+- **Do not put the only way out in the corner.** Escape and the backdrop already close it; a
+  visible Cancel is still worth having when there is something to lose.
+- **The body scrolls, not the panel.** Keeping the header and footer fixed means the actions stay
+  reachable in a long form.

@@ -1,0 +1,128 @@
+@layer components {
+  .sheet {
+    @apply fixed z-50 max-w-none bg-popover text-sm text-popover-foreground shadow-lg outline-none;
+
+    /* A closed <dialog> is display:none by UA rule; only [open] may set a
+       layout display. */
+    display: none;
+    margin: 0;
+    padding: 0;
+    max-height: none;
+    background-clip: padding-box;
+    opacity: 0;
+    translate: var(--sheet-translate);
+    transition:
+      opacity 200ms ease-in-out,
+      translate 200ms ease-in-out,
+      overlay 200ms allow-discrete,
+      display 200ms allow-discrete;
+  }
+
+  /* Right is the default side. Sides are physical, as their names say: a right
+     sheet stays on the right in Arabic. Use the inline sides to follow the
+     reading direction instead. */
+  .sheet,
+  .sheet[data-side="right"] {
+    @apply inset-y-0 right-0 left-auto h-full w-3/4 border-l sm:max-w-sm;
+    --sheet-translate: 2.5rem 0;
+  }
+
+  .sheet[data-side="left"] {
+    @apply inset-y-0 left-0 right-auto h-full w-3/4 border-r sm:max-w-sm;
+    --sheet-translate: -2.5rem 0;
+  }
+
+  .sheet[data-side="inline-end"] {
+    @apply inset-y-0 end-0 start-auto h-full w-3/4 border-s sm:max-w-sm;
+    --sheet-translate: 2.5rem 0;
+  }
+
+  .sheet[data-side="inline-end"]:dir(rtl) {
+    --sheet-translate: -2.5rem 0;
+  }
+
+  .sheet[data-side="inline-start"] {
+    @apply inset-y-0 start-0 end-auto h-full w-3/4 border-e sm:max-w-sm;
+    --sheet-translate: -2.5rem 0;
+  }
+
+  .sheet[data-side="inline-start"]:dir(rtl) {
+    --sheet-translate: 2.5rem 0;
+  }
+
+  .sheet[data-side="top"] {
+    @apply inset-x-0 top-0 bottom-auto h-auto w-full max-w-none border-x-0 border-b;
+    --sheet-translate: 0 -2.5rem;
+  }
+
+  .sheet[data-side="bottom"] {
+    @apply inset-x-0 top-auto bottom-0 h-auto w-full max-w-none border-x-0 border-t;
+    --sheet-translate: 0 2.5rem;
+  }
+
+  .sheet[open] {
+    @apply flex flex-col gap-4;
+    opacity: 1;
+    translate: none;
+  }
+
+  @starting-style {
+    .sheet[open] {
+      opacity: 0;
+      translate: var(--sheet-translate);
+    }
+  }
+
+  .sheet::backdrop {
+    background-color: oklch(0 0 0 / 10%);
+    opacity: 0;
+    transition:
+      opacity 150ms ease,
+      overlay 150ms allow-discrete,
+      display 150ms allow-discrete;
+  }
+
+  @supports (backdrop-filter: blur(2px)) {
+    .sheet::backdrop {
+      backdrop-filter: blur(2px);
+    }
+  }
+
+  .sheet[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .sheet[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .sheet-close {
+    @apply absolute top-3 end-3 z-10;
+  }
+
+  .sheet-header {
+    @apply flex flex-col gap-0.5 p-4;
+  }
+
+  .sheet:has(> .sheet-header > .sheet-close, > .sheet-close) .sheet-header {
+    @apply pe-12;
+  }
+
+  .sheet-title {
+    @apply text-base font-medium text-foreground;
+  }
+
+  .sheet-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .sheet-body {
+    @apply flex-1 overflow-y-auto px-4;
+  }
+
+  .sheet-footer {
+    @apply mt-auto flex flex-col gap-2 p-4;
+  }
+}

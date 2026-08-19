@@ -1,0 +1,86 @@
+---
+title: Accordion
+description: A vertically stacked set of interactive headings that each reveal a section of content.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="accordion/overview" width="sm" />
+
+## Usage
+
+```html
+<div class="accordion">
+  <details class="accordion-item" name="faq" open>
+    <summary class="accordion-trigger">
+      Product Information
+      <svg class="accordion-icon">…</svg>
+    </summary>
+    <div class="accordion-content">…</div>
+  </details>
+</div>
+```
+
+The open state lives in the `<details>` element, so there is no JavaScript: the browser toggles
+the section, and `name` is what makes the group exclusive.
+
+| Class | Part |
+| --- | --- |
+| `.accordion` | The stack |
+| `.accordion-item` | One `<details>` section |
+| `.accordion-trigger` | The `<summary>` that opens it |
+| `.accordion-icon` | The chevron, rotated when open |
+| `.accordion-content` | What is revealed |
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `name="…"` | `.accordion-item` | Shared name: opening one closes the others |
+| `open` | `.accordion-item` | Starts expanded |
+| `aria-disabled="true"` | `.accordion-trigger` | Cannot be opened |
+
+## One at a time
+
+A shared `name` makes the group exclusive, the way a radio group is. Opening a section closes
+whichever was open — the overview above does exactly this.
+
+## Several open at once
+
+Drop the `name` and every section is independent.
+
+<Preview src="accordion/multiple" width="sm" />
+
+## Disabled
+
+<Preview src="accordion/disabled" width="sm" />
+
+`aria-disabled` styles the trigger and stops pointer events; `tabindex="-1"` takes it out of the
+tab order. A `<summary>` has no `disabled` attribute, which is why it takes both.
+
+<Aside title="Why the animation is optional">
+The height transition uses `::details-content`, which Chrome and Safari support and Firefox does
+not yet. Where it is missing the section still opens — instantly instead of sliding. The content
+is never hidden from anyone; only the movement is progressive.
+</Aside>
+
+## Accordion or Collapsible?
+
+An accordion is **a group of sections that behave as one**, usually with one open at a time. A
+[collapsible](/components/collapsible/) is **a single disclosure** with no group and no styling of
+its own. If there is only one thing to reveal, it is a collapsible.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the chevron moves to the leading edge on its own.
+See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The browser does the work.** `<details>`/`<summary>` is announced as a disclosure with its
+  expanded state, and responds to Enter and Space, without any ARIA from you.
+- **Do not add `role="button"` to the summary.** It already has the right role, and overriding it
+  loses the expanded state.
+- **Headings still matter.** If the trigger is a section heading on the page, wrap its text in an
+  `<h3>` inside the `<summary>` so it appears in the heading outline.
+- **`aria-disabled`, not `hidden`.** A section that cannot be opened should still be readable and
+  announced as unavailable, rather than disappearing.

@@ -1,0 +1,80 @@
+---
+title: Popover
+description: Displays rich content in a portal, triggered by a button.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="popover/overview" />
+
+## Usage
+
+```html
+<button class="btn btn-outline" popovertarget="dimensions">Open popover</button>
+
+<div class="popover" id="dimensions" popover data-pk-placement="bottom">
+  <div class="popover-header">
+    <h4 class="popover-title">Dimensions</h4>
+    <p class="popover-description">Set the dimensions for the layer.</p>
+  </div>
+  …
+</div>
+```
+
+`popovertarget` is a browser attribute: it opens the panel, closes it on a second click, closes it
+when you click away, and closes it on Escape. partialkit adds the placement, the ARIA wiring and
+the focus move.
+
+| Class | Part |
+| --- | --- |
+| `.popover` | The panel |
+| `.popover-header` | Title and description together |
+| `.popover-title` | Names the panel, and labels it for screen readers |
+| `.popover-description` | Supporting line |
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-pk-placement` | `bottom` (default), `bottom-start`, `bottom-end`, `top`, `top-start`, `top-end`, `left-start`, `right-start` |
+| `data-pk-offset` | Distance from the trigger, in pixels |
+| `data-pk-anchor` | Selector for the element to measure against, when it is not the trigger |
+
+## Placement
+
+The panel flips to the other side when there is no room, and never leaves the viewport.
+
+<Preview src="popover/placement" layout="row" />
+
+## With a form
+
+<Preview src="popover/form" />
+
+## Popover or Dropdown Menu?
+
+A popover holds **content**: fields, text, anything you can tab through. A
+[dropdown menu](/components/dropdown-menu/) holds **commands**, navigated with the arrow keys and
+closed by choosing one. If a user needs to type into it, it is a popover.
+
+<Aside title="Popover or Dialog?">
+A popover is attached to its trigger, leaves the rest of the page usable, and is dismissed by
+clicking away. A [dialog](/components/dialog/) is centred, blocks the page, and has to be answered.
+Interrupting for something optional is what makes a dialog annoying.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — `left-start` and `right-start` are read in reading
+order, so they swap sides. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The panel is a `dialog` role, not a `menu`.** Content is read and tabbed through; commands are
+  not.
+- **`.popover-title` labels the panel automatically** through `aria-labelledby`, so it is announced
+  by name when it opens. Without a title, give the panel an `aria-label`.
+- **Focus moves in and comes back.** The first control inside receives focus; when the panel
+  closes, focus returns to the trigger — including after a click outside, which browsers do not all
+  handle themselves.
+- **Escape closes it**, which the browser provides for any element with `popover`.
+- **Tab does not trap.** A popover is not modal: tabbing past the last control leaves the panel,
+  which is the behaviour people expect from a non-blocking surface.

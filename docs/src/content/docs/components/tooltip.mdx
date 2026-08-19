@@ -1,0 +1,75 @@
+---
+title: Tooltip
+description: A popup that displays information related to an element when it receives keyboard focus or the mouse hovers over it.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="tooltip/overview" layout="row" />
+
+## Usage
+
+```html
+<button class="btn btn-outline" id="save">Save</button>
+
+<div class="tooltip" popover="manual" data-pk-anchor="#save" data-pk-placement="top">
+  Add to library
+</div>
+```
+
+The tooltip is pointed at its trigger with `data-pk-anchor`, and partialkit connects the two with
+`aria-describedby`. It opens on hover or focus after a short pause, and closes on leave, blur,
+Escape, or the click it was describing.
+
+| Attribute | Meaning |
+| --- | --- |
+| `popover="manual"` | Required: an `auto` popover would close whatever menu is already open |
+| `data-pk-anchor` | Selector for the trigger |
+| `data-pk-placement` | `top`, `bottom`, `left-start`, `right-start`, and the `-start`/`-end` variants |
+| `data-pk-delay` | Milliseconds before it opens. Defaults to `600` |
+
+## Sides
+
+<Preview src="tooltip/sides" layout="row" />
+
+## With a shortcut
+
+Keys inside a tooltip use [Kbd](/components/kbd/), which picks up the dark surface on its own.
+
+<Preview src="tooltip/shortcut" layout="row" />
+
+## Delay
+
+<Preview src="tooltip/delay" layout="row" />
+
+<Aside type="caution" title="A tooltip is never the only copy">
+It cannot be reached by touch, it disappears on the way to it, and it holds no controls. Anything
+a user must read to succeed belongs on the page — a
+[field description](/components/field/), a label, or visible text. A tooltip repeats or names;
+it does not inform.
+</Aside>
+
+## Tooltip or Popover?
+
+A tooltip is **a label you cannot interact with**: no links, no buttons, no selectable text. A
+[popover](/components/popover/) holds content people act on. If it contains anything clickable, it
+is a popover.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the side placements follow the reading direction.
+See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The trigger is described by the tooltip**, through `aria-describedby`. That is what makes the
+  text reach a screen reader — the panel itself is never focused.
+- **An icon-only button still needs a name.** A tooltip is a description, not a label: keep the
+  `.sr-only` text inside the button.
+- **Focus opens it too.** A keyboard user gets the same hint as a mouse user, which is why the
+  trigger listens for `focus` and not only `pointerenter`.
+- **Escape dismisses it** while the trigger keeps focus, so a tooltip covering the page can be got
+  rid of without moving.
+- **`popover="manual"`, always.** Auto popovers dismiss each other; a tooltip appearing over an
+  open menu must not close it.

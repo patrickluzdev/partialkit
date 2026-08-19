@@ -1,0 +1,70 @@
+<div
+  class="pk-context-target"
+  data-pk-context-menu="demo-context-menu"
+  style="
+    display: grid;
+    place-items: center;
+    width: 18rem;
+    height: 9rem;
+    border: 1px dashed var(--border);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  "
+>
+  Right click here
+</div>
+
+<div class="dropdown-menu" id="demo-context-menu" popover style="width: 16rem">
+  <button class="dropdown-menu-item" type="button">
+    Back <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">[</kbd></span>
+  </button>
+  <button class="dropdown-menu-item" type="button" aria-disabled="true">
+    Forward <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">]</kbd></span>
+  </button>
+  <button class="dropdown-menu-item" type="button">
+    Reload <span class="dropdown-menu-shortcut kbd-group"><kbd class="kbd">⌘</kbd><kbd class="kbd">R</kbd></span>
+  </button>
+
+  <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button" popovertarget="context-more">
+    More tools
+  </button>
+  <div class="dropdown-menu" id="context-more" popover style="width: 12rem">
+    <button class="dropdown-menu-item" type="button">Save page</button>
+    <button class="dropdown-menu-item" type="button">Create shortcut</button>
+    <hr class="dropdown-menu-separator" />
+    <button class="dropdown-menu-item" type="button">Developer tools</button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+
+  <button class="dropdown-menu-checkbox-item" type="button" aria-checked="true" data-pk-keep-open>
+    <span class="dropdown-menu-item-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </span>
+    Show bookmarks
+  </button>
+  <button class="dropdown-menu-checkbox-item" type="button" data-pk-keep-open>
+    <span class="dropdown-menu-item-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    </span>
+    Show full URLs
+  </button>
+
+  <hr class="dropdown-menu-separator" />
+
+  <div class="dropdown-menu-radio-group">
+    <div class="dropdown-menu-label">People</div>
+    <button class="dropdown-menu-radio-item" type="button" aria-checked="true" data-value="ada">
+      <span class="dropdown-menu-item-indicator"><span></span></span>
+      Ada Lovelace
+    </button>
+    <button class="dropdown-menu-radio-item" type="button" data-value="grace">
+      <span class="dropdown-menu-item-indicator"><span></span></span>
+      Grace Hopper
+    </button>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<button class="btn btn-outline" data-pk-dialog-open="sheet-wide">Open wide sheet</button>
+
+<dialog class="sheet" id="sheet-wide" data-side="right" style="--sheet-width: 32rem; width: var(--sheet-width); max-width: 100%">
+  <div class="sheet-header">
+    <h3 class="sheet-title">Filters</h3>
+    <p class="sheet-description">A sheet is as wide as you make it.</p>
+  </div>
+
+  <div class="sheet-body">
+    <div class="field-group">
+      <label class="label">
+        <input class="checkbox" type="checkbox" checked />
+        In stock
+      </label>
+      <label class="label">
+        <input class="checkbox" type="checkbox" />
+        On sale
+      </label>
+    </div>
+  </div>
+
+  <div class="sheet-footer">
+    <button class="btn" data-pk-dialog-close="apply">Apply</button>
+  </div>
+</dialog>

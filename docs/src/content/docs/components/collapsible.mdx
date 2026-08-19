@@ -1,0 +1,49 @@
+---
+title: Collapsible
+description: An interactive component which expands and collapses a panel.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="collapsible/overview" />
+
+## Usage
+
+```html
+<details class="collapsible">
+  <summary class="collapsible-trigger">…</summary>
+  <div class="collapsible-content">…</div>
+</details>
+```
+
+| Class | Part |
+| --- | --- |
+| `.collapsible` | The `<details>` element |
+| `.collapsible-trigger` | The `<summary>` that toggles it |
+| `.collapsible-content` | What is revealed |
+
+The collapsible carries no look of its own — it only removes the disclosure marker and animates
+the height. Whatever goes inside keeps its own layout, which is why the example above is made of
+[items](/components/item/).
+
+<Aside title="One element, no state to track">
+`open` on the `<details>` is the whole state. Reading it is `details.open`, changing it is
+`details.open = true`, and the `toggle` event fires either way — including when the browser opens
+the section itself to run find-in-page.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the collapsible adds no direction of its own, so
+its contents decide. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The summary is the button.** It is focusable, announced as a disclosure, and toggles on Enter
+  and Space with nothing added.
+- **Give it a real label.** An icon-only trigger needs `.sr-only` text, the same as any button.
+- **Content inside stays searchable.** Browsers open a closed `<details>` to reveal a find-in-page
+  match, which a `hidden` div would never do.
+- **Do not nest interactive controls in the summary.** A button inside a `<summary>` is
+  unreachable — the summary swallows the click. Put controls in the content instead.

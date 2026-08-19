@@ -1,0 +1,86 @@
+@layer components {
+  .tabs {
+    @apply flex gap-2;
+  }
+
+  .tabs[data-horizontal] {
+    @apply flex-col;
+  }
+
+  .tabs-list {
+    @apply inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground;
+  }
+
+  .tabs[data-horizontal] .tabs-list {
+    @apply h-8;
+  }
+
+  .tabs[data-vertical] .tabs-list {
+    @apply h-fit flex-col;
+  }
+
+  .tabs-list[data-variant="line"] {
+    @apply gap-1 rounded-none bg-transparent;
+  }
+
+  .tabs-trigger {
+    @apply relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5;
+    @apply rounded-md border border-transparent px-1.5 py-0.5;
+    @apply text-sm font-medium whitespace-nowrap text-foreground/60 transition-all;
+    @apply hover:text-foreground;
+    @apply focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
+    @apply focus-visible:outline-1 focus-visible:outline-ring;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
+    @apply dark:text-muted-foreground dark:hover:text-foreground;
+  }
+
+  .tabs[data-vertical] .tabs-trigger {
+    @apply w-full justify-start;
+  }
+
+  .tabs-trigger svg {
+    @apply pointer-events-none shrink-0;
+  }
+
+  .tabs-trigger svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  .tabs-trigger[data-active] {
+    @apply bg-background text-foreground;
+    @apply dark:border-input dark:bg-input/30 dark:text-foreground;
+  }
+
+  .tabs-list:not([data-variant="line"]) .tabs-trigger[data-active] {
+    @apply shadow-sm;
+  }
+
+  /* The line variant trades the raised pill for an underline. */
+  .tabs-list[data-variant="line"] .tabs-trigger,
+  .tabs-list[data-variant="line"] .tabs-trigger[data-active] {
+    @apply bg-transparent shadow-none;
+    @apply dark:border-transparent dark:bg-transparent;
+  }
+
+  .tabs-trigger::after {
+    @apply absolute bg-foreground opacity-0 transition-opacity;
+    content: "";
+  }
+
+  .tabs[data-horizontal] .tabs-trigger::after {
+    @apply inset-x-0 -bottom-[5px] h-0.5;
+  }
+
+  .tabs[data-vertical] .tabs-trigger::after {
+    @apply inset-y-0 -end-1 w-0.5;
+  }
+
+  .tabs-list[data-variant="line"] .tabs-trigger[data-active]::after {
+    @apply opacity-100;
+  }
+
+  .tabs-content {
+    @apply flex-1 text-sm outline-none;
+  }
+}

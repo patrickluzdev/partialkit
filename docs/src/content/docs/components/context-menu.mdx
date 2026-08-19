@@ -1,0 +1,60 @@
+---
+title: Context Menu
+description: Displays a menu to the user — such as a set of actions or functions — triggered by a right click.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="context-menu/overview" />
+
+## Usage
+
+```html
+<div data-pk-context-menu="page-menu">Right click here</div>
+
+<div class="dropdown-menu" id="page-menu" popover>
+  <button class="dropdown-menu-item" type="button">Back</button>
+  …
+</div>
+```
+
+The panel is a [dropdown menu](/components/dropdown-menu/) — same classes, same roles, same
+keyboard handling. Only the way it is summoned differs: `data-pk-context-menu` on any element
+opens the menu where the pointer is, instead of under a trigger.
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-pk-context-menu` | The target | The id of the menu to open |
+
+Everything else — items, checkbox items, radio groups, submenus, separators, labels, shortcuts —
+is documented on the [dropdown menu page](/components/dropdown-menu/).
+
+## Why it is not its own set of classes
+
+shadcn/ui ships Context Menu and Dropdown Menu as two components because React needs two
+different pieces of state. The rendered result is the same menu, so partialkit ships the styling
+once and lets the trigger decide. One set of classes to learn, one to keep consistent.
+
+<Aside type="caution" title="It replaces the browser's own menu">
+Right-clicking normally offers Back, Reload, Save image, Inspect. Taking that away is a real cost:
+only do it where you genuinely add commands about the thing under the pointer, and never over
+plain text or an image someone might want to copy.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the menu opens toward the leading edge and flips
+when it would overflow. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **A context menu is a shortcut, never the only route.** Every command in it must also be
+  reachable by a visible control — a right click cannot be discovered, and touch has no equivalent.
+- **The target is focusable.** partialkit gives it `tabindex="0"` so the context-menu key and
+  Shift+F10 have somewhere to fire from; opened that way, the menu appears against the element
+  rather than at the top corner.
+- **The menu keeps the full keyboard pattern**: arrows move, typing jumps, Escape closes and
+  returns focus, Tab closes.
+- **Announce what it acts on.** A menu that appears over a row should say which row — put a
+  `.dropdown-menu-label` at the top when the target is not obvious.

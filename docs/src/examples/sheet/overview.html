@@ -1,0 +1,35 @@
+<button class="btn btn-outline" data-pk-dialog-open="demo-sheet">Open sheet</button>
+
+<dialog class="sheet" id="demo-sheet">
+  <div class="sheet-header">
+    <h3 class="sheet-title">Edit profile</h3>
+    <p class="sheet-description">
+      Make changes to your profile here. Click save when you are done.
+    </p>
+  </div>
+
+  <div class="sheet-body">
+    <div class="field-group">
+      <div class="field">
+        <label class="label" for="sheet-name">Name</label>
+        <input class="input" id="sheet-name" value="Ada Lovelace" />
+      </div>
+      <div class="field">
+        <label class="label" for="sheet-username">Username</label>
+        <input class="input" id="sheet-username" value="@ada" />
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-footer">
+    <button class="btn" data-pk-dialog-close="save">Save changes</button>
+    <button class="btn btn-outline" data-pk-dialog-close>Close</button>
+  </div>
+
+  <button class="btn btn-ghost btn-icon-sm sheet-close" data-pk-dialog-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6 6 18M6 6l12 12"></path>
+    </svg>
+    <span class="sr-only">Close</span>
+  </button>
+</dialog>
