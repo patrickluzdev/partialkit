@@ -31,7 +31,7 @@
 
   .badge-destructive {
     @apply bg-destructive/10 text-destructive focus-visible:ring-destructive/20;
-    @apply dark:bg-destructive/12 dark:focus-visible:ring-destructive/40;
+    @apply dark:bg-destructive/20 dark:focus-visible:ring-destructive/40;
   }
 
   .badge-outline {

@@ -26,6 +26,49 @@ const PAGES = [
 ];
 
 /**
+ * Violations partialkit knowingly ships, because closing them would mean parting
+ * ways with shadcn/ui. Each one is narrow: a rule plus the markup it applies to,
+ * so anything else still fails the build.
+ */
+const ACCEPTED = [
+  {
+    rule: "color-contrast",
+    // A destructive control carries --destructive as its text on a wash of the
+    // same colour. shadcn/ui's palette puts that at 3.97:1 in light and 4.28:1
+    // in dark, under the 4.5:1 WCAG AA asks for. partialkit follows their
+    // palette rather than diverging; see guides/theming.
+    applies: (html: string) => /btn-destructive|badge-destructive/.test(html),
+  },
+];
+
+interface AxeNode {
+  html: string;
+}
+
+interface AxeViolation {
+  id: string;
+  nodes: AxeNode[];
+}
+
+/** Splits a report into what must fail the build and what is a recorded exception. */
+function triage(violations: AxeViolation[]) {
+  const unexpected: string[] = [];
+  let accepted = 0;
+
+  for (const violation of violations) {
+    for (const node of violation.nodes) {
+      const exception = ACCEPTED.find(
+        (candidate) => candidate.rule === violation.id && candidate.applies(node.html),
+      );
+      if (exception) accepted++;
+      else unexpected.push(`${violation.id}: ${node.html.slice(0, 120)}`);
+    }
+  }
+
+  return { unexpected, accepted };
+}
+
+/**
  * Scoped to `main` so the report covers partialkit's markup, not Starlight's chrome.
  * Expressive Code renders the code panels and owns their scroll containers.
  */
@@ -45,16 +88,26 @@ for (const theme of ["light", "dark"] as const) {
       await visit(page, path, theme);
 
       const results = await scan(page).analyze();
-      expect(results.violations).toEqual([]);
+      expect(triage(results.violations).unexpected).toEqual([]);
     });
   }
 }
+
+test("the recorded contrast exception is still needed", async ({ page }) => {
+  await visit(page, "/components/button/", "light");
+
+  const { accepted } = triage((await scan(page).analyze()).violations);
+
+  // If shadcn/ui lifts its destructive colour, this stops matching and the
+  // exception above should be deleted rather than left to rot.
+  expect(accepted, "destructive contrast no longer reported — drop the exception").toBeGreaterThan(0);
+});
 
 test("the lab fixture has no violations", async ({ page }) => {
   await page.goto("/tests/lab.html");
 
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
-  expect(results.violations).toEqual([]);
+  expect(triage(results.violations).unexpected).toEqual([]);
 });
 
 test("an open dialog has no violations", async ({ page }) => {
@@ -63,7 +116,7 @@ test("an open dialog has no violations", async ({ page }) => {
   await expect(page.locator("#basic")).toBeVisible();
 
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
-  expect(results.violations).toEqual([]);
+  expect(triage(results.violations).unexpected).toEqual([]);
 });
 
 test("an open dropdown menu has no violations", async ({ page }) => {
@@ -72,5 +125,5 @@ test("an open dropdown menu has no violations", async ({ page }) => {
   await expect(page.locator("#start-menu")).toBeVisible();
 
   const results = await new AxeBuilder({ page }).withTags(TAGS).analyze();
-  expect(results.violations).toEqual([]);
+  expect(triage(results.violations).unexpected).toEqual([]);
 });

@@ -21,12 +21,7 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  /* shadcn/ui ships 0.577 here. Destructive surfaces are a wash of this colour
-     with this colour as the text, which measures 3.97:1 on the page and 3.83:1
-     on a card footer — below WCAG AA, and no wash strength fixes it (4% still
-     only reaches 4.26:1). 0.50 measures 4.95:1 and 4.77:1 at the same hue and
-     chroma. The dark value keeps shadcn's, with a lighter wash instead. */
-  --destructive: oklch(0.50 0.245 27.325);
+  --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);

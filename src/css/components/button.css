@@ -62,7 +62,7 @@
   .btn-destructive {
     @apply bg-destructive/10 text-destructive hover:bg-destructive/20;
     @apply focus-visible:border-destructive/40 focus-visible:ring-destructive/20;
-    @apply dark:bg-destructive/12 dark:hover:bg-destructive/20 dark:focus-visible:ring-destructive/40;
+    @apply dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40;
   }
 
   .btn-link {
