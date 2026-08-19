@@ -18,14 +18,14 @@ jobs:
       # Firefox refuses to launch when $HOME is not owned by the current user.
       HOME: /root
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
       - run: npm run docs:build
       # Visual baselines are per platform; only linux ones are comparable here.
       - run: npm test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report
