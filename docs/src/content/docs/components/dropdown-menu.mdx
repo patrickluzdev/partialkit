@@ -121,6 +121,16 @@ Labels, groups, shortcuts, a submenu, a disabled item and a destructive action i
 Set `dir="rtl"` on the page or on any subtree — padding, corners and positions follow the reading
 direction on their own. See [the button page](/components/button/#rtl) for a live example.
 
+## Hover and focus
+
+An item paints on `:focus`, not `:hover` — and the pointer moves focus rather than lighting a
+separate state. That is what Radix does inside shadcn/ui, and it means keyboard and pointer share
+one highlight instead of two that can disagree.
+
+The highlight is `--accent`, which is deliberately quiet: 3% grey on white, and one step up from
+the panel in dark. It has to differ from `--popover` or a menu has no visible hover at all — the
+palette test checks exactly that pair.
+
 ## Keyboard
 
 | Key | Action |
