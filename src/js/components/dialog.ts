@@ -9,6 +9,45 @@ const STATIC_ATTRIBUTE = "data-pk-dialog-static";
 const openers = new WeakMap<HTMLDialogElement, HTMLElement>();
 
 /**
+ * A modal <dialog> makes the page inert but leaves it scrollable, so the wheel
+ * still moves the content behind a sheet that covers half the screen. Locking
+ * is refcounted: a dialog opened over a dialog only unlocks once.
+ */
+const locked = new Set<HTMLDialogElement>();
+let restoreScroll: (() => void) | undefined;
+
+function lockScroll(element: HTMLDialogElement): void {
+  if (locked.has(element)) return;
+  locked.add(element);
+  if (locked.size > 1) return;
+
+  // On the root element, not on <body>: overflow only propagates from the body
+  // to the viewport when the root leaves it alone, which a page is free not to.
+  const root = document.documentElement.style;
+  const body = document.body.style;
+  const overflow = root.overflow;
+  const padding = body.paddingInlineEnd;
+  // Hiding the scrollbar would widen the page under the dialog, so its width is
+  // handed back as padding.
+  const gutter = window.innerWidth - document.documentElement.clientWidth;
+
+  root.overflow = "hidden";
+  if (gutter > 0) body.paddingInlineEnd = `${gutter}px`;
+
+  restoreScroll = () => {
+    root.overflow = overflow;
+    body.paddingInlineEnd = padding;
+  };
+}
+
+function unlockScroll(element: HTMLDialogElement): void {
+  if (!locked.delete(element) || locked.size > 0) return;
+
+  restoreScroll?.();
+  restoreScroll = undefined;
+}
+
+/**
  * @param opener element focus should return to on close. Defaults to whatever is
  * focused, which WebKit leaves on the document because clicking a button there
  * does not focus it.
@@ -76,6 +115,15 @@ export const dialog: Component = {
       if (event.target !== element_ || isAlert || element_.hasAttribute(STATIC_ATTRIBUTE)) return;
       element_.close();
     };
+    // The `open` attribute is the one signal every engine agrees on, and it
+    // covers a dialog opened by showModal() directly rather than through us.
+    const openState = new MutationObserver(() => {
+      if (element_.open && element_.matches(":modal")) lockScroll(element_);
+      else unlockScroll(element_);
+    });
+    openState.observe(element_, { attributeFilter: ["open"] });
+    if (element_.open && element_.matches(":modal")) lockScroll(element_);
+
     const onClose = () => {
       element_.setAttribute("data-state", "closed");
 
@@ -98,6 +146,8 @@ export const dialog: Component = {
     element_.addEventListener("close", onClose);
 
     return () => {
+      openState.disconnect();
+      unlockScroll(element_);
       element_.removeEventListener("click", onClick);
       element_.removeEventListener("close", onClose);
     };

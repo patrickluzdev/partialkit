@@ -90,3 +90,44 @@ test("clicking the backdrop closes it", async ({ page }) => {
   await page.mouse.click(5, 5);
   await expect(page.locator("#lab-sheet")).toBeHidden();
 });
+
+test("locks the page behind it, and hands the scrollbar's width back", async ({ page }) => {
+  // A block of page content: if the scrollbar's width is not given back, losing
+  // it widens the page and every line of text moves as the sheet opens.
+  const content = page.locator("#lab-accordion");
+  const before = (await content.boundingBox())!.width;
+
+  await page.click("#lab-sheet-trigger");
+  await settle(page, "#lab-sheet");
+  // Clicking scrolled the trigger into view, so the resting position is whatever
+  // it left behind — what matters is that it stops moving.
+  const resting = await page.evaluate(() => window.scrollY);
+
+  await page.mouse.wheel(0, 400);
+  await page.waitForTimeout(100);
+
+  expect(await page.evaluate(() => window.scrollY)).toBe(resting);
+  expect((await content.boundingBox())!.width).toBe(before);
+
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#lab-sheet")).toBeHidden();
+
+  await page.mouse.wheel(0, -400);
+  await page.waitForTimeout(100);
+  expect(await page.evaluate(() => window.scrollY)).toBeLessThan(resting);
+});
+
+test("a second modal over the first only unlocks once", async ({ page }) => {
+  await page.click("#lab-sheet-trigger");
+  await settle(page, "#lab-sheet");
+  await page.evaluate(() => (document.getElementById("lab-sheet-left") as HTMLDialogElement).showModal());
+  await settle(page, "#lab-sheet-left");
+  const resting = await page.evaluate(() => window.scrollY);
+
+  await page.evaluate(() => (document.getElementById("lab-sheet-left") as HTMLDialogElement).close());
+  await expect(page.locator("#lab-sheet-left")).toBeHidden();
+
+  await page.mouse.wheel(0, -400);
+  await page.waitForTimeout(100);
+  expect(await page.evaluate(() => window.scrollY)).toBe(resting);
+});
