@@ -1,0 +1,97 @@
+---
+title: Dynamic HTML
+description: How partialkit handles markup that appears after page load, whatever puts it there.
+---
+
+Most component libraries assume the framework tells them when the DOM changed. partialkit has no
+framework to ask, so it watches instead — and that turns out to work with everything.
+
+## Why markup added later just works
+
+Two mechanisms, chosen so nothing has to be re-initialised:
+
+- **Triggers use event delegation on `document`.** A `data-pk-dialog-open` button works the moment
+  it exists, whether it shipped with the page or arrived a minute later.
+- **Anything needing per-element state is mounted by a `MutationObserver`.** Dialogs and dropdown
+  menus get their listeners and ARIA the instant they enter the DOM, and their cleanups run when
+  they leave.
+
+So it does not matter what put the markup there:
+
+```js
+// A fetch and an innerHTML assignment
+document.querySelector("#panel").innerHTML = await response.text();
+
+// A template you cloned
+target.replaceChildren(template.content.cloneNode(true));
+
+// htmx, Turbo, Unpoly, or anything else that swaps HTML
+```
+
+There is no `partialkit.refresh()` to call, and no `afterSwap` handler to write.
+
+## htmx
+
+Nothing to configure — a response containing a dialog or a menu is live as soon as it lands.
+
+```html
+<button class="btn" hx-get="/projects/new" hx-target="#panel">New project</button>
+
+<div id="panel">
+  <!-- A dialog or menu in this response is live as soon as it lands. -->
+</div>
+```
+
+To close a dialog once the server has accepted the request:
+
+```html
+<dialog class="dialog" id="new-project"
+        hx-on::after-request="if (event.detail.successful) this.close()">
+  ...
+</dialog>
+```
+
+## Server-rendered validation
+
+Fields style their error state from `aria-invalid`, so re-rendering a form needs no extra class and
+no client-side state. The classes are plain strings, so this is the same in every templating
+language — here it is in Go's `html/template`:
+
+```html
+<div class="field">
+  <label class="label" for="handle">Handle</label>
+  <input class="input" id="handle" name="handle" value="{{ .Handle }}"
+         {{ if .Error }}aria-invalid="true"{{ end }} />
+  {{ if .Error }}<p class="field-error">{{ .Error }}</p>{{ end }}
+</div>
+```
+
+The same field in Jinja, ERB, Blade or Twig is the same markup with different delimiters.
+
+## Reusable fragments
+
+A component is markup, so whatever your stack calls a partial is where it belongs.
+
+```html
+<button class="btn btn-destructive" data-pk-dialog-open="delete-{{ .ID }}">Delete</button>
+
+<dialog class="dialog" id="delete-{{ .ID }}">
+  <div class="dialog-header">
+    <h2 class="dialog-title">Delete {{ .Name }}</h2>
+    <p class="dialog-description">This action cannot be undone.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
+    <button class="btn btn-destructive" hx-delete="/projects/{{ .ID }}">Delete</button>
+  </div>
+</dialog>
+```
+
+Give each instance a unique `id` — that is the only thing to keep in mind when the same fragment
+renders more than once on a page.
+
+## Single-page apps
+
+If your framework owns the DOM, prefer its own components. partialkit is aimed at pages where HTML
+is the interface rather than an output format. That said, `mount(root)` and `unmount(root)` are
+exported for the cases where you want to drive it yourself instead of observing.

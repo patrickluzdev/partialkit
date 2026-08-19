@@ -1,16 +1,18 @@
 {
   "name": "partialkit",
   "version": "0.0.0",
-  "description": "shadcn-inspired UI components for server-rendered HTML. Tailwind CSS classes plus ESM behaviours, built for htmx and Go templates.",
+  "description": "shadcn-inspired UI components for plain HTML. Tailwind CSS classes plus a small ESM runtime, for any project that writes HTML.",
   "keywords": [
     "ui",
     "components",
     "tailwindcss",
-    "htmx",
-    "hypermedia",
     "html",
-    "go",
-    "templ"
+    "css-library",
+    "design-system",
+    "accessibility",
+    "vanilla-js",
+    "hypermedia",
+    "htmx"
   ],
   "license": "MIT",
   "author": "Patrick Luz <eu@patrickluz.dev>",
@@ -50,7 +52,7 @@
     "docs:assets": "node scripts/copy-dist.js",
     "docs:dev": "npm run build && npm run docs:assets && astro dev --root docs",
     "docs:build": "npm run build && npm run docs:assets && astro build --root docs",
-    "docs:preview": "astro preview --root docs",
+    "docs:preview": "node scripts/serve-docs.js",
     "dev": "npm run docs:dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",
     "test": "playwright test --grep-invert @visual",

@@ -15,7 +15,7 @@ export default defineConfig({
     starlight({
       title: "partialkit",
       description:
-        "shadcn-inspired UI components for server-rendered HTML. Tailwind CSS classes plus ESM behaviours, built for htmx and Go templates.",
+        "shadcn-inspired UI components for plain HTML. Tailwind CSS classes plus a small ESM runtime, for any project that writes HTML.",
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/patrickluzdev/partialkit" },
       ],
@@ -48,7 +48,7 @@ export default defineConfig({
           items: [
             { label: "Theming", slug: "guides/theming" },
             { label: "Accessibility", slug: "guides/accessibility" },
-            { label: "htmx and Go", slug: "guides/htmx" },
+            { label: "Dynamic HTML", slug: "guides/dynamic-html" },
             { label: "JavaScript API", slug: "guides/javascript-api" },
           ],
         },

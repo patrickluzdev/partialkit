@@ -35,10 +35,13 @@ for (const theme of ["light", "dark"] as const) {
       });
     }
 
+    // The backdrop only shows on a full-page shot, so this one runs against the
+    // lab fixture: documentation chrome would make the baseline churn on copy edits.
     test("open dialog", async ({ page }) => {
-      await visit(page, "/components/dialog/", theme);
-      await page.click('[data-pk-dialog-open="demo-dialog"]');
-      await expect(page.locator("#demo-dialog")).toBeVisible();
+      await page.goto("/tests/lab.html");
+      await page.click(`#theme-${theme}`);
+      await page.click("#open-basic");
+      await expect(page.locator("#basic")).toBeVisible();
 
       await expect(page).toHaveScreenshot(`dialog-open-${theme}.png`);
     });

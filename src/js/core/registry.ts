@@ -32,7 +32,7 @@ export function unmount(root: ParentNode): void {
   }
 }
 
-/** Scans `root` and keeps watching it, so htmx swaps mount automatically. */
+/** Scans `root` and keeps watching it, so markup added later mounts automatically. */
 export function start(options: StartOptions = {}): void {
   const root = options.root ?? document.body;
   if (observer) observer.disconnect();

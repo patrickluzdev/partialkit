@@ -1,9 +1,9 @@
 ---
 title: partialkit
-description: shadcn-inspired UI components for HTML you render on the server. Tailwind CSS classes plus a small ESM runtime, built for htmx and Go templates.
+description: shadcn-inspired UI components for plain HTML. Tailwind CSS classes plus a small ESM runtime, for any project that writes HTML.
 template: splash
 hero:
-  tagline: shadcn-inspired components for HTML you render on the server. No React, no Vue, no build step in your app.
+  tagline: shadcn-inspired components for plain HTML. No React, no Vue, no build step — if you can write HTML, you can use it.
   actions:
     - text: Get started
       link: /installation/
@@ -22,12 +22,14 @@ shadcn/ui gets its behaviour from Radix, which only runs in React. partialkit re
 place from two directions: **browser primitives** where the platform already implements the
 pattern, and an **explicit ARIA layer** where it does not.
 
+Nothing about it assumes a framework. A static page, a server-rendered app in any language, a
+site generator, a browser extension — anywhere HTML ends up, these classes work.
+
 <Preview src="index/why-it-exists" width="md" />
 
 ## What you get
 
-- **Semantic classes** — `class="btn btn-outline"`, not twenty utilities in every template.
-- **shadcn tokens** — the same OKLCH variables, so a theme ports straight over.
-- **Names you already know** — components, parts and states match shadcn/ui.
-- **htmx-safe** — swapped markup mounts itself, with no re-init call.
+- **Semantic classes** — `class="btn btn-outline"`, not twenty utilities in every file.
+- **shadcn tokens and names** — the same OKLCH variables, and the naming you already know.
+- **Markup that arrives later just works** — no re-init call after you replace part of the page.
 - **~8 kB of JS**, minified and unzipped.
