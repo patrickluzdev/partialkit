@@ -23,6 +23,12 @@ the panel and adds the WAI-ARIA menu button pattern: roles, `aria-expanded`, arr
 | `.dropdown-menu-label` | Group heading — names the menu |
 | `.dropdown-menu-separator` | Divider |
 | `.dropdown-menu-shortcut` | Right-aligned key hint |
+| `.dropdown-menu-group` | Groups related items under one role |
+| `.dropdown-menu-checkbox-item` | Item that toggles |
+| `.dropdown-menu-radio-group` | Container for mutually exclusive items |
+| `.dropdown-menu-radio-item` | One choice within a radio group |
+| `.dropdown-menu-item-indicator` | Slot for the check or dot |
+| `.dropdown-menu-sub-trigger` | Item that opens a nested menu |
 
 ## Attributes
 
@@ -50,6 +56,32 @@ Give every item an icon, or use `data-inset` on the ones without so the labels s
 
 <Preview src="dropdown-menu/with-icons" />
 
+## Checkbox items
+
+Each item keeps its own state in `aria-checked`, and `pk:menu:change` fires with
+`{ checked, value }` where `value` comes from `data-value`. Pair them with `data-pk-keep-open` so
+several can be toggled in one visit.
+
+<Preview src="dropdown-menu/checkbox-items" />
+
+## Radio items
+
+Selecting one clears its siblings in the same `.dropdown-menu-radio-group`, and leaves checkbox
+items elsewhere in the menu alone.
+
+<Preview src="dropdown-menu/radio-items" />
+
+## Submenus
+
+A `.dropdown-menu-sub-trigger` points `popovertarget` at a nested `.dropdown-menu`. **Put the
+submenu inside its parent in the DOM** — that containment is what makes the browser treat them as
+parent and child, so opening the submenu does not dismiss the menu it came from.
+
+<Preview src="dropdown-menu/submenus" />
+
+`→` opens a submenu and focuses its first item; `←` closes it and returns to the trigger. Moving
+the pointer to a different item closes it too.
+
 ## Keyboard
 
 | Key | Action |
@@ -57,6 +89,8 @@ Give every item an icon, or use `data-inset` on the ones without so the labels s
 | `↓` / `↑` | Move between enabled items, wrapping at the ends |
 | `Home` / `End` | First / last enabled item |
 | a–z, 0–9 | Type-ahead to the first item starting with what you type |
+| `→` | Open the submenu under the cursor |
+| `←` | Close a submenu and return to its trigger |
 | `Esc` / `Tab` | Close and return focus to the trigger |
 
 Items are real `<button>` elements, so `Enter` and `Space` activate them without extra code.

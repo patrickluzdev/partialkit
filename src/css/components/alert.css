@@ -8,16 +8,40 @@
     @apply grid-cols-[calc(var(--spacing)*4)_1fr] gap-x-3;
   }
 
+  .alert:has(> .alert-action) {
+    @apply grid-cols-[1fr_auto];
+  }
+
+  .alert:has(> svg):has(> .alert-action) {
+    @apply grid-cols-[calc(var(--spacing)*4)_1fr_auto];
+  }
+
+  .alert-action {
+    @apply row-span-2 row-start-1 self-start justify-self-end;
+  }
+
+  .alert:has(> svg) > .alert-action {
+    @apply col-start-3;
+  }
+
+  .alert:not(:has(> svg)) > .alert-action {
+    @apply col-start-2;
+  }
+
   .alert > svg {
     @apply size-4 translate-y-0.5 text-current;
   }
 
   .alert-title {
-    @apply col-start-2 min-h-4 font-medium tracking-tight;
+    @apply min-h-4 font-medium tracking-tight;
   }
 
   .alert-description {
-    @apply col-start-2 grid gap-1 text-sm text-muted-foreground;
+    @apply grid gap-1 text-sm text-muted-foreground;
+  }
+
+  .alert:has(> svg) > :is(.alert-title, .alert-description) {
+    @apply col-start-2;
   }
 
   .alert-destructive {

@@ -1,0 +1,15 @@
+<fieldset class="field-set">
+  <legend class="field-legend" data-variant="label">Billing address</legend>
+
+  <div class="field">
+    <label class="label" for="fieldset-street">Street</label>
+    <input class="input" id="fieldset-street" />
+  </div>
+
+  <div class="field" data-invalid>
+    <label class="label" for="fieldset-postcode">Postcode</label>
+    <input class="input" id="fieldset-postcode" value="000" aria-invalid="true"
+           aria-describedby="fieldset-postcode-error" />
+    <p class="field-error" id="fieldset-postcode-error">That postcode is not valid.</p>
+  </div>
+</fieldset>

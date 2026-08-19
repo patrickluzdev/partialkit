@@ -22,8 +22,16 @@ import Preview from "../../../components/Preview.astro";
 
 <Preview src="button/sizes" layout="row" />
 
-`.btn-icon` makes the button square. Combine it with `.btn-sm` or `.btn-lg` for the smaller and
-larger squares. An icon-only button needs an `aria-label` or `.sr-only` text.
+| Class | Height |
+| --- | --- |
+| `.btn-xs` | Extra small |
+| `.btn-sm` | Small |
+| `.btn` | Default |
+| `.btn-lg` | Large |
+| `.btn-icon-xs` `.btn-icon-sm` `.btn-icon` `.btn-icon-lg` | Square, matching the text size of the same name |
+
+An icon-only button needs an `aria-label` or `.sr-only` text — there is no visible text to name it.
+Composing the sizes (`.btn-icon.btn-sm`) reaches the same place, for markup already written that way.
 
 ## States
 

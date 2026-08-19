@@ -30,7 +30,13 @@ const code = source.replace(/\n+$/, "");
 ---
 
 <div class="pk-example not-content">
-  <div class="pk-preview pk-surface" data-layout={layout} data-width={width} set:html={code} />
+  <div
+    class="pk-preview pk-surface"
+    data-example={src}
+    data-layout={layout}
+    data-width={width}
+    set:html={code}
+  />
 
   <div class="pk-example-bar">
     <button class="pk-example-toggle" type="button" data-pk-code-toggle aria-expanded="false">

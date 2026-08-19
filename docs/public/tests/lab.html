@@ -109,12 +109,172 @@
     </section>
 
     <section>
+      <h2>Rich Dropdown Menu</h2>
+      <button class="btn" popovertarget="rich-menu" id="rich-trigger">Rich</button>
+      <div class="dropdown-menu" id="rich-menu" popover style="width: 14rem">
+        <div class="dropdown-menu-label">View</div>
+        <hr class="dropdown-menu-separator" />
+
+        <div class="dropdown-menu-group" id="checkbox-group">
+          <button class="dropdown-menu-checkbox-item" type="button" id="check-status"
+                  data-value="status" data-pk-keep-open aria-checked="true">
+            <span class="dropdown-menu-item-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </span>
+            Status bar
+          </button>
+          <button class="dropdown-menu-checkbox-item" type="button" id="check-panel"
+                  data-value="panel" data-pk-keep-open>
+            <span class="dropdown-menu-item-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </span>
+            Panel
+          </button>
+          <button class="dropdown-menu-checkbox-item" type="button" id="check-disabled" data-disabled>
+            <span class="dropdown-menu-item-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </span>
+            Unavailable
+          </button>
+        </div>
+
+        <hr class="dropdown-menu-separator" />
+
+        <div class="dropdown-menu-radio-group" id="radio-group">
+          <button class="dropdown-menu-radio-item" type="button" id="radio-compact"
+                  data-value="compact" data-pk-keep-open aria-checked="true">
+            <span class="dropdown-menu-item-indicator"><span></span></span>
+            Compact
+          </button>
+          <button class="dropdown-menu-radio-item" type="button" id="radio-comfortable"
+                  data-value="comfortable" data-pk-keep-open>
+            <span class="dropdown-menu-item-indicator"><span></span></span>
+            Comfortable
+          </button>
+        </div>
+
+        <hr class="dropdown-menu-separator" />
+
+        <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button"
+                id="sub-trigger" popovertarget="sub-menu">
+          More tools
+        </button>
+
+        <!-- Nested in the DOM: that is what makes the browser treat the two popovers
+             as parent and child, so opening this one does not dismiss the other. -->
+        <div class="dropdown-menu" id="sub-menu" popover style="width: 12rem">
+          <button class="dropdown-menu-item" type="button" id="sub-first">Save page</button>
+          <button class="dropdown-menu-item" type="button" id="sub-second">Developer tools</button>
+        </div>
+
+        <button class="dropdown-menu-item" type="button" id="rich-last">Close window</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Dialog with close button</h2>
+      <button class="btn" data-pk-dialog-open="closable" id="open-closable">Open closable</button>
+      <dialog class="dialog" id="closable">
+        <button class="dialog-close" data-pk-dialog-close aria-label="Close" id="closable-x">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+        <div class="dialog-header">
+          <h3 class="dialog-title">Closable dialog</h3>
+        </div>
+      </dialog>
+    </section>
+
+    <section>
+      <h2>Field states</h2>
+      <div class="field-group" style="width: 100%">
+        <fieldset class="field-set">
+          <legend class="field-legend" data-variant="label">Account</legend>
+
+          <div class="field" data-orientation="horizontal" id="field-horizontal">
+            <label class="label" for="field-h-input">Handle</label>
+            <input class="input" id="field-h-input" />
+          </div>
+
+          <div class="field" data-invalid id="field-invalid">
+            <label class="label" for="field-i-input">Email</label>
+            <input class="input" id="field-i-input" aria-invalid="true" />
+            <p class="field-error">That address is already registered.</p>
+          </div>
+
+          <div class="field" id="field-disabled">
+            <label class="label" for="field-d-input">Workspace</label>
+            <input class="input" id="field-d-input" value="acme" disabled />
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <section>
       <h2>Native Select</h2>
       <label class="label" for="lab-select">Visibility</label>
       <select class="native-select" id="lab-select">
         <option>Private</option>
         <option>Public</option>
       </select>
+    </section>
+
+    <section>
+      <h2>Button sizes</h2>
+      <button class="btn btn-xs" id="btn-xs">xs</button>
+      <button class="btn btn-sm" id="btn-sm">sm</button>
+      <button class="btn" id="btn-default">default</button>
+      <button class="btn btn-lg" id="btn-lg">lg</button>
+      <button class="btn btn-icon-xs" id="btn-icon-xs" aria-label="xs icon">+</button>
+      <button class="btn btn-icon-sm" id="btn-icon-sm" aria-label="sm icon">+</button>
+      <button class="btn btn-icon" id="btn-icon" aria-label="icon">+</button>
+      <button class="btn btn-icon-lg" id="btn-icon-lg" aria-label="lg icon">+</button>
+    </section>
+
+    <section>
+      <h2>Badge variants</h2>
+      <span class="badge" id="badge-default">default</span>
+      <span class="badge badge-secondary" id="badge-secondary">secondary</span>
+      <span class="badge badge-destructive" id="badge-destructive">destructive</span>
+      <span class="badge badge-outline" id="badge-outline">outline</span>
+      <span class="badge badge-ghost" id="badge-ghost">ghost</span>
+      <span class="badge badge-link" id="badge-link">link</span>
+    </section>
+
+    <section style="display: block">
+      <h2>Alert with action</h2>
+      <div class="alert" id="alert-with-action">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+        <h3 class="alert-title" id="alert-title">Update available</h3>
+        <p class="alert-description">Version 2.1 is ready to install.</p>
+        <div class="alert-action" id="alert-action">
+          <button class="btn btn-outline btn-sm">Install</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: block">
+      <h2>Card sizes</h2>
+      <div class="card" id="card-default" style="max-width: 20rem">
+        <div class="card-header">
+          <h3 class="card-title">Default</h3>
+          <div class="card-action" id="card-action"><span class="badge badge-outline">new</span></div>
+        </div>
+        <div class="card-content" id="card-content-default">Body</div>
+      </div>
+      <div class="card" data-size="sm" id="card-sm" style="max-width: 20rem">
+        <div class="card-header"><h3 class="card-title">Small</h3></div>
+        <div class="card-content" id="card-content-sm">Body</div>
+      </div>
     </section>
 
     <section>

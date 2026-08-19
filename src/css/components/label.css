@@ -2,9 +2,4 @@
   .label {
     @apply flex items-center gap-2 text-sm leading-none font-medium select-none;
   }
-
-  /* Reads the control's own state, so no marker class is needed on the label. */
-  .field:has(:disabled) > .label {
-    @apply cursor-not-allowed opacity-50;
-  }
 }

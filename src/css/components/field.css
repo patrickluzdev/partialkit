@@ -1,14 +1,56 @@
 @layer components {
+  .field-set {
+    @apply flex flex-col gap-6;
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .field-legend {
+    @apply mb-3 font-medium;
+  }
+
+  .field-legend[data-variant="legend"] {
+    @apply text-base;
+  }
+
+  .field-legend[data-variant="label"] {
+    @apply text-sm;
+  }
+
+  /* A container query, so a responsive field reacts to its own column rather
+     than the viewport. */
+  .field-group {
+    @apply @container/field-group flex w-full flex-col gap-6;
+  }
+
   .field {
     @apply flex w-full flex-col gap-2;
   }
 
-  .field-group {
-    @apply flex w-full flex-col gap-6;
+  .field[data-orientation="horizontal"] {
+    @apply flex-row items-center gap-4;
+  }
+
+  .field[data-orientation="horizontal"] > .label {
+    @apply shrink-0;
+  }
+
+  .field[data-orientation="responsive"] {
+    @apply flex-col gap-2 @md/field-group:flex-row @md/field-group:items-center @md/field-group:gap-4;
+  }
+
+  .field-content {
+    @apply flex flex-1 flex-col gap-1.5;
+  }
+
+  .field-title {
+    @apply flex items-center gap-2 text-sm leading-snug font-medium;
   }
 
   .field-description {
-    @apply text-sm leading-normal font-normal text-muted-foreground;
+    @apply text-sm leading-normal font-normal text-balance text-muted-foreground;
   }
 
   .field-error {
@@ -17,5 +59,19 @@
 
   .field-separator {
     @apply h-px w-full bg-border;
+  }
+
+  /* One flag on the wrapper marks the whole block, the way shadcn/ui does it. */
+  .field[data-invalid] > :is(.label, .field-title),
+  .field[data-invalid] .field-title {
+    @apply text-destructive;
+  }
+
+  .field[data-invalid] :is(.input, .textarea, .native-select) {
+    @apply border-destructive ring-destructive/20;
+  }
+
+  .field:has(:disabled) > :is(.label, .field-content) {
+    @apply cursor-not-allowed opacity-50;
   }
 }

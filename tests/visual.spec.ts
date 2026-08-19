@@ -4,18 +4,20 @@ import { expect, test, type Page } from "@playwright/test";
 // compare font rasterisers. Behaviour is what the other browsers are for.
 test.skip(({ browserName }) => browserName !== "chromium", "visual baselines are chromium-only");
 
-const COMPONENTS = [
-  "alert",
-  "badge",
-  "button",
-  "card",
-  "dialog",
-  "dropdown-menu",
-  "field",
-  "input",
-  "label",
-  "native-select",
-  "textarea",
+const PAGES = [
+  "/",
+  "/components/alert/",
+  "/components/badge/",
+  "/components/button/",
+  "/components/card/",
+  "/components/dialog/",
+  "/components/dropdown-menu/",
+  "/components/field/",
+  "/components/input/",
+  "/components/label/",
+  "/components/native-select/",
+  "/components/textarea/",
+  "/guides/theming/",
 ];
 
 async function visit(page: Page, path: string, theme: "light" | "dark") {
@@ -26,12 +28,21 @@ async function visit(page: Page, path: string, theme: "light" | "dark") {
 
 for (const theme of ["light", "dark"] as const) {
   test.describe(`@visual ${theme}`, () => {
-    for (const component of COMPONENTS) {
-      test(component, async ({ page }) => {
-        await visit(page, `/components/${component}/`, theme);
+    for (const path of PAGES) {
+      // Every example on the page, named after the example file rather than its
+      // position, so reordering a page does not invalidate baselines.
+      test(path, async ({ page }) => {
+        await visit(page, path, theme);
 
-        const preview = page.locator(".pk-preview").first();
-        await expect(preview).toHaveScreenshot(`${component}-${theme}.png`);
+        const previews = page.locator("[data-example]");
+        const count = await previews.count();
+        expect(count, `${path} has examples`).toBeGreaterThan(0);
+
+        for (let index = 0; index < count; index++) {
+          const preview = previews.nth(index);
+          const name = await preview.getAttribute("data-example");
+          await expect(preview).toHaveScreenshot(`${name!.replace(/\//g, "-")}-${theme}.png`);
+        }
       });
     }
 
@@ -52,6 +63,20 @@ for (const theme of ["light", "dark"] as const) {
       await expect(page.locator("#demo-menu")).toBeVisible();
 
       await expect(page.locator("#demo-menu")).toHaveScreenshot(`dropdown-menu-open-${theme}.png`);
+    });
+
+    test("open submenu", async ({ page }) => {
+      await page.goto("/tests/lab.html");
+      await page.click(`#theme-${theme}`);
+      await page.click("#rich-trigger");
+      // The pointer would still be over the menu as it animates in, and moving
+      // across items closes an open submenu. This one is opened by keyboard.
+      await page.mouse.move(0, 0);
+      await page.locator("#sub-trigger").focus();
+      await page.keyboard.press("ArrowRight");
+      await expect(page.locator("#sub-menu")).toBeVisible();
+
+      await expect(page.locator("#rich-menu")).toHaveScreenshot(`submenu-open-${theme}.png`);
     });
   });
 }

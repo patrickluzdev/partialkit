@@ -1,0 +1,19 @@
+<button class="btn btn-outline" popovertarget="file-menu">File</button>
+
+<div class="dropdown-menu" id="file-menu" popover style="width: 13rem">
+  <button class="dropdown-menu-item" type="button">New window</button>
+
+  <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button" popovertarget="share-menu">
+    Share
+  </button>
+
+  <!-- Nested inside its parent: that is what makes the browser treat the two
+       popovers as parent and child. -->
+  <div class="dropdown-menu" id="share-menu" popover style="width: 12rem">
+    <button class="dropdown-menu-item" type="button">Email link</button>
+    <button class="dropdown-menu-item" type="button">Copy link</button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+  <button class="dropdown-menu-item" type="button" data-variant="destructive">Close window</button>
+</div>

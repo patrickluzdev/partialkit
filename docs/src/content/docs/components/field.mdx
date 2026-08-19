@@ -13,6 +13,10 @@ import Preview from "../../../components/Preview.astro";
 | `.field-group` | Several fields stacked with wider spacing |
 | `.field-description` | Help text |
 | `.field-error` | Validation message |
+| `.field-set` | A semantic `<fieldset>` with the same spacing |
+| `.field-legend` | Its `<legend>`; `data-variant="legend"` or `"label"` sizes it |
+| `.field-content` | Groups control and description when the label sits beside them |
+| `.field-title` | Title with label styling inside `.field-content` |
 | `.field-separator` | Divider between groups |
 
 ## Error state
@@ -27,6 +31,21 @@ Point `aria-describedby` at the error so it is announced with the control.
 ## Groups
 
 <Preview src="field/groups" width="sm" />
+
+## Orientation
+
+`data-orientation="horizontal"` puts the label beside the control. `"responsive"` starts stacked and
+switches at the container's width — a container query, so it reacts to its own column rather than the
+viewport, which needs a `.field-group` around it.
+
+<Preview src="field/orientation" layout="stack" />
+
+## Fieldsets
+
+<Preview src="field/fieldsets" width="sm" />
+
+`data-invalid` on the `.field` marks the whole block, so the label turns with the control instead of
+each part being styled separately.
 
 ## Disabled
 

@@ -12,6 +12,7 @@ import Preview from "../../../components/Preview.astro";
 | `.alert` | Container |
 | `.alert-title` | Heading line |
 | `.alert-description` | Body copy |
+| `.alert-action` | Control pinned to the trailing edge |
 | `.alert-destructive` | Error variant |
 
 ## With an icon
@@ -19,6 +20,12 @@ import Preview from "../../../components/Preview.astro";
 An `svg` as the first child shifts the layout into its icon column automatically.
 
 <Preview src="alert/with-an-icon" />
+
+## With an action
+
+`.alert-action` takes a trailing column, leaving the icon and text columns untouched.
+
+<Preview src="alert/with-an-action" />
 
 ## Title only
 

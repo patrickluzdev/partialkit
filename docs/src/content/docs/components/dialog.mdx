@@ -22,6 +22,7 @@ and the state attribute.
 | `.dialog-header` | Title area |
 | `.dialog-title` | Heading — becomes the accessible name |
 | `.dialog-description` | Supporting line — becomes `aria-describedby` |
+| `.dialog-close` | Corner dismiss control |
 | `.dialog-footer` | Actions row |
 
 ## Attributes
@@ -33,6 +34,12 @@ and the state attribute.
 | `data-pk-dialog-close="<value>"` | a control inside | Closes it and sets `returnValue` |
 | `data-pk-dialog-static` | the dialog | Clicking the backdrop does not close it |
 | `data-state="open" \| "closed"` | the dialog | Set by the runtime |
+
+## Close button
+
+`.dialog-close` positions a control in the corner and reserves room for it in the header. It is
+plain markup, so leave it out when a dialog must be answered rather than dismissed. Give it an
+`aria-label`, since the icon carries no text.
 
 ## Static backdrop
 

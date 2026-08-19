@@ -1,11 +1,22 @@
 @layer components {
   .card {
-    @apply flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm;
+    --card-spacing: calc(var(--spacing) * 6);
+
+    @apply flex flex-col rounded-xl border bg-card text-card-foreground shadow-sm;
+
+    gap: var(--card-spacing);
+    padding-block: var(--card-spacing);
+  }
+
+  .card[data-size="sm"] {
+    --card-spacing: calc(var(--spacing) * 4);
   }
 
   .card-header {
-    @apply grid auto-rows-min items-start gap-1.5 px-6;
+    @apply grid auto-rows-min items-start gap-1.5;
     @apply has-[.card-action]:grid-cols-[1fr_auto];
+
+    padding-inline: var(--card-spacing);
   }
 
   .card-action {
@@ -21,10 +32,12 @@
   }
 
   .card-content {
-    @apply px-6;
+    padding-inline: var(--card-spacing);
   }
 
   .card-footer {
-    @apply flex items-center gap-2 px-6;
+    @apply flex items-center gap-2;
+
+    padding-inline: var(--card-spacing);
   }
 }

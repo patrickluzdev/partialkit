@@ -20,4 +20,20 @@
   .badge-outline {
     @apply border-border bg-transparent text-foreground;
   }
+
+  .badge-ghost {
+    @apply border-transparent bg-accent text-accent-foreground;
+  }
+
+  .badge-link {
+    @apply border-transparent bg-transparent text-primary underline-offset-4 hover:underline;
+  }
+
+  .badge [data-icon="inline-start"] {
+    @apply -ml-0.5;
+  }
+
+  .badge [data-icon="inline-end"] {
+    @apply -mr-0.5 order-last;
+  }
 }

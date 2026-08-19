@@ -36,6 +36,10 @@
     @apply bg-transparent text-primary shadow-none underline-offset-4 hover:underline;
   }
 
+  .btn-xs {
+    @apply h-7 gap-1 rounded-md px-2.5 text-xs;
+  }
+
   .btn-sm {
     @apply h-8 gap-1.5 rounded-md px-3 text-sm;
   }
@@ -46,6 +50,23 @@
 
   .btn-icon {
     @apply size-9 p-0;
+  }
+
+  .btn-icon-xs {
+    @apply size-7 gap-0 p-0 text-xs;
+  }
+
+  .btn-icon-sm {
+    @apply size-8 gap-0 p-0;
+  }
+
+  .btn-icon-lg {
+    @apply size-10 gap-0 p-0;
+  }
+
+  /* Composing the size classes reaches the same place, for markup already written that way. */
+  .btn-icon.btn-xs {
+    @apply size-7;
   }
 
   .btn-icon.btn-sm {
