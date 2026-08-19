@@ -8,14 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # The image ships the browsers, so the suite runs on the same engines locally and here.
-    container: mcr.microsoft.com/playwright:v1.62.1-noble
+    # The image ships the browsers, so the suite runs on the same engines locally
+    # and here. Node comes from the image too: a second toolchain would resolve a
+    # different Playwright than the one the browsers were installed for.
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --user root
+    env:
+      # Firefox refuses to launch when $HOME is not owned by the current user.
+      HOME: /root
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
