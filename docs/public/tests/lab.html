@@ -181,7 +181,7 @@
       <h2>Dialog with close button</h2>
       <button class="btn" data-pk-dialog-open="closable" id="open-closable">Open closable</button>
       <dialog class="dialog" id="closable">
-        <button class="dialog-close" data-pk-dialog-close aria-label="Close" id="closable-x">
+        <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close" id="closable-x">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6 6 18M6 6l12 12"></path>
           </svg>
@@ -236,6 +236,20 @@
       <button class="btn btn-icon-sm" id="btn-icon-sm" aria-label="sm icon">+</button>
       <button class="btn btn-icon" id="btn-icon" aria-label="icon">+</button>
       <button class="btn btn-icon-lg" id="btn-icon-lg" aria-label="lg icon">+</button>
+    </section>
+
+    <section>
+      <h2>Button states</h2>
+      <button class="btn" id="state-default">Default</button>
+      <button class="btn btn-outline" id="state-outline">Outline</button>
+      <button class="btn btn-secondary" id="state-secondary">Secondary</button>
+      <button class="btn btn-ghost" id="state-ghost">Ghost</button>
+      <button class="btn btn-destructive" id="state-destructive">Destructive</button>
+      <button class="btn btn-link" id="state-link">Link</button>
+      <button class="btn" id="state-disabled" disabled>Disabled</button>
+      <button class="btn" id="state-invalid" aria-invalid="true">Invalid</button>
+      <button class="btn" id="state-trigger" aria-haspopup="menu">Trigger</button>
+      <a class="btn" id="state-anchor" href="#state-anchor">Anchor</a>
     </section>
 
     <section>

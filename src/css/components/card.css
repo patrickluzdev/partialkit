@@ -1,34 +1,44 @@
 @layer components {
   .card {
-    --card-spacing: calc(var(--spacing) * 6);
+    --card-spacing: calc(var(--spacing) * 4);
 
-    @apply flex flex-col rounded-xl border bg-card text-card-foreground shadow-sm;
+    @apply flex flex-col overflow-hidden rounded-xl bg-card text-sm text-card-foreground;
+    @apply ring-1 ring-foreground/10;
 
     gap: var(--card-spacing);
     padding-block: var(--card-spacing);
   }
 
   .card[data-size="sm"] {
-    --card-spacing: calc(var(--spacing) * 4);
+    --card-spacing: calc(var(--spacing) * 3);
+  }
+
+  /* The footer carries its own padding, so the card stops short of it. */
+  .card:has(> .card-footer) {
+    @apply pb-0;
   }
 
   .card-header {
-    @apply grid auto-rows-min items-start gap-1.5;
+    @apply grid auto-rows-min items-start gap-1 rounded-t-xl;
     @apply has-[.card-action]:grid-cols-[1fr_auto];
 
     padding-inline: var(--card-spacing);
   }
 
-  .card-action {
-    @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
+  .card-title {
+    @apply text-base leading-snug font-medium;
   }
 
-  .card-title {
-    @apply leading-none font-semibold;
+  .card[data-size="sm"] .card-title {
+    @apply text-sm;
   }
 
   .card-description {
     @apply text-sm text-muted-foreground;
+  }
+
+  .card-action {
+    @apply col-start-2 row-span-2 row-start-1 self-start justify-self-end;
   }
 
   .card-content {
@@ -36,8 +46,8 @@
   }
 
   .card-footer {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-2 rounded-b-xl border-t bg-muted/50;
 
-    padding-inline: var(--card-spacing);
+    padding: var(--card-spacing);
   }
 }

@@ -1,79 +1,140 @@
 @layer components {
   .btn {
-    @apply inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap;
-    @apply h-9 rounded-md px-4 py-2 text-sm font-medium;
-    @apply cursor-pointer transition-all outline-none select-none;
-    @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding;
+    @apply text-sm font-medium whitespace-nowrap transition-all outline-none select-none;
+    @apply h-8 gap-1.5 px-2.5;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
     @apply disabled:pointer-events-none disabled:opacity-50;
-    @apply aria-invalid:ring-destructive/20 aria-invalid:border-destructive;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20;
+    @apply dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
   }
 
-  .btn > svg {
-    @apply pointer-events-none size-4 shrink-0;
+  /* The default variant, applied only when no other one is: leaving these on the
+     base class leaked its hover background into .btn-link. */
+  .btn:not(.btn-outline, .btn-secondary, .btn-ghost, .btn-destructive, .btn-link) {
+    @apply bg-primary text-primary-foreground hover:bg-primary/80;
   }
 
-  .btn-secondary {
-    @apply bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80;
+  /* A menu trigger stays put, so the panel it anchors does not jump with it.
+     Written out rather than @apply translate-y-px: that utility composes through
+     --tw-translate-x, which the standalone build does not register. */
+  .btn:active:not([aria-haspopup]) {
+    translate: 0 1px;
   }
 
-  .btn-destructive {
-    @apply bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90;
-    @apply focus-visible:ring-destructive/20;
+  .btn svg {
+    @apply pointer-events-none shrink-0;
+  }
+
+  .btn svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  .btn:has([data-icon="inline-start"]) {
+    @apply pl-2;
+  }
+
+  .btn:has([data-icon="inline-end"]) {
+    @apply pr-2;
   }
 
   .btn-outline {
-    @apply border bg-background text-foreground shadow-xs;
-    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply border-border bg-background text-foreground;
+    @apply hover:bg-muted hover:text-foreground;
+    @apply aria-expanded:bg-muted aria-expanded:text-foreground;
+    @apply dark:border-input dark:bg-input/30 dark:hover:bg-input/50;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)];
+    @apply aria-expanded:bg-secondary aria-expanded:text-secondary-foreground;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-foreground shadow-none;
-    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply text-foreground;
+    @apply hover:bg-muted hover:text-foreground;
+    @apply aria-expanded:bg-muted aria-expanded:text-foreground;
+    @apply dark:hover:bg-muted/50;
+  }
+
+  /* Tinted rather than solid: the danger reads from the colour, not the weight. */
+  .btn-destructive {
+    @apply bg-destructive/10 text-destructive hover:bg-destructive/20;
+    @apply focus-visible:border-destructive/40 focus-visible:ring-destructive/20;
+    @apply dark:bg-destructive/12 dark:hover:bg-destructive/20 dark:focus-visible:ring-destructive/40;
   }
 
   .btn-link {
-    @apply bg-transparent text-primary shadow-none underline-offset-4 hover:underline;
+    @apply text-primary underline-offset-4 hover:underline;
   }
 
   .btn-xs {
-    @apply h-7 gap-1 rounded-md px-2.5 text-xs;
+    @apply h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs;
+  }
+
+  .btn-xs svg:not([class*="size-"]) {
+    @apply size-3;
+  }
+
+  .btn-xs:has([data-icon="inline-start"]) {
+    @apply pl-1.5;
+  }
+
+  .btn-xs:has([data-icon="inline-end"]) {
+    @apply pr-1.5;
   }
 
   .btn-sm {
-    @apply h-8 gap-1.5 rounded-md px-3 text-sm;
+    @apply h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem];
+  }
+
+  .btn-sm svg:not([class*="size-"]) {
+    @apply size-3.5;
+  }
+
+  .btn-sm:has([data-icon="inline-start"]) {
+    @apply pl-1.5;
+  }
+
+  .btn-sm:has([data-icon="inline-end"]) {
+    @apply pr-1.5;
   }
 
   .btn-lg {
-    @apply h-10 rounded-md px-6;
+    @apply h-9 gap-1.5 px-2.5;
   }
 
   .btn-icon {
-    @apply size-9 p-0;
+    @apply size-8 px-0;
   }
 
   .btn-icon-xs {
-    @apply size-7 gap-0 p-0 text-xs;
+    @apply size-6 rounded-[min(var(--radius-md),10px)] px-0;
+  }
+
+  .btn-icon-xs svg:not([class*="size-"]) {
+    @apply size-3;
   }
 
   .btn-icon-sm {
-    @apply size-8 gap-0 p-0;
+    @apply size-7 rounded-[min(var(--radius-md),12px)] px-0;
   }
 
   .btn-icon-lg {
-    @apply size-10 gap-0 p-0;
+    @apply size-9 px-0;
   }
 
   /* Composing the size classes reaches the same place, for markup already written that way. */
   .btn-icon.btn-xs {
-    @apply size-7;
+    @apply size-6;
   }
 
   .btn-icon.btn-sm {
-    @apply size-8;
+    @apply size-7;
   }
 
   .btn-icon.btn-lg {
-    @apply size-10;
+    @apply size-9;
   }
 }

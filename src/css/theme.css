@@ -1,6 +1,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  /* Drives the native form controls and scrollbars, and makes the system colours
+     an <option> popup paints itself with follow the theme. */
+  color-scheme: light;
+
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -17,14 +21,20 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
+  /* shadcn/ui ships 0.577 here. Destructive surfaces are a wash of this colour
+     with this colour as the text, which measures 3.97:1 on the page and 3.83:1
+     on a card footer — below WCAG AA, and no wash strength fixes it (4% still
+     only reaches 4.26:1). 0.50 measures 4.95:1 and 4.77:1 at the same hue and
+     chroma. The dark value keeps shadcn's, with a lighter wash instead. */
+  --destructive: oklch(0.50 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
 }
 
 .dark {
+  color-scheme: dark;
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -40,9 +50,6 @@
   --accent: oklch(0.371 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  /* The dark palette lightens every accent, so its foreground inverts too, the
-     same way --primary-foreground does. White here fails WCAG AA. */
-  --destructive-foreground: oklch(0.145 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -64,7 +71,6 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

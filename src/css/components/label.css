@@ -1,5 +1,6 @@
 @layer components {
   .label {
-    @apply flex items-center gap-2 text-sm leading-none font-medium select-none;
+    @apply flex w-fit items-center gap-2 text-sm leading-none font-medium select-none;
+    @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-50;
   }
 }

@@ -1,18 +1,18 @@
 @layer components {
   .dropdown-menu {
-    @apply z-50 min-w-32 overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md;
-    @apply bg-popover text-popover-foreground;
+    @apply z-50 min-w-32 overflow-x-hidden overflow-y-auto rounded-lg p-1;
+    @apply bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none;
 
     position: fixed;
     margin: 0;
     inset: auto;
     opacity: 0;
-    scale: 0.96;
+    scale: 0.95;
     transition:
-      opacity 120ms ease,
-      scale 120ms ease,
-      overlay 120ms allow-discrete,
-      display 120ms allow-discrete;
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
   }
 
   .dropdown-menu:popover-open {
@@ -23,49 +23,56 @@
   @starting-style {
     .dropdown-menu:popover-open {
       opacity: 0;
-      scale: 0.96;
+      scale: 0.95;
     }
   }
 
-  .dropdown-menu-item {
-    @apply relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm;
-    @apply outline-hidden select-none;
-    @apply hover:bg-accent hover:text-accent-foreground;
+  /* A submenu floats above its parent. */
+  .dropdown-menu .dropdown-menu {
+    @apply w-auto min-w-24 shadow-lg;
+  }
+
+  .dropdown-menu-item,
+  .dropdown-menu-sub-trigger,
+  .dropdown-menu-checkbox-item,
+  .dropdown-menu-radio-item {
+    @apply relative flex w-full cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm;
+    @apply text-left outline-hidden select-none;
     @apply focus:bg-accent focus:text-accent-foreground;
     @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
     @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
   }
 
-  .dropdown-menu-item > svg {
-    @apply pointer-events-none size-4 shrink-0 text-muted-foreground;
+  :is(.dropdown-menu-item, .dropdown-menu-sub-trigger) svg {
+    @apply pointer-events-none shrink-0;
+  }
+
+  :is(.dropdown-menu-item, .dropdown-menu-sub-trigger) svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  :is(.dropdown-menu-item, .dropdown-menu-label)[data-inset] {
+    @apply pl-7;
   }
 
   .dropdown-menu-item[data-variant="destructive"] {
-    @apply text-destructive hover:bg-destructive/10 focus:bg-destructive/10;
+    @apply text-destructive;
+    @apply focus:bg-destructive/10 focus:text-destructive;
+    @apply dark:focus:bg-destructive/20;
   }
 
-  .dropdown-menu-item[data-variant="destructive"] > svg {
+  .dropdown-menu-item[data-variant="destructive"] svg {
     @apply text-destructive;
   }
 
-  .dropdown-menu-item[data-inset] {
-    @apply pl-8;
-  }
-
-  /* Checkbox and radio items reserve the indicator column, so labels line up with
-     plain items that use data-inset. */
+  /* The indicator sits on the trailing edge, so labels align with plain items. */
   .dropdown-menu-checkbox-item,
   .dropdown-menu-radio-item {
-    @apply relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm;
-    @apply outline-hidden select-none;
-    @apply hover:bg-accent hover:text-accent-foreground;
-    @apply focus:bg-accent focus:text-accent-foreground;
-    @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
-    @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
+    @apply py-1 pr-8 pl-1.5;
   }
 
   .dropdown-menu-item-indicator {
-    @apply pointer-events-none absolute left-2 flex size-3.5 items-center justify-center;
+    @apply pointer-events-none absolute right-2 flex items-center justify-center;
   }
 
   .dropdown-menu-item-indicator > * {
@@ -86,18 +93,12 @@
     @apply size-2 rounded-full bg-current;
   }
 
-  .dropdown-menu-group,
-  .dropdown-menu-radio-group {
-    @apply contents;
-  }
-
-  /* A submenu trigger is an item that opens a nested panel. */
-  .dropdown-menu-sub-trigger {
-    @apply data-[state=open]:bg-accent data-[state=open]:text-accent-foreground;
+  .dropdown-menu-sub-trigger[data-state="open"] {
+    @apply bg-accent text-accent-foreground;
   }
 
   .dropdown-menu-sub-trigger::after {
-    @apply ml-auto size-4 shrink-0 text-muted-foreground;
+    @apply ml-auto size-4 shrink-0;
 
     content: "";
     background-color: currentColor;
@@ -106,17 +107,13 @@
     mask-position: center;
   }
 
+  .dropdown-menu-group,
+  .dropdown-menu-radio-group {
+    @apply contents;
+  }
+
   .dropdown-menu-label {
-    @apply px-2 py-1.5 text-sm font-medium;
-  }
-
-  .dropdown-menu-label[data-inset] {
-    @apply pl-8;
-  }
-
-  .dropdown-menu-shortcut + .dropdown-menu-sub-trigger::after,
-  .dropdown-menu-sub-trigger .dropdown-menu-shortcut {
-    @apply ml-0;
+    @apply px-1.5 py-1 text-xs font-medium text-muted-foreground;
   }
 
   .dropdown-menu-separator {
@@ -125,5 +122,10 @@
 
   .dropdown-menu-shortcut {
     @apply ml-auto text-xs tracking-widest text-muted-foreground;
+  }
+
+  :is(.dropdown-menu-item, .dropdown-menu-checkbox-item, .dropdown-menu-radio-item):focus
+    .dropdown-menu-shortcut {
+    @apply text-accent-foreground;
   }
 }

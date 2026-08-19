@@ -1,54 +1,59 @@
 @layer components {
   .alert {
-    @apply grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm;
+    @apply relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm;
     @apply bg-card text-card-foreground;
   }
 
   .alert:has(> svg) {
-    @apply grid-cols-[calc(var(--spacing)*4)_1fr] gap-x-3;
-  }
-
-  .alert:has(> .alert-action) {
-    @apply grid-cols-[1fr_auto];
-  }
-
-  .alert:has(> svg):has(> .alert-action) {
-    @apply grid-cols-[calc(var(--spacing)*4)_1fr_auto];
-  }
-
-  .alert-action {
-    @apply row-span-2 row-start-1 self-start justify-self-end;
-  }
-
-  .alert:has(> svg) > .alert-action {
-    @apply col-start-3;
-  }
-
-  .alert:not(:has(> svg)) > .alert-action {
-    @apply col-start-2;
+    @apply grid-cols-[auto_1fr] gap-x-2;
   }
 
   .alert > svg {
-    @apply size-4 translate-y-0.5 text-current;
+    @apply row-span-2 translate-y-0.5 text-current;
+  }
+
+  .alert > svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  /* Reserves the corner so a long title never runs under the action. */
+  .alert:has(> .alert-action) {
+    @apply pr-18;
+  }
+
+  .alert-action {
+    @apply absolute top-2 right-2;
   }
 
   .alert-title {
-    @apply min-h-4 font-medium tracking-tight;
+    @apply font-medium;
+  }
+
+  .alert:has(> svg) > .alert-title {
+    @apply col-start-2;
   }
 
   .alert-description {
-    @apply grid gap-1 text-sm text-muted-foreground;
+    @apply text-sm text-balance text-muted-foreground md:text-pretty;
   }
 
-  .alert:has(> svg) > :is(.alert-title, .alert-description) {
+  .alert:has(> svg) > .alert-description {
     @apply col-start-2;
+  }
+
+  .alert-description p:not(:last-child) {
+    @apply mb-4;
+  }
+
+  :is(.alert-title, .alert-description) a {
+    @apply underline underline-offset-[3px] hover:text-foreground;
   }
 
   .alert-destructive {
     @apply text-destructive;
   }
 
-  .alert-destructive .alert-description {
+  .alert-destructive > .alert-description {
     @apply text-destructive/90;
   }
 }

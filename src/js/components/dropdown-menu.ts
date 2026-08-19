@@ -173,9 +173,13 @@ export const dropdownMenu: Component = {
         if (submenu?.matches(":popover-open")) submenu.hidePopover();
       }
 
-      if (item.matches(SUB_TRIGGER) && item.getAttribute("aria-disabled") !== "true") {
-        submenuOf(item)?.showPopover();
-      }
+      if (item.getAttribute("aria-disabled") === "true") return;
+
+      // Styling keys off :focus alone, the way shadcn/ui does, so the pointer has
+      // to move focus rather than trigger a separate hover rule.
+      item.focus();
+
+      if (item.matches(SUB_TRIGGER)) submenuOf(item)?.showPopover();
     };
 
     applyRoles(element);

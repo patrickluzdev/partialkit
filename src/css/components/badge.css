@@ -1,12 +1,23 @@
 @layer components {
   .badge {
-    @apply inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap;
-    @apply rounded-md border px-2 py-0.5 text-xs font-medium;
-    @apply border-transparent bg-primary text-primary-foreground;
+    @apply inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden;
+    @apply rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap;
+    @apply transition-all;
+    @apply focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40;
+    @apply bg-primary text-primary-foreground;
   }
 
   .badge > svg {
-    @apply pointer-events-none size-3;
+    @apply pointer-events-none size-3!;
+  }
+
+  .badge:has([data-icon="inline-start"]) {
+    @apply pl-1.5;
+  }
+
+  .badge:has([data-icon="inline-end"]) {
+    @apply pr-1.5;
   }
 
   .badge-secondary {
@@ -14,7 +25,8 @@
   }
 
   .badge-destructive {
-    @apply bg-destructive text-destructive-foreground;
+    @apply bg-destructive/10 text-destructive focus-visible:ring-destructive/20;
+    @apply dark:bg-destructive/12 dark:focus-visible:ring-destructive/40;
   }
 
   .badge-outline {
@@ -22,18 +34,27 @@
   }
 
   .badge-ghost {
-    @apply border-transparent bg-accent text-accent-foreground;
+    @apply bg-transparent text-foreground hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50;
   }
 
   .badge-link {
-    @apply border-transparent bg-transparent text-primary underline-offset-4 hover:underline;
+    @apply bg-transparent text-primary underline-offset-4 hover:underline;
   }
 
-  .badge [data-icon="inline-start"] {
-    @apply -ml-0.5;
+  /* Only an interactive badge reacts to the pointer. */
+  a.badge:hover {
+    @apply bg-primary/80;
   }
 
-  .badge [data-icon="inline-end"] {
-    @apply -mr-0.5 order-last;
+  a.badge-secondary:hover {
+    @apply bg-secondary/80;
+  }
+
+  a.badge-destructive:hover {
+    @apply bg-destructive/20 dark:bg-destructive/20;
+  }
+
+  a.badge-outline:hover {
+    @apply bg-muted text-muted-foreground;
   }
 }

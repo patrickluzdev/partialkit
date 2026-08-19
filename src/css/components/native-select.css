@@ -1,17 +1,35 @@
 @layer components {
   .native-select {
-    @apply flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs;
-    @apply transition-[color,box-shadow] outline-none md:text-sm;
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
-    @apply disabled:cursor-not-allowed disabled:opacity-50;
-    @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20;
+    @apply h-8 w-full min-w-0 rounded-lg border border-input bg-transparent py-1 pr-8 pl-2.5 text-sm;
+    @apply appearance-none transition-colors outline-none select-none;
+    @apply selection:bg-primary selection:text-primary-foreground;
+    @apply focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50;
+    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20;
+    @apply dark:bg-input/30 dark:hover:bg-input/50;
+    @apply dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40;
+
+    /* The chevron the appearance reset removed. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.625rem center;
+    background-size: 1rem;
   }
 
-  /* The control is transparent so it inherits the page surface, but options must
-     not be: the native popup paints them directly, and a transparent option is
-     invisible until it is highlighted. */
+  .native-select[data-size="sm"] {
+    @apply h-7 rounded-[min(var(--radius-md),10px)] py-0.5;
+  }
+
+  /* The popup is painted by the platform, so options take system colours: a
+     transparent option is invisible until it is highlighted. `color-scheme` on
+     the root is what makes these follow the theme. */
   .native-select option,
   .native-select optgroup {
-    @apply bg-background text-foreground;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  .native-select[multiple] {
+    @apply bg-none py-1 pr-2.5;
   }
 }

@@ -27,7 +27,7 @@ whole set follows.
 | `--secondary` / `--secondary-foreground` | Secondary button |
 | `--muted` / `--muted-foreground` | Descriptions, placeholders |
 | `--accent` / `--accent-foreground` | Hover and focus states |
-| `--destructive` / `--destructive-foreground` | Danger surfaces and text |
+| `--destructive` | Danger surfaces and text — the surface is a wash of it, the text is it |
 | `--border` / `--input` / `--ring` | Borders, field borders, focus ring |
 | `--radius` | Base corner radius; `sm`/`md`/`lg`/`xl` derive from it |
 
@@ -69,9 +69,17 @@ A `pk:theme:change` event fires on `<html>` with `{ theme, dark }` whenever it c
 
 ## Contrast is tested, not assumed
 
-The dark palette is not a mirror of the light one. Lightening an accent means its foreground has
-to invert too — `--destructive-foreground` goes dark in dark mode for exactly this reason. axe-core
-runs against every example in both modes on each build, so a token change that breaks WCAG AA
-fails CI.
+axe-core runs against every documentation page in both modes on each build, so a token change that
+breaks WCAG AA fails CI.
+
+That check found one place where partialkit deliberately parts ways with shadcn/ui. Destructive
+controls are a wash of `--destructive` carrying `--destructive` as their text. With shadcn's light
+value of `oklch(0.577 0.245 27.325)` that measures **3.97:1** on the page and **3.83:1** on a card
+footer, under the 4.5:1 that WCAG AA asks for — and no wash strength fixes it, since thinning the
+wash to 4% still only reaches 4.26:1. partialkit ships `oklch(0.50 0.245 27.325)` instead, same hue
+and chroma, which measures 4.95:1 and 4.77:1.
+
+The dark value is shadcn's unchanged; there the wash is 12% rather than 20%, which lifts the same
+pairing from 4.28:1 to 4.91:1.
 
 <Preview src="theming/contrast-is-tested-not-assumed" layout="row" />

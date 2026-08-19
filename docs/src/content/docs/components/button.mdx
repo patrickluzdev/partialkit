@@ -11,11 +11,11 @@ import Preview from "../../../components/Preview.astro";
 
 | Class | Use |
 | --- | --- |
-| `.btn` | Primary action. The base class already carries the default variant |
+| `.btn` | Primary action — the default variant, applied when no other is |
 | `.btn-secondary` | Secondary action |
-| `.btn-outline` | Bordered, transparent background |
+| `.btn-outline` | Bordered, sitting on the page surface |
 | `.btn-ghost` | No border, no background until hovered |
-| `.btn-destructive` | Irreversible action |
+| `.btn-destructive` | Irreversible action — a wash of the danger colour, not a solid fill |
 | `.btn-link` | Looks like a link, behaves like a button |
 
 ## Sizes
@@ -24,10 +24,10 @@ import Preview from "../../../components/Preview.astro";
 
 | Class | Height |
 | --- | --- |
-| `.btn-xs` | Extra small |
-| `.btn-sm` | Small |
-| `.btn` | Default |
-| `.btn-lg` | Large |
+| `.btn-xs` | 24px |
+| `.btn-sm` | 28px |
+| `.btn` | 32px |
+| `.btn-lg` | 36px |
 | `.btn-icon-xs` `.btn-icon-sm` `.btn-icon` `.btn-icon-lg` | Square, matching the text size of the same name |
 
 An icon-only button needs an `aria-label` or `.sr-only` text — there is no visible text to name it.
@@ -42,6 +42,7 @@ focus order and `disabled` come from the platform.
 
 ## With an icon
 
-An `svg` child is sized and made non-interactive automatically.
+An `svg` child is sized and made non-interactive automatically. Mark it with
+`data-icon="inline-start"` or `data-icon="inline-end"` so the padding tightens on that side.
 
 <Preview src="button/with-an-icon" />

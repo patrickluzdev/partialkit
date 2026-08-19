@@ -1,19 +1,19 @@
 @layer components {
   .dialog {
-    @apply fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] sm:max-w-lg;
+    @apply fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] sm:max-w-sm;
     @apply -translate-x-1/2 -translate-y-1/2;
-    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border p-6;
-    @apply bg-background text-foreground shadow-lg;
+    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl p-4;
+    @apply bg-popover text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none;
 
     /* A closed <dialog> is display:none by UA rule; only [open] may set a layout display. */
     display: none;
     opacity: 0;
-    scale: 0.96;
+    scale: 0.95;
     transition:
-      opacity 150ms ease,
-      scale 150ms ease,
-      overlay 150ms allow-discrete,
-      display 150ms allow-discrete;
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
   }
 
   .dialog[open] {
@@ -25,17 +25,23 @@
   @starting-style {
     .dialog[open] {
       opacity: 0;
-      scale: 0.96;
+      scale: 0.95;
     }
   }
 
   .dialog::backdrop {
-    background-color: oklch(0 0 0 / 50%);
+    background-color: oklch(0 0 0 / 10%);
     opacity: 0;
     transition:
-      opacity 150ms ease,
-      overlay 150ms allow-discrete,
-      display 150ms allow-discrete;
+      opacity 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  @supports (backdrop-filter: blur(2px)) {
+    .dialog::backdrop {
+      backdrop-filter: blur(2px);
+    }
   }
 
   .dialog[open]::backdrop {
@@ -48,35 +54,33 @@
     }
   }
 
-  /* The corner dismiss control, matching shadcn/ui's default DialogContent. */
   .dialog-close {
-    @apply absolute top-4 right-4 flex size-7 items-center justify-center rounded-xs;
-    @apply cursor-pointer opacity-70 transition-opacity outline-none;
-    @apply hover:opacity-100 disabled:pointer-events-none;
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply absolute top-2 right-2 z-10;
   }
 
-  .dialog-close > svg {
-    @apply pointer-events-none size-4 shrink-0;
+  .dialog-header {
+    @apply flex flex-col gap-2;
   }
 
   .dialog:has(> .dialog-close) .dialog-header {
     @apply pr-8;
   }
 
-  .dialog-header {
-    @apply flex flex-col gap-2 text-center sm:text-left;
-  }
-
   .dialog-title {
-    @apply text-lg leading-none font-semibold;
+    @apply text-base leading-none font-medium;
   }
 
   .dialog-description {
     @apply text-sm text-muted-foreground;
   }
 
+  .dialog-description a {
+    @apply underline underline-offset-[3px] hover:text-foreground;
+  }
+
+  /* Full-bleed footer: it cancels the dialog's padding and carries its own. */
   .dialog-footer {
-    @apply flex flex-col-reverse gap-2 sm:flex-row sm:justify-end;
+    @apply -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4;
+    @apply sm:flex-row sm:justify-end;
   }
 }

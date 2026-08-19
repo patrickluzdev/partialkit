@@ -37,9 +37,15 @@ and the state attribute.
 
 ## Close button
 
-`.dialog-close` positions a control in the corner and reserves room for it in the header. It is
-plain markup, so leave it out when a dialog must be answered rather than dismissed. Give it an
-`aria-label`, since the icon carries no text.
+`.dialog-close` only positions; the control itself is a button, so combine it with the button
+classes the way shadcn/ui composes a ghost icon button:
+
+```html
+<button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
+```
+
+It is plain markup, so leave it out when a dialog must be answered rather than dismissed. The
+`aria-label` is not optional — the icon carries no text.
 
 ## Static backdrop
 

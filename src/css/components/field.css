@@ -1,6 +1,6 @@
 @layer components {
   .field-set {
-    @apply flex flex-col gap-6;
+    @apply flex flex-col gap-4;
 
     border: 0;
     margin: 0;
@@ -8,7 +8,7 @@
   }
 
   .field-legend {
-    @apply mb-3 font-medium;
+    @apply mb-1.5 font-medium;
   }
 
   .field-legend[data-variant="legend"] {
@@ -22,35 +22,59 @@
   /* A container query, so a responsive field reacts to its own column rather
      than the viewport. */
   .field-group {
-    @apply @container/field-group flex w-full flex-col gap-6;
+    @apply @container/field-group flex w-full flex-col gap-5;
   }
 
   .field {
     @apply flex w-full flex-col gap-2;
   }
 
+  .field > * {
+    @apply w-full;
+  }
+
+  .field > .sr-only {
+    @apply w-auto;
+  }
+
   .field[data-orientation="horizontal"] {
-    @apply flex-row items-center gap-4;
+    @apply flex-row items-center;
   }
 
   .field[data-orientation="horizontal"] > .label {
-    @apply shrink-0;
+    @apply flex-auto;
+  }
+
+  .field[data-orientation="horizontal"]:has(> .field-content) {
+    @apply items-start;
   }
 
   .field[data-orientation="responsive"] {
-    @apply flex-col gap-2 @md/field-group:flex-row @md/field-group:items-center @md/field-group:gap-4;
+    @apply flex-col @md/field-group:flex-row @md/field-group:items-center;
+  }
+
+  .field[data-orientation="responsive"] > * {
+    @apply @md/field-group:w-auto;
+  }
+
+  .field[data-orientation="responsive"] > .label {
+    @apply @md/field-group:flex-auto;
   }
 
   .field-content {
-    @apply flex flex-1 flex-col gap-1.5;
+    @apply flex flex-1 flex-col gap-0.5 leading-snug;
   }
 
   .field-title {
-    @apply flex items-center gap-2 text-sm leading-snug font-medium;
+    @apply flex w-fit items-center gap-2 text-sm font-medium;
   }
 
   .field-description {
-    @apply text-sm leading-normal font-normal text-balance text-muted-foreground;
+    @apply text-left text-sm leading-normal font-normal text-muted-foreground;
+  }
+
+  .field-description a {
+    @apply underline underline-offset-4 hover:text-primary;
   }
 
   .field-error {
@@ -58,20 +82,24 @@
   }
 
   .field-separator {
-    @apply h-px w-full bg-border;
+    @apply -my-2 h-5;
+
+    position: relative;
   }
 
-  /* One flag on the wrapper marks the whole block, the way shadcn/ui does it. */
-  .field[data-invalid] > :is(.label, .field-title),
-  .field[data-invalid] .field-title {
+  .field-separator::before {
+    @apply absolute top-1/2 h-px w-full bg-border;
+
+    content: "";
+  }
+
+  /* One flag on the wrapper colours the whole block. */
+  .field[data-invalid] {
     @apply text-destructive;
   }
 
-  .field[data-invalid] :is(.input, .textarea, .native-select) {
-    @apply border-destructive ring-destructive/20;
-  }
-
-  .field:has(:disabled) > :is(.label, .field-content) {
-    @apply cursor-not-allowed opacity-50;
+  .field[data-disabled] > :is(.label, .field-title, .field-content),
+  .field:has(:disabled) > :is(.label, .field-title, .field-content) {
+    @apply opacity-50;
   }
 }
