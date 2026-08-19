@@ -1,7 +1,9 @@
-/* Unlayered rules beat layered ones, so the order is declared up front and the
-   scoped reset lives in `base` — otherwise it would override partialkit's own
-   `@layer components`. */
-@layer theme, base, components, utilities;
+/* Layer order decides this, not specificity. Starlight's own layers are named
+   first so partialkit's land after them — otherwise `starlight.reset`'s
+   `* { margin: 0 }` quietly flattens a separator inside a preview. The scoped
+   reset lives in `base` so it stays under the components it is resetting. */
+@layer starlight.base, starlight.reset, starlight.core, starlight.content,
+  starlight.components, starlight.utils, theme, base, components, utilities;
 
 /* Tailwind without preflight: Starlight owns the page reset, partialkit only owns
    what is inside a preview. */
@@ -39,11 +41,6 @@
 
   .pk-surface :is(svg, img) {
     display: block;
-  }
-
-  .pk-surface hr {
-    height: 0;
-    border-top-width: 1px;
   }
 
   .pk-surface :is(h1, h2, h3, h4, h5, h6, p, ul, ol) {
