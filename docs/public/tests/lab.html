@@ -82,6 +82,37 @@
     </section>
 
     <section>
+      <h2>Alert Dialog</h2>
+      <button class="btn" data-pk-dialog-open="alert-basic" id="open-alert">Open alert dialog</button>
+      <dialog class="alert-dialog" id="alert-basic">
+        <div class="alert-dialog-header">
+          <div class="alert-dialog-media" id="alert-dialog-media">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+          </div>
+          <h3 class="alert-dialog-title" id="alert-dialog-title">Delete this project?</h3>
+          <p class="alert-dialog-description" id="alert-dialog-description">This cannot be undone.</p>
+        </div>
+        <div class="alert-dialog-footer">
+          <button class="btn btn-outline" data-pk-dialog-close id="alert-cancel">Cancel</button>
+          <button class="btn btn-destructive" data-pk-dialog-close="confirm" id="alert-confirm">Delete</button>
+        </div>
+      </dialog>
+
+      <button class="btn" data-pk-dialog-open="alert-compact" id="open-alert-compact">Compact</button>
+      <dialog class="alert-dialog" id="alert-compact" data-size="sm">
+        <div class="alert-dialog-header">
+          <h3 class="alert-dialog-title">Discard draft?</h3>
+        </div>
+        <div class="alert-dialog-footer" id="alert-compact-footer">
+          <button class="btn btn-outline" data-pk-dialog-close>Keep</button>
+          <button class="btn btn-destructive" data-pk-dialog-close="confirm">Discard</button>
+        </div>
+      </dialog>
+    </section>
+
+    <section>
       <h2>Dropdown Menu</h2>
       <button class="btn" popovertarget="start-menu" id="start-trigger">Start</button>
       <div class="dropdown-menu" id="start-menu" popover style="width: 12rem">

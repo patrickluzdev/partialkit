@@ -7,6 +7,7 @@ test.skip(({ browserName }) => browserName !== "chromium", "visual baselines are
 const PAGES = [
   "/",
   "/components/alert/",
+  "/components/alert-dialog/",
   "/components/badge/",
   "/components/button/",
   "/components/card/",

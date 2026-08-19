@@ -1,4 +1,4 @@
-<button class="btn btn-destructive" data-pk-dialog-open="demo-dialog">Delete project</button>
+<button class="btn btn-outline" data-pk-dialog-open="demo-dialog">Edit profile</button>
 
 <dialog class="dialog" id="demo-dialog">
   <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
@@ -8,11 +8,17 @@
   </button>
 
   <div class="dialog-header">
-    <h3 class="dialog-title">Delete project</h3>
-    <p class="dialog-description">This action cannot be undone.</p>
+    <h3 class="dialog-title">Edit profile</h3>
+    <p class="dialog-description">Changes are saved to your account immediately.</p>
   </div>
+
+  <div class="field">
+    <label class="label" for="profile-name">Display name</label>
+    <input class="input" id="profile-name" value="Ada Lovelace" />
+  </div>
+
   <div class="dialog-footer">
     <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
-    <button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+    <button class="btn" data-pk-dialog-close="save">Save</button>
   </div>
 </dialog>

@@ -1,0 +1,80 @@
+---
+title: Alert Dialog
+description: A modal that interrupts the user with important content and expects a response.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="alert-dialog/overview" />
+
+<Aside title="Not the same as a dialog">
+A [dialog](/components/dialog/) is a place to do something, and you can dismiss it by clicking away
+or with a close control. An alert dialog blocks until the question is answered: there is no close
+button, the backdrop does not dismiss it, and it carries `role="alertdialog"` so assistive tech
+announces it as an interruption rather than a container.
+
+Reach for this one whenever the choice is destructive or otherwise cannot be undone.
+</Aside>
+
+## Parts
+
+| Class | Part |
+| --- | --- |
+| `.alert-dialog` | The `<dialog>` element itself |
+| `.alert-dialog-header` | Title area, centred on small screens |
+| `.alert-dialog-media` | Optional icon that pairs with the title |
+| `.alert-dialog-title` | Heading — becomes the accessible name |
+| `.alert-dialog-description` | The consequence, spelled out |
+| `.alert-dialog-footer` | Cancel and confirm |
+
+## Attributes
+
+| Attribute | On | Meaning |
+| --- | --- | --- |
+| `data-pk-dialog-open="<id>"` | any control | Opens it |
+| `data-pk-dialog-close[="<value>"]` | a control inside | Closes it, optionally setting `returnValue` |
+| `data-size="sm"` | the alert dialog | Compact: stays narrow and splits the footer into two columns |
+| `data-state="open" \| "closed"` | the alert dialog | Set by the runtime |
+
+The events are the dialog's: `pk:dialog:before-open`, `pk:dialog:open` and `pk:dialog:close`.
+
+## With an icon
+
+`.alert-dialog-media` sits above the title on a small screen and moves beside it once there is
+room.
+
+<Preview src="alert-dialog/with-media" />
+
+## Compact
+
+`data-size="sm"` keeps the panel narrow at every width and gives the two actions equal halves,
+which suits a short yes-or-no.
+
+<Preview src="alert-dialog/compact" />
+
+## Writing the question
+
+The title asks, the description says what happens, and the confirm button names the action rather
+than agreeing:
+
+```html
+<h3 class="alert-dialog-title">Delete this project?</h3>
+<p class="alert-dialog-description">Every deployment and log will be removed.</p>
+...
+<button class="btn btn-destructive" data-pk-dialog-close="confirm">Delete</button>
+```
+
+Cancel comes first in the markup so it is the first thing keyboard and screen reader users reach,
+and it renders last on wider screens.
+
+## Handling the answer
+
+```js
+document.getElementById("delete-project").addEventListener("pk:dialog:close", (event) => {
+  if (event.detail.returnValue === "confirm") deleteProject();
+});
+```
+
+`Esc` closes it, the same as any dialog, and counts as cancelling — `returnValue` is empty. Treat
+anything other than your confirm value as "no".

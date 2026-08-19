@@ -35,7 +35,7 @@ export function closeDialog(target: string | HTMLDialogElement, returnValue?: st
 
 export const dialog: Component = {
   name: "dialog",
-  selector: "dialog.dialog",
+  selector: "dialog.dialog, dialog.alert-dialog",
 
   setup() {
     const onClick = (event: MouseEvent) => {
@@ -62,12 +62,18 @@ export const dialog: Component = {
 
   mount(element) {
     const element_ = element as HTMLDialogElement;
-    applyLabels(element_);
+    const isAlert = element_.classList.contains("alert-dialog");
+
+    applyLabels(element_, isAlert);
     setDefaultAttribute(element_, "data-state", element_.open ? "open" : "closed");
+
+    // An alert dialog interrupts and expects an answer, so it never dismisses by
+    // clicking away — the same reason it has no close control.
+    if (isAlert) setDefaultAttribute(element_, "role", "alertdialog");
 
     // A click landing on the dialog box itself means the backdrop was hit.
     const onClick = (event: MouseEvent) => {
-      if (event.target !== element_ || element_.hasAttribute(STATIC_ATTRIBUTE)) return;
+      if (event.target !== element_ || isAlert || element_.hasAttribute(STATIC_ATTRIBUTE)) return;
       element_.close();
     };
     const onClose = () => {
@@ -99,13 +105,15 @@ export const dialog: Component = {
 };
 
 /** Points the dialog at its own heading and description, so it is announced with both. */
-function applyLabels(element: HTMLDialogElement): void {
-  const title = element.querySelector(".dialog-title");
-  if (title) setDefaultAttribute(element, "aria-labelledby", ensureId(title, "pk-dialog-title"));
+function applyLabels(element: HTMLDialogElement, isAlert: boolean): void {
+  const prefix = isAlert ? "alert-dialog" : "dialog";
 
-  const description = element.querySelector(".dialog-description");
+  const title = element.querySelector(`.${prefix}-title`);
+  if (title) setDefaultAttribute(element, "aria-labelledby", ensureId(title, `pk-${prefix}-title`));
+
+  const description = element.querySelector(`.${prefix}-description`);
   if (description) {
-    setDefaultAttribute(element, "aria-describedby", ensureId(description, "pk-dialog-description"));
+    setDefaultAttribute(element, "aria-describedby", ensureId(description, `pk-${prefix}-description`));
   }
 }
 

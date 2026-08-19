@@ -12,6 +12,7 @@ const PAGES = [
   "/installation/",
   "/guides/theming/",
   "/components/alert/",
+  "/components/alert-dialog/",
   "/components/badge/",
   "/components/button/",
   "/components/card/",

@@ -1,0 +1,109 @@
+@layer components {
+  /* A dialog that interrupts and expects an answer: no dismiss control, and the
+     backdrop does not close it. */
+  .alert-dialog {
+    @apply fixed top-1/2 left-1/2 z-50 w-full max-w-xs;
+    @apply -translate-x-1/2 -translate-y-1/2;
+    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl p-4;
+    @apply bg-popover text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none;
+
+    display: none;
+    opacity: 0;
+    scale: 0.95;
+    transition:
+      opacity 100ms ease,
+      scale 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  .alert-dialog:not([data-size="sm"]) {
+    @apply sm:max-w-sm;
+  }
+
+  .alert-dialog[open] {
+    @apply grid gap-4;
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .alert-dialog[open] {
+      opacity: 0;
+      scale: 0.95;
+    }
+  }
+
+  .alert-dialog::backdrop {
+    background-color: oklch(0 0 0 / 10%);
+    opacity: 0;
+    transition:
+      opacity 100ms ease,
+      overlay 100ms allow-discrete,
+      display 100ms allow-discrete;
+  }
+
+  @supports (backdrop-filter: blur(2px)) {
+    .alert-dialog::backdrop {
+      backdrop-filter: blur(2px);
+    }
+  }
+
+  .alert-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .alert-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  /* Centred on small screens, and at the default size it settles left from sm up. */
+  .alert-dialog-header {
+    @apply grid place-items-center gap-1.5 text-center;
+  }
+
+  .alert-dialog:not([data-size="sm"]) .alert-dialog-header {
+    @apply sm:place-items-start sm:text-left;
+  }
+
+  .alert-dialog-media {
+    @apply mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted;
+  }
+
+  .alert-dialog-media > svg:not([class*="size-"]) {
+    @apply size-6;
+  }
+
+  /* With an icon the header pairs it beside the text once there is room. */
+  .alert-dialog:not([data-size="sm"]) .alert-dialog-header:has(.alert-dialog-media) {
+    @apply sm:grid-cols-[auto_1fr] sm:gap-x-4;
+  }
+
+  .alert-dialog:not([data-size="sm"]) .alert-dialog-header:has(.alert-dialog-media) .alert-dialog-media {
+    @apply sm:row-span-2 sm:mb-0;
+  }
+
+  .alert-dialog-title {
+    @apply text-base font-medium;
+  }
+
+  .alert-dialog-description {
+    @apply text-sm text-balance text-muted-foreground md:text-pretty;
+  }
+
+  .alert-dialog-description a {
+    @apply underline underline-offset-[3px] hover:text-foreground;
+  }
+
+  .alert-dialog-footer {
+    @apply -mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4;
+    @apply sm:flex-row sm:justify-end;
+  }
+
+  /* The compact size splits the actions evenly instead of stacking them. */
+  .alert-dialog[data-size="sm"] .alert-dialog-footer {
+    @apply grid grid-cols-2 sm:justify-normal;
+  }
+}
