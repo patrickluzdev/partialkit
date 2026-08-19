@@ -60,6 +60,7 @@ npm install
 npm run dev        # build the library, then serve the docs at :4321
 npm test           # behaviour and accessibility, in Chromium, Firefox and WebKit
 npm run test:all   # the above plus visual regression
+npm run docs:check # every internal link in the built site resolves
 ```
 
 The components are built on real browser primitives and real focus order, so the

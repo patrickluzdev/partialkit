@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    :root { color-scheme: light dark; }
+    .frame { fill: none; stroke: #18181b; stroke-width: 2.5; }
+    .part { fill: #18181b; }
+    @media (prefers-color-scheme: dark) {
+      .frame { stroke: #fafafa; }
+      .part { fill: #fafafa; }
+    }
+  </style>
+
+  <!-- A frame with one quadrant filled: the whole, and the partial. -->
+  <rect class="frame" x="3.25" y="3.25" width="25.5" height="25.5" rx="6.5" />
+  <path class="part" d="M9 16h7v7H9a2 2 0 0 1-2-2v-5Z" />
+  <path class="part" d="M16 9h5a2 2 0 0 1 2 2v5h-7V9Z" opacity="0.45" />
+</svg>

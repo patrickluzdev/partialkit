@@ -52,6 +52,7 @@
     "docs:assets": "node scripts/copy-dist.js",
     "docs:dev": "npm run build && npm run docs:assets && astro dev --root docs",
     "docs:build": "npm run build && npm run docs:assets && astro build --root docs",
+    "docs:check": "node scripts/check-links.js",
     "docs:preview": "node scripts/serve-docs.js",
     "dev": "npm run docs:dev",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.tests.json",

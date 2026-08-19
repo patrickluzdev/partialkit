@@ -1,4 +1,5 @@
 import starlight from "@astrojs/starlight";
+import { rehypeBaseLinks } from "./rehype-base-links.mjs";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
@@ -11,6 +12,7 @@ export default defineConfig({
   // Bind IPv4 explicitly: the default resolves to ::1 only on Windows.
   server: { host: "127.0.0.1", port: 4321 },
   vite: { plugins: [tailwindcss()] },
+  markdown: { rehypePlugins: [rehypeBaseLinks({ base })] },
   integrations: [
     starlight({
       title: "partialkit",
