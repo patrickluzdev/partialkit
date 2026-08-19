@@ -1,0 +1,30 @@
+@layer components {
+  .alert {
+    @apply grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm;
+    @apply bg-card text-card-foreground;
+  }
+
+  .alert:has(> svg) {
+    @apply grid-cols-[calc(var(--spacing)*4)_1fr] gap-x-3;
+  }
+
+  .alert > svg {
+    @apply size-4 translate-y-0.5 text-current;
+  }
+
+  .alert-title {
+    @apply col-start-2 min-h-4 font-medium tracking-tight;
+  }
+
+  .alert-description {
+    @apply col-start-2 grid gap-1 text-sm text-muted-foreground;
+  }
+
+  .alert-destructive {
+    @apply text-destructive;
+  }
+
+  .alert-destructive .alert-description {
+    @apply text-destructive/90;
+  }
+}

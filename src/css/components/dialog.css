@@ -1,0 +1,67 @@
+@layer components {
+  .dialog {
+    @apply fixed top-1/2 left-1/2 z-50 w-full max-w-[calc(100%-2rem)] sm:max-w-lg;
+    @apply -translate-x-1/2 -translate-y-1/2;
+    @apply grid gap-4 rounded-lg border bg-background p-6 text-foreground shadow-lg;
+    @apply m-0 max-h-[calc(100dvh-2rem)] overflow-y-auto p-6;
+
+    opacity: 0;
+    scale: 0.96;
+    transition:
+      opacity 150ms ease,
+      scale 150ms ease,
+      overlay 150ms allow-discrete,
+      display 150ms allow-discrete;
+  }
+
+  .dialog[open] {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .dialog[open] {
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+
+  .dialog::backdrop {
+    background-color: oklch(0 0 0 / 50%);
+    opacity: 0;
+    transition:
+      opacity 150ms ease,
+      overlay 150ms allow-discrete,
+      display 150ms allow-discrete;
+  }
+
+  .dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .dialog[open]::backdrop {
+      opacity: 1;
+    }
+  }
+
+  .dialog-header {
+    @apply flex flex-col gap-2 text-center sm:text-left;
+  }
+
+  .dialog-title {
+    @apply text-lg leading-none font-semibold;
+  }
+
+  .dialog-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .dialog-body {
+    @apply grid gap-4;
+  }
+
+  .dialog-footer {
+    @apply flex flex-col-reverse gap-2 sm:flex-row sm:justify-end;
+  }
+}

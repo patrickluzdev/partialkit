@@ -1,0 +1,73 @@
+{
+  "name": "partialkit",
+  "version": "0.0.0",
+  "description": "shadcn-inspired UI components for server-rendered HTML. Tailwind CSS classes plus ESM behaviours, built for htmx and Go templates.",
+  "keywords": [
+    "ui",
+    "components",
+    "tailwindcss",
+    "htmx",
+    "hypermedia",
+    "html",
+    "go",
+    "templ"
+  ],
+  "license": "MIT",
+  "author": "Patrick Luz <eu@patrickluz.dev>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickluzdev/partialkit.git"
+  },
+  "type": "module",
+  "sideEffects": [
+    "./dist/esm/auto.js",
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "src/css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js"
+    },
+    "./auto": {
+      "types": "./dist/esm/auto.d.ts",
+      "import": "./dist/esm/auto.js"
+    },
+    "./css": "./dist/partialkit.css",
+    "./css/source": "./src/css/index.css",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run build:js && npm run build:bundle && npm run build:css",
+    "build:js": "tsc -p tsconfig.build.json",
+    "build:bundle": "esbuild src/js/auto.ts --bundle --format=esm --target=es2022 --outfile=dist/partialkit.js && esbuild src/js/auto.ts --bundle --minify --format=esm --target=es2022 --outfile=dist/partialkit.min.js",
+    "build:css": "tailwindcss -i src/css/dist.css -o dist/partialkit.css && tailwindcss -i src/css/dist.css -o dist/partialkit.min.css --minify",
+    "build:site": "tailwindcss -i site/site.css -o site/dist/site.css",
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('dist',{recursive:true,force:true}))\"",
+    "dev": "npm run build && npm run build:site && node site/serve.js",
+    "watch:site": "tailwindcss -i site/site.css -o site/dist/site.css --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "esbuild": "^0.28.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

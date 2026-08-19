@@ -1,0 +1,62 @@
+@layer components {
+  .menu {
+    @apply z-50 min-w-32 overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md;
+    @apply bg-popover text-popover-foreground;
+
+    position: fixed;
+    margin: 0;
+    inset: auto;
+    opacity: 0;
+    scale: 0.96;
+    transition:
+      opacity 120ms ease,
+      scale 120ms ease,
+      overlay 120ms allow-discrete,
+      display 120ms allow-discrete;
+  }
+
+  .menu:popover-open {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .menu:popover-open {
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+
+  .menu-item {
+    @apply relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm;
+    @apply outline-hidden select-none;
+    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply focus:bg-accent focus:text-accent-foreground;
+    @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
+    @apply aria-disabled:pointer-events-none aria-disabled:opacity-50;
+  }
+
+  .menu-item > svg {
+    @apply pointer-events-none size-4 shrink-0 text-muted-foreground;
+  }
+
+  .menu-item-destructive {
+    @apply text-destructive hover:bg-destructive/10 focus:bg-destructive/10;
+  }
+
+  .menu-item-destructive > svg {
+    @apply text-destructive;
+  }
+
+  .menu-label {
+    @apply px-2 py-1.5 text-sm font-medium;
+  }
+
+  .menu-separator {
+    @apply -mx-1 my-1 h-px bg-border;
+  }
+
+  .menu-shortcut {
+    @apply ml-auto text-xs tracking-widest text-muted-foreground;
+  }
+}

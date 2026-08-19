@@ -1,0 +1,44 @@
+@layer components {
+  .field {
+    @apply flex flex-col gap-2;
+  }
+
+  .label {
+    @apply flex items-center gap-2 text-sm leading-none font-medium select-none;
+    @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-50;
+  }
+
+  .input,
+  .textarea {
+    @apply flex w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs;
+    @apply transition-[color,box-shadow] outline-none md:text-sm;
+    @apply placeholder:text-muted-foreground;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20;
+  }
+
+  .input {
+    @apply h-9;
+    @apply file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium;
+  }
+
+  .textarea {
+    @apply field-sizing-content min-h-16 py-2;
+  }
+
+  .select {
+    @apply flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs;
+    @apply transition-[color,box-shadow] outline-none md:text-sm;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .field-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .field-error {
+    @apply text-sm text-destructive;
+  }
+}

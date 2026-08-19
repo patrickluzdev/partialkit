@@ -1,0 +1,58 @@
+@layer components {
+  .btn {
+    @apply inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap;
+    @apply h-9 rounded-md px-4 py-2 text-sm font-medium;
+    @apply cursor-pointer transition-all outline-none select-none;
+    @apply bg-primary text-primary-foreground shadow-xs hover:bg-primary/90;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply aria-invalid:ring-destructive/20 aria-invalid:border-destructive;
+  }
+
+  .btn > svg {
+    @apply pointer-events-none size-4 shrink-0;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80;
+  }
+
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90;
+    @apply focus-visible:ring-destructive/20;
+  }
+
+  .btn-outline {
+    @apply border bg-background text-foreground shadow-xs;
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-foreground shadow-none;
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-link {
+    @apply bg-transparent text-primary shadow-none underline-offset-4 hover:underline;
+  }
+
+  .btn-sm {
+    @apply h-8 gap-1.5 rounded-md px-3 text-sm;
+  }
+
+  .btn-lg {
+    @apply h-10 rounded-md px-6;
+  }
+
+  .btn-icon {
+    @apply size-9 p-0;
+  }
+
+  .btn-icon.btn-sm {
+    @apply size-8;
+  }
+
+  .btn-icon.btn-lg {
+    @apply size-10;
+  }
+}

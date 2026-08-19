@@ -1,0 +1,23 @@
+@layer components {
+  .badge {
+    @apply inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap;
+    @apply rounded-md border px-2 py-0.5 text-xs font-medium;
+    @apply border-transparent bg-primary text-primary-foreground;
+  }
+
+  .badge > svg {
+    @apply pointer-events-none size-3;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .badge-destructive {
+    @apply bg-destructive text-destructive-foreground;
+  }
+
+  .badge-outline {
+    @apply border-border bg-transparent text-foreground;
+  }
+}

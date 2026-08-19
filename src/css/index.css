@@ -1,0 +1,4 @@
+/* Source entry: import after `@import "tailwindcss"` in your own stylesheet. */
+@import "./theme.css";
+@import "./base.css";
+@import "./components/index.css";
