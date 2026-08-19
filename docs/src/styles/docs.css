@@ -56,6 +56,15 @@
 }
 
 @layer components {
+  /* Starlight calls the label of its mobile table of contents `toggle`, which is
+     also one of our class names. Inside Starlight's own element the docs hand it
+     back — scoped there, so a real partialkit toggle on the page keeps its
+     styles. */
+  mobile-starlight-toc .toggle,
+  mobile-starlight-toc .toggle svg {
+    all: revert-layer;
+  }
+
   .pk-example {
     @apply my-6 flex flex-col;
   }

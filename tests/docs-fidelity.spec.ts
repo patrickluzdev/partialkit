@@ -110,3 +110,25 @@ for (const pair of PAIRS) {
     expect(differences).toEqual([]);
   });
 }
+
+/**
+ * The cascade runs the other way too: Starlight names the label of its mobile
+ * table of contents `toggle`, which is one of partialkit's class names. Left
+ * alone, the library restyles a part of the documentation chrome that has
+ * nothing to do with it.
+ */
+test("Starlight's own toggle keeps its own styles, and ours keeps ours", async ({ page }) => {
+  await page.setViewportSize({ width: 480, height: 900 });
+  await page.goto("/components/toggle/");
+
+  const starlight = page.locator("mobile-starlight-toc .toggle");
+  await expect(starlight).toBeVisible();
+  await expect(starlight).toHaveCSS("min-width", "auto");
+  await expect(starlight).toHaveCSS("font-weight", "400");
+  await expect(starlight).toHaveCSS("border-radius", "8px");
+
+  const ours = page.locator(".pk-preview button.toggle").first();
+  await expect(ours).toHaveCSS("min-width", "32px");
+  await expect(ours).toHaveCSS("font-weight", "500");
+  await expect(ours).toHaveCSS("border-radius", "10px");
+});
