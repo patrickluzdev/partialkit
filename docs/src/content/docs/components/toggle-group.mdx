@@ -1,0 +1,53 @@
+---
+title: Toggle Group
+description: A set of two-state buttons that can be toggled on or off.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="toggle-group/overview" />
+
+## Usage
+
+```html
+<div class="toggle-group" data-spacing="0" role="group" aria-label="Text alignment">
+  <button class="toggle toggle-outline" type="button" aria-pressed="true">…</button>
+</div>
+```
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-spacing="0"` | Joined: flat inner corners and shared edges |
+| `data-orientation="vertical"` | Stacks the segments |
+
+## Spaced
+
+Without `data-spacing="0"` the segments keep their own shape and a gap.
+
+<Preview src="toggle-group/spaced" />
+
+## Single selection
+
+When exactly one may be on, it is a radio group — not several toggles. Radios give the arrow keys
+and the announced state for free.
+
+<Preview src="toggle-group/single" />
+
+<Aside type="caution" title="Multiple and single are different components">
+Several independent toggles use `role="group"` and each carries its own `aria-pressed`. One choice
+out of many is `role="radiogroup"` with radio inputs. Using pressed buttons for a single choice
+leaves a screen reader user unable to tell the options are exclusive.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the outer corners round on the correct sides. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **Name the group.** `role="group"` with `aria-label`, or `role="radiogroup"` for a single choice.
+- **A focused segment lifts above its neighbours**, so a joined group never clips the focus ring.
+- **Icon-only segments each need a name.** The group name says what the set is for; each button
+  still says what it does.

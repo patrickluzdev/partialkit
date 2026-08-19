@@ -1,0 +1,48 @@
+---
+title: Progress
+description: Displays an indicator showing the completion progress of a task.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="progress/overview" width="sm" />
+
+## Usage
+
+```html
+<progress class="progress" value="60" max="100" aria-label="Upload progress"></progress>
+```
+
+<Aside title="It is the native element">
+`<progress>` already carries the role, the value and the announcement. partialkit only paints the
+track and the bar, so there is no `aria-valuenow` to keep in sync — setting `value` is the whole
+update.
+</Aside>
+
+## With a value
+
+A bar without a number is hard to read precisely. Put the number beside it.
+
+<Preview src="progress/with-value" width="sm" />
+
+## Indeterminate
+
+Leave `value` off and the element is indeterminate — the bar sweeps instead of filling.
+
+<Preview src="progress/indeterminate" width="sm" />
+
+The sweep stops under `prefers-reduced-motion`.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the bar fills from the other end. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **Name it.** `aria-label`, or a `<label for>` pointing at it.
+- **A progress bar is not a spinner.** Use it when you know the proportion, and a
+  [spinner](/components/spinner/) when you do not.
+- **Do not announce every percent.** The element updates its own value; wrapping it in an assertive
+  live region turns a quiet bar into a stream of interruptions.

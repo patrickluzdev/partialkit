@@ -1,0 +1,21 @@
+@layer components {
+  .pagination {
+    @apply mx-auto flex w-full justify-center;
+  }
+
+  .pagination-list {
+    @apply flex items-center gap-0.5;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pagination-ellipsis {
+    @apply flex size-8 items-center justify-center;
+  }
+
+  .pagination-ellipsis > svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+}

@@ -1,0 +1,39 @@
+---
+title: Separator
+description: Visually or semantically separates content.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="separator/overview" width="sm" />
+
+## Usage
+
+```html
+<hr class="separator" />
+<hr class="separator" data-orientation="vertical" />
+```
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-orientation="vertical"` | A vertical rule that stretches to its container |
+
+A vertical separator needs a parent with a height — it stretches to fill, and has nothing to fill
+in a container only as tall as its text.
+
+<Aside title="An <hr> already means this">
+`<hr>` carries `role="separator"` on its own, so a screen reader announces the break without extra
+markup. Reach for `<div class="separator">` only when the division is decoration, and add
+`aria-hidden="true"` there so it is not announced.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — padding, corners and positions follow the reading
+direction on their own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+A rule between groups of controls is meaningful and should stay an `<hr>`. A line used as
+decoration inside one control is not, and should be hidden from assistive tech.

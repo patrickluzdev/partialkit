@@ -1,0 +1,44 @@
+@layer components {
+  /* The scroll container: a wide table scrolls rather than breaking the page. */
+  .table-container {
+    @apply relative w-full overflow-x-auto;
+  }
+
+  .table {
+    @apply w-full caption-bottom text-sm;
+
+    border-collapse: collapse;
+  }
+
+  .table tr {
+    @apply border-b transition-colors;
+  }
+
+  .table tbody tr:hover {
+    @apply bg-muted/50;
+  }
+
+  .table tr[data-state="selected"] {
+    @apply bg-muted;
+  }
+
+  .table th {
+    @apply h-10 px-2 text-start align-middle font-medium whitespace-nowrap text-foreground;
+  }
+
+  .table td {
+    @apply p-2 align-middle whitespace-nowrap;
+  }
+
+  .table tfoot {
+    @apply border-t bg-muted/50 font-medium;
+  }
+
+  .table tfoot tr:last-child {
+    @apply border-b-0;
+  }
+
+  .table caption {
+    @apply mt-4 text-sm text-muted-foreground;
+  }
+}

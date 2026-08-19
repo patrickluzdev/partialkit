@@ -1,0 +1,75 @@
+---
+title: Input Group
+description: Add addons, buttons, and helper content to inputs.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="input-group/overview" width="sm" />
+
+## Usage
+
+```html
+<div class="input-group">
+  <span class="input-group-addon">…</span>
+  <input class="input input-group-control" aria-label="Search" />
+</div>
+```
+
+The group owns the border and the focus ring; the control inside gives up its own, so there is one
+edge rather than two boxes nested inside each other.
+
+| Class | Part |
+| --- | --- |
+| `.input-group` | The bordered box |
+| `.input-group-control` | The input or textarea inside it |
+| `.input-group-addon` | Anything alongside the control |
+| `.input-group-text` | Muted text inside an addon |
+
+| Attribute | On the addon | Meaning |
+| --- | --- | --- |
+| *(none)* or `data-align="inline-start"` | leading edge | Before the control |
+| `data-align="inline-end"` | trailing edge | After the control |
+| `data-align="block-start"` | above | A full-width row on top |
+| `data-align="block-end"` | below | A full-width row underneath |
+
+## Text
+
+<Preview src="input-group/text" width="sm" />
+
+## With a button
+
+<Preview src="input-group/button" width="sm" />
+
+## With a shortcut
+
+<Preview src="input-group/shortcut" width="sm" />
+
+## Textarea
+
+A `block-end` addon puts the actions under the control, and the group grows to fit.
+
+<Preview src="input-group/textarea" width="sm" />
+
+<Aside title="Input Group or Button Group?">
+An input group is **one control** with decoration around it: the addons are not separately
+focusable, and the whole thing reads as a single field. A
+[button group](/components/button-group/) is **several controls** sitting flush, each with its own
+focus. If a user needs to tab to it, it belongs in a button group.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — `inline-start` and `inline-end` follow the reading
+direction, which is why they are named that way rather than left and right. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The control still needs a name.** The addon is not a label — an icon beside a field says
+  nothing. Use `<label for>`, or `aria-label` when there is no visible text.
+- **A unit is not a label either.** In `partialkit.dev/[docs]`, the prefix is context; the field
+  still needs to say what it is.
+- **The group is not focusable**, only the control inside it is. The ring appears on the group
+  because that is the visible box, but focus never lands on a `<div>`.

@@ -1,0 +1,67 @@
+---
+title: Toggle
+description: A two-state button that can be either on or off.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="toggle/overview" layout="row" />
+
+## Usage
+
+```html
+<button class="toggle" type="button" aria-pressed="false" aria-label="Bold">…</button>
+```
+
+`aria-pressed` is both the state and the styling hook, so flipping the attribute is the whole
+update — there is no second class to keep in sync.
+
+## Variants
+
+<Preview src="toggle/variants" layout="row" />
+
+## Sizes
+
+<Preview src="toggle/sizes" layout="row" />
+
+## In a form
+
+A toolbar toggle is a button, but a toggle that submits a value is a checkbox. Wrap one in the
+label and the styling follows `:checked` instead of `aria-pressed`.
+
+<Preview src="toggle/checkbox" layout="row" />
+
+```html
+<label class="toggle toggle-outline">
+  <input class="sr-only" type="checkbox" name="notify" value="email" />
+  Email
+</label>
+```
+
+<Aside title="Which one to write">
+`aria-pressed` on a `<button>` is the ARIA pattern for a toolbar control that acts immediately.
+A checkbox inside a label is for a value that travels with a form. Both are styled by `.toggle`;
+pick by what the control does, not by how it looks.
+</Aside>
+
+## Toggle or Switch?
+
+A toggle is a **button that stays pressed** — bold, italic, a filter that is on. A
+[switch](/components/switch/) is a **setting**. If it reads as "on/off" rather than
+"pressed/not pressed", it is a switch.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — icon padding follows the reading direction. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **An icon-only toggle needs a name**: `aria-label`, or `.sr-only` text inside it.
+- **The name says what it controls, not its state.** "Bold", not "Bold is on" — `aria-pressed`
+  already announces the state.
+- **Do not swap the icon to convey state.** A play icon becoming a pause icon is ambiguous; keep
+  the icon and let `aria-pressed` carry the change.
+- **The checkbox form keeps the input focusable.** `.sr-only` hides it visually without taking it
+  out of the tab order, which `display: none` would.

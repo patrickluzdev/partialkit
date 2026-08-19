@@ -1,0 +1,64 @@
+---
+title: Avatar
+description: An image element with a fallback for representing the user.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="avatar/overview" layout="row" />
+
+## Usage
+
+```html
+<span class="avatar">
+  <img class="avatar-image" src="…" alt="Ada Lovelace" />
+</span>
+```
+
+| Class | Part |
+| --- | --- |
+| `.avatar` | The round frame |
+| `.avatar-image` | The photo |
+| `.avatar-fallback` | Initials or an icon when there is no photo |
+| `.avatar-badge` | A dot pinned to the corner |
+| `.avatar-group` | Overlapping avatars |
+| `.avatar-group-count` | The "+3" at the end of a group |
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-size="sm"` | 24px |
+| `data-size="lg"` | 40px |
+
+## Sizes
+
+<Preview src="avatar/sizes" layout="row" />
+
+## Badge
+
+<Preview src="avatar/badge" layout="row" />
+
+## Group
+
+<Preview src="avatar/group" />
+
+<Aside title="The fallback is markup, not a script">
+Nothing here watches for a broken image. Render the fallback when you know there is no photo — on
+the server, where you already know. For an image that fails at runtime, `onerror` on the `<img>` is
+the whole of it.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the badge moves to the other corner on its own. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **The photo carries the name.** `alt="Ada Lovelace"`, not `alt="avatar"`.
+- **Initials are not a name.** A fallback showing "AL" needs the full name somewhere — visible text
+  beside it, or `.sr-only` inside the fallback.
+- **A status dot needs words.** A green circle says nothing on its own, so put `.sr-only` text in
+  the badge saying what it means.
+- **In a group**, the count is text and is announced. Whether that is enough depends on whether the
+  names matter — if they do, list them.

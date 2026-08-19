@@ -1,0 +1,38 @@
+@layer components {
+  .empty {
+    @apply flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4;
+    @apply rounded-xl border border-dashed p-6 text-center text-balance;
+  }
+
+  .empty-header {
+    @apply flex max-w-sm flex-col items-center gap-2;
+  }
+
+  .empty-media {
+    @apply mb-2 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground;
+  }
+
+  .empty-media > svg {
+    @apply pointer-events-none shrink-0;
+  }
+
+  .empty-media > svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  .empty-title {
+    @apply text-sm font-medium tracking-tight;
+  }
+
+  .empty-description {
+    @apply text-sm/relaxed text-muted-foreground;
+  }
+
+  .empty-description a {
+    @apply underline underline-offset-4 hover:text-primary;
+  }
+
+  .empty-content {
+    @apply flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-sm text-balance;
+  }
+}

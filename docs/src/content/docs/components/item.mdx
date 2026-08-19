@@ -1,0 +1,77 @@
+---
+title: Item
+description: A versatile component for displaying content with media, title, description, and actions.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="item/overview" />
+
+## Usage
+
+```html
+<div class="item" data-variant="outline">
+  <div class="item-media">…</div>
+  <div class="item-content">
+    <span class="item-title">partialkit</span>
+    <p class="item-description">Components for plain HTML.</p>
+  </div>
+  <div class="item-actions">
+    <button class="btn btn-outline btn-sm">Open</button>
+  </div>
+</div>
+```
+
+| Class | Part |
+| --- | --- |
+| `.item` | The row |
+| `.item-group` | Several rows, spaced by size |
+| `.item-media` | Icon or image at the leading edge |
+| `.item-content` | Title and description |
+| `.item-title` | One line, clamped |
+| `.item-description` | Two lines, clamped |
+| `.item-actions` | Controls at the trailing edge |
+| `.item-header` / `.item-footer` | Full-width rows above and below |
+| `.item-separator` | A rule between rows |
+
+| Attribute | Meaning |
+| --- | --- |
+| `data-variant="outline"` | A visible border |
+| `data-variant="muted"` | A filled surface |
+| `data-size="sm"` / `"xs"` | Tighter rows, and a smaller image |
+
+## Variants
+
+<Preview src="item/variants" width="sm" />
+
+## Sizes
+
+<Preview src="item/sizes" width="sm" />
+
+## As a link
+
+Put the classes on an `<a>` and the whole row navigates, with a hover surface to say so.
+
+<Preview src="item/link" width="sm" />
+
+<Aside type="caution" title="One target per row">
+A row that is a link cannot also hold a button — the button ends up inside the link, which is
+invalid and unusable with a keyboard. Either the row navigates, or the row holds controls and the
+title is the link.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — media and actions swap ends on their own. See
+[the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **A list of items is a list.** Wrap them in `<ul>`/`<li>` when they are one, so the count is
+  announced and the rows can be navigated as a group.
+- **Titles are clamped, not shortened.** `line-clamp` hides overflow visually while the full text
+  stays in the accessibility tree, which is the right way round — but a title that always overflows
+  is a sign the layout needs the room, not the clamp.
+- **The media is decoration** unless it carries information. Give a decorative icon
+  `aria-hidden="true"`, and an avatar its person's name.

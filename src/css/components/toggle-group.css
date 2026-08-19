@@ -1,0 +1,51 @@
+@layer components {
+  .toggle-group {
+    @apply flex w-fit flex-row items-center gap-1 rounded-lg;
+  }
+
+  .toggle-group[data-orientation="vertical"] {
+    @apply flex-col items-stretch;
+  }
+
+  .toggle-group > * {
+    @apply shrink-0;
+  }
+
+  .toggle-group > *:focus-visible,
+  .toggle-group > *:has(:focus-visible) {
+    @apply relative z-10;
+  }
+
+  /* Joined: the segments sit flush and share their edges, like a button group. */
+  .toggle-group[data-spacing="0"] {
+    @apply gap-0;
+  }
+
+  .toggle-group[data-spacing="0"] > * {
+    @apply rounded-none px-2;
+  }
+
+  .toggle-group[data-spacing="0"]:not([data-orientation="vertical"]) > *:first-child {
+    @apply rounded-s-lg;
+  }
+
+  .toggle-group[data-spacing="0"]:not([data-orientation="vertical"]) > *:last-child {
+    @apply rounded-e-lg;
+  }
+
+  .toggle-group[data-spacing="0"][data-orientation="vertical"] > *:first-child {
+    @apply rounded-t-lg;
+  }
+
+  .toggle-group[data-spacing="0"][data-orientation="vertical"] > *:last-child {
+    @apply rounded-b-lg;
+  }
+
+  .toggle-group[data-spacing="0"]:not([data-orientation="vertical"]) > .toggle-outline + .toggle-outline {
+    @apply border-s-0;
+  }
+
+  .toggle-group[data-spacing="0"][data-orientation="vertical"] > .toggle-outline + .toggle-outline {
+    @apply border-t-0;
+  }
+}

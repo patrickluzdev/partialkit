@@ -1,0 +1,13 @@
+@layer components {
+  .separator {
+    @apply shrink-0 border-0 bg-border;
+  }
+
+  .separator:not([data-orientation="vertical"]) {
+    @apply h-px w-full;
+  }
+
+  .separator[data-orientation="vertical"] {
+    @apply w-px self-stretch;
+  }
+}

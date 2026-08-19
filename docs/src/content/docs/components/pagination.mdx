@@ -1,0 +1,50 @@
+---
+title: Pagination
+description: Pagination with page navigation, next and previous links.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="pagination/overview" />
+
+## Usage
+
+```html
+<nav class="pagination" aria-label="Pagination">
+  <ul class="pagination-list">
+    <li><a class="btn btn-ghost btn-sm" href="?page=1">Previous</a></li>
+    <li><a class="btn btn-outline btn-icon-sm" href="?page=2" aria-current="page">2</a></li>
+  </ul>
+</nav>
+```
+
+| Class | Part |
+| --- | --- |
+| `.pagination` | The `<nav>` |
+| `.pagination-list` | The `<ul>` of pages |
+| `.pagination-ellipsis` | A gap in the sequence |
+
+The pages themselves are [buttons](/components/button/) — ghost for the rest, outline for the
+current one — so there is no third set of classes to learn.
+
+<Aside title="Links, not buttons">
+Each page is a real `<a href>` with the page in the URL. That is what makes the browser's back
+button, opening in a new tab, and sharing a link all work. A `<button>` that changes state in
+JavaScript breaks every one of those.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the row follows the reading direction, so
+"Previous" sits on the right. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **`aria-label="Pagination"` on the `<nav>`**, so it is distinguishable from other navigations.
+- **`aria-current="page"` on the current page.** The outline variant shows it; `aria-current`
+  announces it.
+- **Previous and next need to say where they go** when they are icon-only: `aria-label="Previous
+  page"`, not just an arrow.
+- **Disable the ends rather than hiding them.** A control that disappears at the first page shifts
+  the row under the pointer; one that is disabled stays put.

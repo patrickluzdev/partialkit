@@ -1,0 +1,13 @@
+@layer components {
+  .aspect-ratio {
+    --ratio: 1;
+
+    @apply relative;
+
+    aspect-ratio: var(--ratio);
+  }
+
+  .aspect-ratio > * {
+    @apply size-full object-cover;
+  }
+}

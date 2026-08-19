@@ -1,0 +1,59 @@
+@layer components {
+  /* A styled native <progress>: the value, the max and the announcement are the
+     platform's. */
+  .progress {
+    @apply relative h-1 w-full overflow-hidden rounded-full border-0 bg-muted;
+
+    appearance: none;
+  }
+
+  .progress::-webkit-progress-bar {
+    @apply rounded-full bg-muted;
+  }
+
+  .progress::-webkit-progress-value {
+    @apply rounded-full bg-primary;
+
+    transition: inline-size 150ms ease;
+  }
+
+  .progress::-moz-progress-bar {
+    @apply rounded-full bg-primary;
+  }
+
+  /* Indeterminate: no value attribute, so the bar sweeps instead. */
+  .progress:indeterminate::-webkit-progress-value {
+    @apply w-1/3;
+
+    animation: pk-progress-sweep 1.2s ease-in-out infinite;
+  }
+
+  .progress:indeterminate::-moz-progress-bar {
+    @apply w-1/3;
+
+    animation: pk-progress-sweep 1.2s ease-in-out infinite;
+  }
+
+  .progress-value {
+    @apply ms-auto text-sm tabular-nums text-muted-foreground;
+  }
+}
+
+@keyframes pk-progress-sweep {
+  0% {
+    margin-inline-start: 0;
+  }
+  50% {
+    margin-inline-start: 66%;
+  }
+  100% {
+    margin-inline-start: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress:indeterminate::-webkit-progress-value,
+  .progress:indeterminate::-moz-progress-bar {
+    animation: none;
+  }
+}

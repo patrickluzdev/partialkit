@@ -1,0 +1,55 @@
+---
+title: Empty
+description: Use the Empty component to display an empty state.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview src="empty/overview" />
+
+## Usage
+
+```html
+<div class="empty">
+  <div class="empty-header">
+    <div class="empty-media">…</div>
+    <h3 class="empty-title">No projects yet</h3>
+    <p class="empty-description">Create one to get started.</p>
+  </div>
+  <div class="empty-content">
+    <button class="btn">Create project</button>
+  </div>
+</div>
+```
+
+| Class | Part |
+| --- | --- |
+| `.empty` | Dashed container |
+| `.empty-header` | Media, title and description together |
+| `.empty-media` | The icon frame |
+| `.empty-title` | What is missing |
+| `.empty-description` | Why, or what to do |
+| `.empty-content` | The way out — usually one action |
+
+## Without media
+
+An icon is optional, and often noise. The words carry the state.
+
+<Preview src="empty/no-media" />
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — the layout is centred, so it follows without
+changes. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **Say what to do, not just what is missing.** "No results" is a dead end; "No results — clear the
+  filters" is a way out.
+- **Distinguish empty from failed.** An empty list and a request that failed look alike and need
+  different words. A failure belongs in an [alert](/components/alert/) with `role="alert"`, not in
+  an empty state.
+- **The heading level fits the page.** `.empty-title` is styled small; that is not a reason to use
+  a low-level heading inside a page that has none above it.
+- **An empty state that replaces content should be announced.** Put it in the same live region that
+  held the results, so a screen reader hears the change.

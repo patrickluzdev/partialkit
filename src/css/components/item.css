@@ -1,0 +1,97 @@
+@layer components {
+  .item-group {
+    @apply flex w-full flex-col gap-4;
+  }
+
+  .item-group:has([data-size="sm"]) {
+    @apply gap-2.5;
+  }
+
+  .item-group:has([data-size="xs"]) {
+    @apply gap-2;
+  }
+
+  .item {
+    @apply flex w-full flex-wrap items-center gap-2 rounded-lg border border-transparent px-2.5 py-2;
+    @apply text-sm transition-colors outline-none;
+    @apply focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50;
+  }
+
+  a.item:hover {
+    @apply bg-muted;
+  }
+
+  .item[data-variant="outline"] {
+    @apply border-border;
+  }
+
+  .item[data-variant="muted"] {
+    @apply bg-muted/50;
+  }
+
+  .item-media {
+    @apply flex shrink-0 items-center justify-center gap-2;
+  }
+
+  .item-media > svg {
+    @apply pointer-events-none;
+  }
+
+  /* With a description the row is two lines, so the media aligns to the top. */
+  .item:has(.item-description) .item-media {
+    @apply translate-y-0.5 self-start;
+  }
+
+  .item-media[data-variant="image"] {
+    @apply size-10 overflow-hidden rounded-sm;
+  }
+
+  .item[data-size="sm"] .item-media[data-variant="image"] {
+    @apply size-8;
+  }
+
+  .item[data-size="xs"] .item-media[data-variant="image"] {
+    @apply size-6;
+  }
+
+  .item-media[data-variant="image"] img {
+    @apply size-full object-cover;
+  }
+
+  .item-content {
+    @apply flex flex-1 flex-col gap-1;
+  }
+
+  .item[data-size="xs"] .item-content {
+    @apply gap-0;
+  }
+
+  .item-title {
+    @apply line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4;
+  }
+
+  .item-description {
+    @apply line-clamp-2 text-start text-sm leading-normal font-normal text-muted-foreground;
+  }
+
+  .item[data-size="xs"] .item-description {
+    @apply text-xs;
+  }
+
+  .item-description a {
+    @apply underline underline-offset-4 hover:text-primary;
+  }
+
+  .item-actions {
+    @apply flex items-center gap-2;
+  }
+
+  .item-header,
+  .item-footer {
+    @apply flex basis-full items-center justify-between gap-2;
+  }
+
+  .item-separator {
+    @apply my-0 h-px w-full border-0 bg-border;
+  }
+}

@@ -14,7 +14,7 @@ absent.
 
 | Concern | Source |
 | --- | --- |
-| Modal semantics, focus trap, `Esc`, background `inert`, focus restore | `<dialog>.showModal()` |
+| Modal semantics, focus trap, <kbd class="kbd">Esc</kbd>, background `inert`, focus restore | `<dialog>.showModal()` |
 | Menu top layer, light dismiss | popover API |
 | `aria-labelledby` / `aria-describedby` on dialogs | wired from `.dialog-title` / `.dialog-description` |
 | `role="menu"`, `role="menuitem"`, `role="separator"` | applied on mount and on every open |
@@ -41,19 +41,19 @@ The platform is not uniform, and the test suite runs on Chromium, Firefox and We
 
 | Key | Action |
 | --- | --- |
-| `Esc` | Closes and returns focus to whatever opened it |
-| `Tab` | Cycles within the dialog; the rest of the page is inert |
+| <kbd class="kbd">Esc</kbd> | Closes and returns focus to whatever opened it |
+| <kbd class="kbd">Tab</kbd> | Cycles within the dialog; the rest of the page is inert |
 
 ### Dropdown Menu
 
 | Key | Action |
 | --- | --- |
-| `↓` / `↑` | Move between enabled items, wrapping at the ends |
-| `Home` / `End` | First / last enabled item |
+| <kbd class="kbd">↓</kbd> / <kbd class="kbd">↑</kbd> | Move between enabled items, wrapping at the ends |
+| <kbd class="kbd">Home</kbd> / <kbd class="kbd">End</kbd> | First / last enabled item |
 | a–z, 0–9 | Type-ahead to the first item starting with what you type |
-| `Esc` | Closes and returns focus to the trigger |
-| `Tab` | Closes and returns focus to the trigger |
-| `Enter` / `Space` | Activates the item — it is a real `<button>` |
+| <kbd class="kbd">Esc</kbd> | Closes and returns focus to the trigger |
+| <kbd class="kbd">Tab</kbd> | Closes and returns focus to the trigger |
+| <kbd class="kbd">Enter</kbd> / <kbd class="kbd">Space</kbd> | Activates the item — it is a real `<button>` |
 
 Disabled items carry `aria-disabled="true"` rather than `disabled`, so a screen reader still
 announces them while arrow navigation skips them.

@@ -1,0 +1,46 @@
+---
+title: Skeleton
+description: Use to show a placeholder while content is loading.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview src="skeleton/overview" />
+
+## Usage
+
+```html
+<div class="skeleton" style="width: 12rem; height: 0.75rem"></div>
+```
+
+The class paints and pulses; the size is yours, because a placeholder should match the shape of
+what is coming.
+
+## In a card
+
+<Preview src="skeleton/card" width="sm" />
+
+## Reduced motion
+
+The pulse stops under `prefers-reduced-motion` and settles at a steady tone. A placeholder that
+never stops moving is a distraction, and for some people a trigger.
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — padding, corners and positions follow the reading
+direction on their own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+A skeleton is decoration: it says nothing to a screen reader, which is right — announcing "loading"
+once beats announcing a dozen grey boxes.
+
+Put the announcement on the region instead:
+
+```html
+<div aria-busy="true" aria-live="polite">
+  <div class="skeleton" style="height: 1rem"></div>
+</div>
+```
+
+Swap `aria-busy` to `false` when the content lands, and the region announces itself once.

@@ -1,0 +1,47 @@
+---
+title: Kbd
+description: Used to display textual user input from keyboard.
+---
+
+import Preview from "../../../components/Preview.astro";
+
+<Preview src="kbd/overview" layout="row" />
+
+## Usage
+
+```html
+<kbd class="kbd">⌘</kbd>
+```
+
+`<kbd>` is the element for keyboard input, so the meaning lives in the markup rather than the class.
+
+## Group
+
+<Preview src="kbd/group" layout="row" />
+
+A chord is several keys, so it is several `<kbd>` elements inside a `.kbd-group` — not one element
+with a plus sign inside it.
+
+## In a button
+
+<Preview src="kbd/in-button" layout="row" />
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — padding, corners and positions follow the reading
+direction on their own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+`.kbd` sets `pointer-events: none`, so a key hint never swallows the click of the control it sits
+in.
+
+A symbol on its own is not readable: "⌘" is announced inconsistently across screen readers. When
+the shortcut matters, spell it out:
+
+```html
+<kbd class="kbd" aria-label="Command">⌘</kbd>
+```
+
+And a hint is only a hint — it does not register anything. The shortcut still has to be bound in
+your own code.

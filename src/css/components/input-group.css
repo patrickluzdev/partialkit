@@ -1,0 +1,85 @@
+@layer components {
+  /* One bordered box that owns the focus ring; the control inside gives up its
+     own so there is a single edge rather than two. */
+  .input-group {
+    @apply relative flex h-8 w-full min-w-0 items-center rounded-lg border border-input;
+    @apply transition-colors outline-none;
+    @apply has-disabled:bg-input/50 has-disabled:opacity-50;
+    @apply dark:bg-input/30 dark:has-disabled:bg-input/80;
+  }
+
+  .input-group:has(.input-group-control:focus-visible) {
+    @apply border-ring ring-3 ring-ring/50;
+  }
+
+  .input-group:has([aria-invalid="true"]) {
+    @apply border-destructive ring-3 ring-destructive/20 dark:ring-destructive/40;
+  }
+
+  .input-group:has(> textarea),
+  .input-group:has(> [data-align="block-start"]),
+  .input-group:has(> [data-align="block-end"]) {
+    @apply h-auto;
+  }
+
+  .input-group:has(> [data-align="block-start"]),
+  .input-group:has(> [data-align="block-end"]) {
+    @apply flex-col;
+  }
+
+  .input-group-control {
+    @apply h-full flex-1 rounded-none border-0 bg-transparent shadow-none ring-0;
+    @apply focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0;
+    @apply dark:bg-transparent dark:disabled:bg-transparent;
+  }
+
+  textarea.input-group-control {
+    @apply resize-none py-2;
+  }
+
+  .input-group-addon {
+    @apply flex h-auto cursor-text items-center justify-center gap-2 py-1.5;
+    @apply text-sm font-medium text-muted-foreground select-none;
+  }
+
+  .input-group-addon > svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+
+  .input-group-addon:not([data-align]),
+  .input-group-addon[data-align="inline-start"] {
+    @apply order-first ps-2;
+  }
+
+  .input-group-addon[data-align="inline-end"] {
+    @apply order-last pe-2;
+  }
+
+  .input-group-addon[data-align="block-start"] {
+    @apply order-first w-full justify-start px-2.5 pt-2;
+  }
+
+  .input-group-addon[data-align="block-end"] {
+    @apply order-last w-full justify-start px-2.5 pb-2;
+  }
+
+  .input-group:has(> [data-align="inline-start"]) > .input-group-control {
+    @apply ps-1.5;
+  }
+
+  .input-group:has(> [data-align="inline-end"]) > .input-group-control {
+    @apply pe-1.5;
+  }
+
+  .input-group-text {
+    @apply flex items-center gap-2 text-sm text-muted-foreground;
+  }
+
+  .input-group-text svg {
+    @apply pointer-events-none;
+  }
+
+  .input-group-text svg:not([class*="size-"]) {
+    @apply size-4;
+  }
+}

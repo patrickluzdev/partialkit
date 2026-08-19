@@ -1,0 +1,59 @@
+---
+title: Table
+description: A responsive table component.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="table/overview" />
+
+## Usage
+
+```html
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr><th scope="col">Commit</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>a3cd96e</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+The wrapper is what makes a wide table scroll instead of breaking the page. The class styles the
+real table elements, so `thead`, `tfoot`, `caption` and `colspan` all keep working.
+
+## Selected rows
+
+<Preview src="table/selected" />
+
+`data-state="selected"` on a `<tr>` marks it. Pair it with `aria-selected` when the selection is
+something the user made.
+
+<Aside type="caution" title="A scroll container has to be reachable">
+An `overflow: auto` region a keyboard cannot focus traps its own content. Give the wrapper
+`tabindex="0"` and a name when the table can actually scroll:
+
+```html
+<div class="table-container" tabindex="0" role="region" aria-label="Deployments">
+```
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree — headers and cells align to the reading direction on
+their own. See [the button page](/components/button/#rtl) for a live example.
+
+## Accessibility
+
+- **`scope` on every header.** `scope="col"` or `scope="row"` is what tells a screen reader which
+  cells a header describes.
+- **A `<caption>` names the table** and is announced before its contents. It beats a heading above
+  the table, which is not associated with it.
+- **Do not use a table for layout.** If the data is not tabular, the row and column announcements
+  are noise.
+- **Keep to one header row where you can.** Split and nested headers need `headers` and `id` on
+  every cell to stay navigable.

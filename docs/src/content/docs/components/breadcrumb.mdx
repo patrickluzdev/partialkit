@@ -1,0 +1,56 @@
+---
+title: Breadcrumb
+description: Displays the path to the current resource using a hierarchy of links.
+---
+
+import Preview from "../../../components/Preview.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+<Preview src="breadcrumb/overview" />
+
+## Usage
+
+```html
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">Home</a></li>
+    <li class="breadcrumb-separator" aria-hidden="true">…</li>
+    <li class="breadcrumb-item">
+      <span class="breadcrumb-page" aria-current="page">Breadcrumb</span>
+    </li>
+  </ol>
+</nav>
+```
+
+| Class | Part |
+| --- | --- |
+| `.breadcrumb-list` | The `<ol>` |
+| `.breadcrumb-item` | One level |
+| `.breadcrumb-link` | A level you can go back to |
+| `.breadcrumb-page` | The current one — not a link |
+| `.breadcrumb-separator` | The chevron between levels |
+| `.breadcrumb-ellipsis` | Collapsed middle levels |
+
+## Collapsed
+
+<Preview src="breadcrumb/ellipsis" />
+
+<Aside title="An ordered list, not a row of links">
+The order is the meaning, so it is an `<ol>`. A screen reader then announces how many levels there
+are and which one you are on — which a row of `<a>` elements cannot convey.
+</Aside>
+
+## RTL
+
+Set `dir="rtl"` on the page or on any subtree. Flip the chevron with the same `:dir(rtl)` trick the
+library uses for its own drawn arrows, since a chevron points along the reading direction.
+
+## Accessibility
+
+- **`aria-label="Breadcrumb"` on the `<nav>`.** A page usually has several navigations; the label
+  is how they are told apart.
+- **The current page is not a link.** Use `.breadcrumb-page` with `aria-current="page"` — a link to
+  where you already are is a dead end.
+- **Separators are decoration.** `aria-hidden="true"`, or a screen reader reads a chevron between
+  every level.
+- **An ellipsis needs words.** The dots alone say nothing; `.sr-only` text like "More levels" does.

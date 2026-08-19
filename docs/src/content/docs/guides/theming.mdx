@@ -78,7 +78,11 @@ the bar:
 | Pairing | Measures | Would need |
 | --- | --- | --- |
 | `--destructive` text on a wash of itself | 3.98:1 light, 4.28:1 dark | `--destructive` at `oklch(0.50 …)`, which clears it at 4.95:1 |
-| `--muted-foreground` on a checked choice card | 4.27:1 | a darker muted foreground, or an untinted card |
+| `--muted-foreground` on a muted surface | 4.27:1 to 4.34:1 | a darker muted foreground |
+
+The second covers every place shadcn/ui pairs muted text with a muted surface: a
+[Kbd](/components/kbd/), an avatar fallback, an avatar group count, and a description inside a
+checked choice card. All of them pass in dark mode.
 
 Both ship shadcn/ui's values rather than a fork. The exceptions are narrow — each names the rule
 and the markup it covers, and the second is bounded to a near miss, so muted text that is genuinely

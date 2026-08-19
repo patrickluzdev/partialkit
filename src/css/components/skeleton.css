@@ -1,0 +1,13 @@
+@layer components {
+  .skeleton {
+    @apply animate-pulse rounded-md bg-muted;
+  }
+
+  /* A placeholder that never settles is a distraction, not information. */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+}
