@@ -6,4 +6,12 @@
     @apply disabled:cursor-not-allowed disabled:opacity-50;
     @apply aria-invalid:border-destructive aria-invalid:ring-destructive/20;
   }
+
+  /* The control is transparent so it inherits the page surface, but options must
+     not be: the native popup paints them directly, and a transparent option is
+     invisible until it is highlighted. */
+  .native-select option,
+  .native-select optgroup {
+    @apply bg-background text-foreground;
+  }
 }
