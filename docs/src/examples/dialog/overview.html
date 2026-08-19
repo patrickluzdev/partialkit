@@ -1,24 +1,33 @@
-<button class="btn btn-outline" data-pk-dialog-open="demo-dialog">Edit profile</button>
+<button class="btn btn-outline" data-pk-dialog-open="demo-dialog">Open dialog</button>
 
 <dialog class="dialog" id="demo-dialog">
-  <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M18 6 6 18M6 6l12 12"></path>
-    </svg>
-  </button>
-
   <div class="dialog-header">
     <h3 class="dialog-title">Edit profile</h3>
-    <p class="dialog-description">Changes are saved to your account immediately.</p>
+    <p class="dialog-description">
+      Make changes to your profile here. Click save when you are done.
+    </p>
   </div>
 
-  <div class="field">
-    <label class="label" for="profile-name">Display name</label>
-    <input class="input" id="profile-name" value="Ada Lovelace" />
+  <div class="field-group">
+    <div class="field">
+      <label class="label" for="dialog-name">Name</label>
+      <input class="input" id="dialog-name" value="Ada Lovelace" />
+    </div>
+    <div class="field">
+      <label class="label" for="dialog-username">Username</label>
+      <input class="input" id="dialog-username" value="@ada" />
+    </div>
   </div>
 
   <div class="dialog-footer">
     <button class="btn btn-outline" data-pk-dialog-close>Cancel</button>
-    <button class="btn" data-pk-dialog-close="save">Save</button>
+    <button class="btn" data-pk-dialog-close="save">Save changes</button>
   </div>
+
+  <button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6 6 18M6 6l12 12"></path>
+    </svg>
+    <span class="sr-only">Close</span>
+  </button>
 </dialog>

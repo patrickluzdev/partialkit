@@ -57,8 +57,14 @@ question before anything else happens — anything destructive, in particular �
 button, which is what the examples here use:
 
 ```html
-<button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close aria-label="Close">
+<button class="btn btn-ghost btn-icon-sm dialog-close" data-pk-dialog-close>
+  <svg …></svg>
+  <span class="sr-only">Close</span>
+</button>
 ```
+
+`.sr-only` text and `aria-label` both name the control. shadcn/ui uses the text node, which has one
+advantage: it survives translation tooling that skips attributes.
 
 Anything else works the same way:
 

@@ -70,6 +70,10 @@ The components are built on real browser primitives and real focus order, so the
 suite runs in real browsers rather than a simulated DOM. axe-core checks every
 documentation page in both themes, and a WCAG violation fails the build.
 
+`tests/metrics.spec.ts` holds the layout numbers — padding, gaps, radii, heights —
+measured from shadcn/ui's own demos with a browser rather than read off their
+class strings. Matching them is a tested property, not a claim.
+
 | Path | Contents |
 | --- | --- |
 | `src/css/` | Tokens, base layer, one file per component |

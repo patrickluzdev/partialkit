@@ -1,13 +1,51 @@
-<button class="btn btn-outline" popovertarget="demo-menu">Account</button>
+<button class="btn btn-outline" popovertarget="demo-menu">Open</button>
 
-<div class="dropdown-menu" id="demo-menu" popover style="width: 13rem">
-  <div class="dropdown-menu-label">My account</div>
+<div class="dropdown-menu" id="demo-menu" popover style="width: 14rem">
+  <div class="dropdown-menu-group">
+    <div class="dropdown-menu-label">My Account</div>
+    <button class="dropdown-menu-item" type="button">
+      Profile <span class="dropdown-menu-shortcut">⇧⌘P</span>
+    </button>
+    <button class="dropdown-menu-item" type="button">
+      Billing <span class="dropdown-menu-shortcut">⌘B</span>
+    </button>
+    <button class="dropdown-menu-item" type="button">
+      Settings <span class="dropdown-menu-shortcut">⌘S</span>
+    </button>
+  </div>
+
   <hr class="dropdown-menu-separator" />
+
+  <div class="dropdown-menu-group">
+    <div class="dropdown-menu-label">Team</div>
+
+    <button class="dropdown-menu-item dropdown-menu-sub-trigger" type="button" popovertarget="invite-menu">
+      Invite users
+    </button>
+
+    <div class="dropdown-menu" id="invite-menu" popover style="width: 11rem">
+      <button class="dropdown-menu-item" type="button">Email</button>
+      <button class="dropdown-menu-item" type="button">Message</button>
+      <hr class="dropdown-menu-separator" />
+      <button class="dropdown-menu-item" type="button">More…</button>
+    </div>
+
+    <button class="dropdown-menu-item" type="button">
+      New Team <span class="dropdown-menu-shortcut">⌘+T</span>
+    </button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+
+  <div class="dropdown-menu-group">
+    <button class="dropdown-menu-item" type="button">GitHub</button>
+    <button class="dropdown-menu-item" type="button">Support</button>
+    <button class="dropdown-menu-item" type="button" data-disabled>API</button>
+  </div>
+
+  <hr class="dropdown-menu-separator" />
+
   <button class="dropdown-menu-item" type="button">
-    Profile <span class="dropdown-menu-shortcut">⇧P</span>
+    Log out <span class="dropdown-menu-shortcut">⇧⌘Q</span>
   </button>
-  <button class="dropdown-menu-item" type="button">Settings</button>
-  <button class="dropdown-menu-item" type="button" data-disabled>Billing</button>
-  <hr class="dropdown-menu-separator" />
-  <button class="dropdown-menu-item" type="button" data-variant="destructive">Sign out</button>
 </div>
