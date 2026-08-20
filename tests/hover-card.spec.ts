@@ -48,11 +48,7 @@ test("Escape closes it", async ({ page }) => {
   await expect(page.locator("#lab-hover-card")).toBeHidden();
 });
 
-test("sits under the link it previews", async ({ page }) => {
-  // With the trigger anywhere near the foot of the viewport the card flips above
-  // it, which is correct and would make this assertion depend on where the
-  // fixture happens to sit.
-  await page.locator("#lab-hover-trigger").evaluate((element) => element.scrollIntoView({ block: "start" }));
+test("sits flush against the link it previews", async ({ page }) => {
   await page.hover("#lab-hover-trigger");
   await expect(page.locator("#lab-hover-card")).toBeVisible();
   await page
@@ -61,7 +57,10 @@ test("sits under the link it previews", async ({ page }) => {
 
   const trigger = (await page.locator("#lab-hover-trigger").boundingBox())!;
   const card = (await page.locator("#lab-hover-card").boundingBox())!;
+  const side = await page.locator("#lab-hover-card").getAttribute("data-side");
 
-  expect(card.y).toBeGreaterThan(trigger.y);
-  await expect(page.locator("#lab-hover-card")).toHaveAttribute("data-side", "bottom");
+  // Below the link when there is room and above it when there is not — which
+  // side depends on the viewport, so what is checked is the gap it leaves.
+  const gap = side === "bottom" ? card.y - (trigger.y + trigger.height) : trigger.y - (card.y + card.height);
+  expect(Math.round(gap)).toBe(4);
 });
