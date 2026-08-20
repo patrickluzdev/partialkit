@@ -38,11 +38,22 @@ jobs:
       - run: npx playwright install --with-deps
       - run: npm test
 
-      - run: npm publish --provenance --access public
+      # Re-running a release, or tagging a version published by hand, should not
+      # fail the run — only an unpublished version is published here.
+      - name: Publish, unless this version is already on the registry
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          if npm view "partialkit@$version" version > /dev/null 2>&1; then
+            echo "partialkit@$version is already on the registry; skipping the publish"
+            exit 0
+          fi
+          npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Draft the GitHub release
-        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-from-tag --verify-tag
+        run: |
+          gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1 && exit 0
+          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-from-tag --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
