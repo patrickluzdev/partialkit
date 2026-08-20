@@ -5,6 +5,21 @@ description: Three ways to add partialkit to a project, from a two-file drop-in 
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
+## From a CDN
+
+The shortest path there is: two tags, no build, no package manager.
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/partialkit@0.1.0/dist/partialkit.min.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/partialkit@0.1.0/dist/partialkit.min.js"></script>
+
+<button class="btn">Save</button>
+```
+
+Pin the version, as above. `@latest` means a release you have not read can change your pages while
+you sleep — and a CDN is a request to someone else's server on every page load, which is a real
+dependency. Fine for a prototype; for production, serve the files yourself.
+
 ## Drop-in
 
 Two self-contained files. Nothing to resolve at runtime, and no Node in your project's build.
@@ -57,8 +72,15 @@ Import the source so Tailwind utilities and partialkit end up in one stylesheet.
 
 ## Vendored, no npm
 
-Copy `partialkit.min.css` and `partialkit.min.js` from a release straight into `static/`. This is
+Copy `partialkit.min.css` and `partialkit.min.js` from a
+[release](https://github.com/patrickluzdev/partialkit/releases) straight into `static/`. This is
 the same path as the drop-in, minus the package manager.
+
+## Versions
+
+partialkit is `0.x`, so a minor bump may carry a breaking change — each one is listed in the
+[changelog](https://github.com/patrickluzdev/partialkit/blob/main/CHANGELOG.md) with what to do
+about it. Pin an exact version and read the entry before moving.
 
 ## Browser support
 

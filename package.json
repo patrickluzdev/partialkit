@@ -1,6 +1,6 @@
 {
   "name": "partialkit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "shadcn-inspired UI components for plain HTML. Tailwind CSS classes plus a small ESM runtime, for any project that writes HTML.",
   "keywords": [
     "ui",
@@ -86,5 +86,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "homepage": "https://patrickluzdev.github.io/partialkit/",
+  "bugs": {
+    "url": "https://github.com/patrickluzdev/partialkit/issues"
   }
 }

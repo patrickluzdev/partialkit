@@ -10,23 +10,25 @@ Tailwind CSS classes plus a small ESM runtime. No React, no Vue, no build step i
 - **shadcn tokens and names** — the same OKLCH variables, and components, parts and states named the way shadcn/ui names them.
 - **Accessible by construction** — the browser handles focus trapping, `Esc` and the top layer; partialkit adds the ARIA roles, states and keyboard patterns.
 - **Markup that arrives later just works** — no re-init call after you replace part of the page.
-- **~8 kB of JS**, minified and unzipped.
+- **25 kB of JS**, minified and unzipped — and most components need none of it.
 
 ## Install
 
-Two self-contained files. Nothing to resolve at runtime.
+Two files from a CDN, and you are done:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/partialkit@0.1.0/dist/partialkit.min.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/partialkit@0.1.0/dist/partialkit.min.js"></script>
+
+<button class="btn">Save</button>
+```
+
+Or serve them yourself, which is what a real project should do:
 
 ```sh
 npm install partialkit
 cp node_modules/partialkit/dist/partialkit.min.css static/
 cp node_modules/partialkit/dist/partialkit.min.js  static/
-```
-
-```html
-<link rel="stylesheet" href="/static/partialkit.min.css" />
-<script type="module" src="/static/partialkit.min.js"></script>
-
-<button class="btn">Save</button>
 ```
 
 Already building CSS with Tailwind? Import the source instead, so utilities and partialkit share one stylesheet:
@@ -44,7 +46,7 @@ import "partialkit/auto";
 
 ## Components
 
-Alert · Alert Dialog · Aspect Ratio · Avatar · Badge · Breadcrumb · Button · Button Group · Card · Checkbox · Dialog · Dropdown Menu · Empty · Field · Input · Input Group · Item · Kbd · Label · Native Select · Pagination · Progress · Radio Group · Separator · Skeleton · Slider · Spinner · Switch · Table · Textarea · Toggle · Toggle Group
+Accordion · Alert · Alert Dialog · Aspect Ratio · Avatar · Badge · Breadcrumb · Button · Button Group · Card · Carousel · Checkbox · Collapsible · Context Menu · Dialog · Dropdown Menu · Empty · Field · Hover Card · Input · Input Group · Input OTP · Item · Kbd · Label · Menubar · Native Select · Pagination · Popover · Progress · Radio Group · Scroll Area · Separator · Sheet · Skeleton · Slider · Spinner · Switch · Table · Tabs · Textarea · Toggle · Toggle Group · Tooltip
 
 Each one has a page with live examples, its classes and its state contract in the
 [documentation](https://patrickluzdev.github.io/partialkit/), following the same sections
