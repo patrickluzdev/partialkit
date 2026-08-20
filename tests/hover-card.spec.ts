@@ -49,6 +49,10 @@ test("Escape closes it", async ({ page }) => {
 });
 
 test("sits under the link it previews", async ({ page }) => {
+  // With the trigger anywhere near the foot of the viewport the card flips above
+  // it, which is correct and would make this assertion depend on where the
+  // fixture happens to sit.
+  await page.locator("#lab-hover-trigger").evaluate((element) => element.scrollIntoView({ block: "start" }));
   await page.hover("#lab-hover-trigger");
   await expect(page.locator("#lab-hover-card")).toBeVisible();
   await page
