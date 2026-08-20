@@ -31,13 +31,25 @@ export const carousel: Component = {
       content.scrollBy(vertical ? { top: by } : { left: by });
     };
 
-    const update = () => {
-      const { atStart, atEnd, index } = state(content, vertical);
-      if (previous) previous.disabled = atStart;
-      if (next) next.disabled = atEnd;
+    let last: State | undefined;
 
-      element.setAttribute("data-index", String(index));
-      dispatch(element, "pk:carousel:change", { index, atStart, atEnd });
+    // Snapping settles over several frames, and a resize recomputes on its own,
+    // so this runs far more often than anything changes. An event named change
+    // has to mean one.
+    const update = (announce = true) => {
+      const current = state(content, vertical);
+      if (previous) previous.disabled = current.atStart;
+      if (next) next.disabled = current.atEnd;
+      element.setAttribute("data-index", String(current.index));
+
+      const changed =
+        !last ||
+        last.index !== current.index ||
+        last.atStart !== current.atStart ||
+        last.atEnd !== current.atEnd;
+      last = current;
+
+      if (changed && announce) dispatch(element, "pk:carousel:change", current);
     };
 
     const onPrevious = () => scrollBy(-1);
@@ -55,11 +67,11 @@ export const carousel: Component = {
     let settle: ReturnType<typeof setTimeout> | undefined;
     const onScroll = () => {
       clearTimeout(settle);
-      settle = setTimeout(update, 100);
+      settle = setTimeout(() => update(), 100);
     };
 
     prepare(element, content, vertical);
-    update();
+    update(false);
 
     previous?.addEventListener("click", onPrevious);
     next?.addEventListener("click", onNext);
@@ -67,7 +79,7 @@ export const carousel: Component = {
     element.addEventListener("keydown", onKeydown);
 
     // Items are often swapped in after the fact, and the ends move with them.
-    const items = new ResizeObserver(update);
+    const items = new ResizeObserver(() => update());
     items.observe(content);
 
     return () => {
@@ -86,7 +98,13 @@ function gap(content: HTMLElement, vertical: boolean): number {
   return Number.parseFloat(vertical ? styles.rowGap : styles.columnGap) || 0;
 }
 
-function state(content: HTMLElement, vertical: boolean): { atStart: boolean; atEnd: boolean; index: number } {
+interface State {
+  atStart: boolean;
+  atEnd: boolean;
+  index: number;
+}
+
+function state(content: HTMLElement, vertical: boolean): State {
   const position = vertical ? content.scrollTop : Math.abs(content.scrollLeft);
   const size = vertical ? content.clientHeight : content.clientWidth;
   const total = vertical ? content.scrollHeight : content.scrollWidth;
